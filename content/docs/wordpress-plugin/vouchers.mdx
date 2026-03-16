@@ -1,23 +1,67 @@
 ---
 title: Vouchers
-description: Issue voucher codes to customers through promotion rules.
+description: Issue voucher codes to customers through promotion rules, redeemable as WooCommerce coupons at checkout.
 ---
 
-<Callout type="info">This page is a stub and will be expanded.</Callout>
+Vouchers are discount codes generated from your promotion rules in Leat. When a customer qualifies, they get a unique code they can enter at checkout just like any WooCommerce coupon. Set the rules once in Leat, and the plugin handles everything from there.
 
-Vouchers are generated from promotion rules and delivered to customers as discount codes. They work as WooCommerce coupons under the hood, so they follow all the same redemption rules at checkout.
+---
 
-## Topics to be covered
+## How vouchers and promotion rules work together
 
-- How vouchers relate to promotion rules
-- Configuring which order status triggers voucher creation
-- How voucher codes are delivered (order emails)
-- Enabling voucher codes in order emails
-- Discount types: percentage vs fixed amount
-- Setting minimum spend requirements
-- Usage limits per voucher and per customer
-- Individual use restriction
-- Setting voucher expiry
-- Cancelling vouchers on order refund or cancellation
-- Syncing vouchers from the Leat platform
-- Voucher redemption at checkout
+Every voucher in Leat is attached to a promotion rule. That rule defines what the discount actually does: a percentage off, a fixed amount, free shipping, or a discount on specific products. It also controls things like minimum order value, whether the code can be combined with other coupons, and which products are eligible.
+
+When a voucher code is issued to a customer, it picks up all of those settings from the promotion rule. There's nothing to configure on the voucher itself. If you need to change how a voucher behaves, update the promotion rule in Leat and run a sync.
+
+Each code is single-use and tied to the customer it was issued to, matched by their email address.
+
+---
+
+## Delivering voucher codes to customers
+
+Once a customer's order contains a voucher product and reaches the trigger status, the plugin creates the voucher in Leat and generates the WooCommerce coupon code. That code lands in the order confirmation email, right below the relevant line item.
+
+Customers don't need to log in anywhere or check a separate page. The code is just there in their inbox, inside the same order email they already expect.
+
+<Callout type="info">Voucher codes are sent to the billing email on the order. WooCommerce collects a billing email by default, so this works out of the box for most stores.</Callout>
+
+---
+
+## Configuring when vouchers are created
+
+You choose which order status kicks off voucher creation. Head to **Leat > Settings > Voucher Settings** and look for the **Voucher Order Status** field. It defaults to `completed`, so vouchers are only issued once you mark an order as complete.
+
+Common choices:
+
+- **completed** (recommended) -- vouchers are issued after fulfilment and confirmed payment. Good for most stores.
+- **processing** -- vouchers are issued as soon as payment comes through, before anything ships.
+
+For digital-only stores, `processing` is usually the right call. For stores shipping physical products, sticking with `completed` gives you more control.
+
+---
+
+## Cancelling vouchers on order reversal
+
+When an order gets refunded or cancelled, you'll usually want to deactivate the vouchers that came with it. Under **Leat > Settings > Voucher Settings**, the **Cancel vouchers on these order statuses** field lets you pick which statuses trigger that cancellation.
+
+When an order moves to one of those statuses, the plugin deactivates the voucher in Leat and flips the WooCommerce coupon to draft, so it can't be used anymore.
+
+<Callout type="info">Cancellation only fires once. Toggling a status on and off won't re-activate the voucher. If a customer needs their voucher restored, you'll need to do that from the Leat dashboard.</Callout>
+
+---
+
+## How customers redeem vouchers
+
+Voucher codes work exactly like any other WooCommerce coupon. The customer copies the code from their email, pastes it into the coupon field at checkout, and the discount is applied. After the order goes through, the voucher is marked as redeemed in Leat.
+
+One thing to keep in mind: vouchers are email-restricted. The customer has to check out with the same email address the voucher was issued to. A different email means the coupon won't apply.
+
+---
+
+## Syncing vouchers from the Leat platform
+
+If you have vouchers in Leat that weren't created through your WooCommerce store, you can pull them in manually. Go to **Leat > Sync** and run a voucher sync. The plugin goes through all active promotion rules, fetches their vouchers from Leat, and creates or updates the matching WooCommerce coupons.
+
+The sync runs in the background and won't hold up your admin panel. It might take a few minutes if you have a large number of vouchers.
+
+<Callout type="info">You don't need to run a manual sync for vouchers created through your store. Those get handled automatically when the order reaches the trigger status you've configured.</Callout>

@@ -1,22 +1,79 @@
 ---
-title: Gift cards
-description: Sell gift cards as WooCommerce products and accept them at checkout.
+title: Gift Cards
+description: Sell gift cards in your WooCommerce store and let customers redeem them at checkout.
 ---
 
-<Callout type="info">This page is a stub and will be expanded.</Callout>
+Gift cards in Leat are regular WooCommerce products with one extra behaviour: when a customer buys one, Leat generates a gift card code and emails it to the recipient. That recipient can then enter the code at your checkout to spend the balance.
 
-The plugin handles the full gift card lifecycle: creating them when an order completes, emailing them to the recipient, and letting customers redeem them through the checkout block.
+---
 
-## Topics to be covered
+## Setting up a gift card product
 
-- Setting up a WooCommerce product as a gift card
-- Configuring which order status triggers gift card creation
-- Recipient email: using billing email vs a separate recipient address
-- Recipient message: enabling or disabling the message field
-- How the gift card is delivered to the recipient
-- Enabling gift card acceptance at checkout
-- The gift card checkout block: how customers enter and apply codes
-- Partial redemption (spending less than the full balance)
-- Checking a gift card balance
-- Cancelling gift cards on order refund or cancellation
-- Customizing all gift card UI text
+Open any product in the WooCommerce editor, scroll down to **Product data**, and find the Leat gift card options. Turn on the **Gift card product** toggle and save.
+
+That's it for the product side. The gift card itself gets created automatically once the order hits the right status.
+
+---
+
+## Choosing when gift cards are created
+
+Leat creates and sends the gift card when an order reaches **Completed** by default. You can change this under **Leat > Gift Card Settings** with the **Gift Card Order Status** setting.
+
+If your store delivers digital products right away, triggering on **Processing** might suit you better than waiting for **Completed**.
+
+<Callout type="info">Only one status triggers creation. If the order status changes again later, no second gift card is sent.</Callout>
+
+---
+
+## Recipient email
+
+At checkout, customers buying a gift card see a field to enter the recipient's email address. That's where the code gets sent.
+
+If you'd rather skip that field, turn on **Disable gift card recipient email** under **Leat > Gift Card Settings**. The code goes to the buyer's billing email instead.
+
+---
+
+## Recipient message
+
+There's also an optional message field customers can use to add a personal note to the gift card email. It's optional, so customers can leave it blank.
+
+To remove the field from checkout entirely, enable **Disable gift card recipient message** under **Leat > Gift Card Settings**.
+
+---
+
+## How delivery works
+
+Once the order reaches the trigger status, Leat creates the gift card and sends the code to the recipient by email. Nothing manual needed on your end.
+
+---
+
+## Accepting gift cards at checkout
+
+Two things need to be in place before customers can redeem gift cards:
+
+1. Turn on **Accept gift cards** under **Leat > Gift Card Settings**.
+2. Add the **Gift Card Input** block to your checkout page in the WooCommerce block editor.
+
+<Callout type="info">Using the classic WooCommerce checkout shortcode instead of blocks? The input form gets injected automatically when the Accept gift cards setting is on. The block step only applies to block-based checkouts.</Callout>
+
+---
+
+## How the gift card input works
+
+On checkout, customers enter their gift card code. The available balance shows up, and they can apply it to the order. The discount comes off their total.
+
+If the gift card balance is higher than the order total, the order is fully covered and the leftover balance stays on the card for next time. Customers can also stack multiple gift cards on a single order.
+
+---
+
+## Cancelling gift cards on refunds
+
+If an order is refunded or cancelled, you can have Leat cancel the associated gift card automatically. Under **Leat > Gift Card Settings**, the **Cancel gift cards on these order statuses** setting lets you pick which statuses trigger that.
+
+You can pick more than one status. The cancellation fires the first time an order hits any of the selected statuses and won't repeat if the status changes again.
+
+---
+
+## Customising the checkout text
+
+All the text in the gift card form at checkout is editable under **Leat > Gift Card Settings**: the form title, input placeholder, button label, balance text, section headings, and every success and error message. No code changes needed.

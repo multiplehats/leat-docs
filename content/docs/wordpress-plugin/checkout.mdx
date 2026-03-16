@@ -1,29 +1,64 @@
 ---
-title: Checkout
-description: Points display, reward redemption, and gift card acceptance in the WooCommerce checkout.
+title: Checkout Integrations
+description: Add loyalty features to the WooCommerce block checkout, including points display, reward redemption, and gift card acceptance.
 ---
 
-<Callout type="info">This page is a stub and will be expanded.</Callout>
+Three checkout integrations come with the plugin. They sit inside the WooCommerce block checkout and let customers see the credits they are about to earn, redeem a reward, and spend a gift card balance, all without leaving the page.
 
-Three checkout block integrations come with the plugin. They slot into the WooCommerce block checkout and give customers a way to interact with their loyalty account without leaving the checkout flow.
+<Callout type="warning">These blocks only work with the **WooCommerce Block Checkout**. If your store still uses the classic shortcode checkout (`[woocommerce_checkout]`), the Leat blocks will not appear. You can switch to the block checkout under **WooCommerce > Settings > Advanced > Page setup**.</Callout>
 
-## Checkout blocks
+---
 
-**Points display**
-Shows customers how many credits they will earn on the current order before they place it.
+## Points display
 
-**Spend rules redemption**
-Lets customers redeem an available reward at checkout. The reward converts to a WooCommerce coupon and is applied to the order.
+This block tells customers how many credits they will earn from their order before they place it. The number recalculates as the cart changes, so it always reflects what is actually in the bag.
 
-**Gift card input**
-A code entry field where customers apply a gift card balance to their order. Supports partial redemption, so the remaining balance stays on the card.
+How the block behaves for different shoppers depends on your settings. If you have guest earning turned on, guests will see their projected credits too. If you have the opt-in invitation enabled, customers who have not yet joined the program will see a message encouraging them to sign up so they can start earning.
 
-## Topics to be covered
+You can edit the message text directly on the block inside the page editor. There are separate fields for members, non-enrolled customers, and the join invitation.
 
-- Adding checkout blocks to your WooCommerce block checkout
-- Points display: how earned credits are calculated from cart contents
-- Spend rules at checkout: the redemption flow
-- Gift card input: entering a code, checking the balance, applying it
-- Partial gift card redemption
-- Loyalty opt-in checkbox at checkout (optional, for guest enrollment)
-- Configuring which checkout block integrations are active
+---
+
+## Spend rules at checkout
+
+This block lets customers redeem a reward while they are checking out. They pick a reward, click **Redeem**, and the plugin converts it to a WooCommerce coupon and applies it to the order straight away. The discount shows up in the order summary just like any other coupon.
+
+Rewards the customer cannot yet afford still appear, but with a progress meter showing how many more credits they need. It is a nice reminder to keep earning.
+
+There is also a **My Coupons** tab built into the block. Customers who have already claimed coupons from the loyalty dashboard can apply them here without navigating away from checkout.
+
+<Callout type="info">The credit cost is deducted from the customer's balance as soon as they redeem. If the order is cancelled or refunded, credits are returned based on your refund settings.</Callout>
+
+---
+
+## Gift card input
+
+The gift card block adds a simple code entry field to checkout. A customer types in their gift card code, the plugin checks the balance and displays it, and clicking **Apply** puts the value toward the order total.
+
+If the gift card is worth more than the order, only the amount needed gets used. The leftover balance stays on the card for next time.
+
+All the text in this block, the field placeholder, button labels, balance display, and success messages, can be changed in **Leat > Settings**.
+
+---
+
+## Adding checkout blocks to your store
+
+1. Go to **Pages** in your WordPress admin and open your checkout page.
+2. Click **Edit** to open it in the block editor.
+3. Click into the **WooCommerce Checkout** block inside the page.
+4. Open the block inserter with the **+** button and search for "Leat."
+5. Add the blocks you want: **Leat Points Display**, **Leat Spend Rules**, or **Leat Gift Card**.
+6. Drag each block to where you want it to sit in the checkout layout.
+7. Save and publish.
+
+<Callout type="info">Add only what makes sense for your store. If you do not sell gift cards, leave that block out.</Callout>
+
+---
+
+## Loyalty opt-in at checkout
+
+There is an optional checkbox you can show at checkout for customers who are not yet in your loyalty program. When someone checks it and places their order, they are enrolled automatically and earn credits for that purchase right away.
+
+Turn this on in **Leat > Loyalty Program** settings under **Loyalty Opt-In at Checkout**. You can also set the label text for the checkbox from the same settings page.
+
+It is a low-key way to grow your program. Customers do not need to register separately before shopping, which removes a barrier that often puts people off joining.

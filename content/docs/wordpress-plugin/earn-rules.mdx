@@ -1,20 +1,82 @@
 ---
 title: Earn rules
-description: Configure how and when customers earn credits on your WooCommerce store.
+description: Configure what customers see on their loyalty dashboard about how they can earn credits.
 ---
 
-<Callout type="info">This page is a stub and will be expanded.</Callout>
+Earn rules control what shows up under the "Earn" section of your customers' loyalty dashboard. They're how you tell customers what actions will earn them credits. You manage all of them in your WordPress admin under **Leat > Loyalty Program**.
 
-Earn rules control when customers collect credits and how many they earn. You manage them under **Leat > Loyalty Program** in your WordPress admin.
+---
 
-## Topics to be covered
+## Finding earn rules
 
-- Types of earn rules (order-based, social actions)
-- Setting a fixed credit amount per order
-- Setting a percentage of order total
-- Configuring which order statuses trigger earning
-- Configuring which order parts count (subtotal, tax, shipping, fees)
-- Tier-based earning multipliers
-- Enabling and disabling individual rules
-- Guest order earning
-- Auto-enrollment on registration
+Go to **Leat > Loyalty Program** in your WordPress admin sidebar. Your earn rules are listed there alongside spend rules and other loyalty settings. Each rule shows its title and current status, so you can quickly see what's live and what's still sitting as a draft.
+
+---
+
+## Types of earn rules
+
+There are two types: an order-based rule and social action rules.
+
+### The order-based earn rule
+
+The order-based earn rule is a single rule that tells customers how they earn credits when they shop. Think of it as a description card on the dashboard. It's purely cosmetic, so it describes your program but doesn't actually award credits itself. The real credit calculation happens automatically in the background when an order reaches the right status.
+
+This rule has a few fields worth knowing about:
+
+- **Title** - The heading customers see, like "Earn credits on every order."
+- **Description** - A short line explaining the deal, such as "Earn 1 credit for every dollar you spend."
+- **Credits display** - The credit value shown on the card so customers understand roughly what they'll earn.
+
+Because this rule is cosmetic, you only need to set it up once. You don't have to update it when your credit rate changes unless you want the text to stay accurate.
+
+### Social action rules
+
+Social action rules reward customers for doing things outside of making a purchase. Following your store on social media, signing up for your newsletter, or leaving a review are all good examples. Customers claim these themselves by hitting the "Claim" button on the rule card in their dashboard.
+
+Each social action rule can only be claimed once per customer. Once they claim it, the credits land in their account and the card shows as claimed so they know it's done.
+
+Some common examples:
+
+- Follow us on Instagram (50 credits)
+- Subscribe to our newsletter (100 credits)
+- Leave a product review (75 credits)
+
+---
+
+## Configuring an earn rule
+
+Click on any earn rule in the list to open it. You'll find these fields:
+
+- **Title** - The rule name shown to customers.
+- **Description** - A sentence or two about what the customer needs to do or what they'll get.
+- **Credits** - The credit amount awarded when the rule is claimed (for social action rules) or displayed (for the order rule).
+- **Icon or image** - An optional image that appears on the rule card.
+- **Status** - Whether the rule is visible to customers or not.
+
+Fill in the fields and save. The rule won't show up on the customer dashboard until the status is set to active.
+
+---
+
+## Setting a rule to active
+
+Every earn rule starts as a draft. Drafts don't show up for customers at all. When you're ready to go live, open the rule, change the **Status** dropdown to **Published**, and save.
+
+If you want to pull a rule off the dashboard without deleting it, just set it back to draft. All your settings stay put and you can republish it whenever you're ready.
+
+<Callout type="info">If you're setting up the program for the first time, get all your rules configured before publishing any of them. That way customers see a complete, polished experience from the start.</Callout>
+
+---
+
+## The Earn Rules List block
+
+The Earn Rules List is a Gutenberg block that shows your active earn rules on any page. You'll typically drop it onto your loyalty dashboard page. Each rule appears as a card with its title, description, credit value, and a claim button for social action rules.
+
+There are a few display settings you can tweak in the block editor:
+
+- **Columns** - How many cards appear side by side (defaults to 3).
+- **Show claimed rules** - Whether customers can still see rules they've already claimed.
+- **Show to guests** - Whether the section is visible to people who aren't logged in.
+- **Button text** - Custom labels for the claim, sign-in, and join-program buttons.
+- **Credits badge** - A small badge on each card showing the credit value. You can turn it off or restyle it.
+
+The block loads content dynamically based on who's viewing it. Guests see a prompt to sign in. Enrolled customers see rules they can claim. Customers who have an account but haven't joined the program see an invite to do so.
