@@ -12,7 +12,7 @@
  */
 
 import { createRequire } from 'module';
-import { writeFileSync, existsSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync, renameSync, rmSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -116,8 +116,11 @@ async function generateMdx() {
   const { generateFiles } = await import('fumadocs-openapi');
   const { createOpenAPI } = await import('fumadocs-openapi/server');
 
+  // Use a relative path so the MDX document= props are environment-independent.
+  // fumadocs-openapi resolves relative paths against process.cwd() (the project root),
+  // so 'leat-openapi.yaml' works identically in local dev, CI, and Vercel.
   const openapi = createOpenAPI({
-    input: [OPENAPI_FILE],
+    input: ['leat-openapi.yaml'],
   });
 
   console.log(`Generating MDX files → ${CONTENT_DIR.replace(ROOT + '/', '')}/`);
@@ -136,6 +139,106 @@ async function generateMdx() {
   });
 
   console.log('MDX files generated.');
+}
+
+// ---------------------------------------------------------------------------
+// Step 3 — Reorganise the flat oauth/clients/ output into logical groups
+// ---------------------------------------------------------------------------
+
+// Maps group folder name → the endpoint folder names that belong to it.
+// Endpoint folders that share a name with their group (orders, bookings,
+// promotions) stay in place — they become part of the group automatically.
+const OAUTH_GROUPS = {
+  admin:      ['shops', 'custom-attributes', 'custom-attribute-groups', 'brand-kit', 'subscription-types'],
+  crm:        ['contacts', 'contact-identifiers', 'contact-session-tokens', 'contact-subscriptions', 'contact-verification', 'referrals', 'tiers'],
+  orders:     ['order-returns', 'products', 'product-categories'],
+  bookings:   ['visits'],
+  loyalty:    ['loyalty-program', 'loyalty-transactions', 'loyalty-tokens', 'loyalty-transaction-attributes', 'credit-receptions', 'rewards', 'reward-receptions', 'reward-attributes', 'collectable-rewards', 'perks', 'units'],
+  promotions: ['promotion-attributes', 'vouchers'],
+  giftcard:   ['giftcards', 'giftcard-transactions', 'giftcard-programs', 'prepaid-transactions'],
+  portal:     ['portal-sessions'],
+  webhooks:   ['webhook-subscriptions'],
+  misc:       ['forms', 'automations', 'contacts-portal', 'contact-attributes'],
+};
+
+const GROUP_TITLES = {
+  admin:      'Admin',
+  crm:        'CRM',
+  orders:     'Orders API',
+  bookings:   'Bookings & Visits',
+  loyalty:    'Loyalty & Rewards',
+  promotions: 'Promotions & Vouchers',
+  giftcard:   'Giftcard & Prepaid',
+  portal:     'Portal Sessions',
+  webhooks:   'Webhooks',
+  misc:       'Miscellaneous',
+};
+
+const GROUP_DESCRIPTIONS = {
+  admin:      'Shop and account-level configuration endpoints.',
+  crm:        'Contact management, sessions, subscriptions, referrals, and tiers.',
+  orders:     'Orders, returns, products, and categories.',
+  bookings:   'Bookings and visit tracking endpoints.',
+  loyalty:    'Loyalty program, transactions, credits, rewards, tiers, and perks.',
+  promotions: 'Promotional campaigns and voucher distribution.',
+  giftcard:   'Gift card issuance, transactions, programs, and prepaid balances.',
+  portal:     'Customer portal session management.',
+  webhooks:   'Webhook subscription management.',
+  misc:       'Forms, automations, contact attributes, and portal contacts.',
+};
+
+async function reorganiseOAuthDocs() {
+  if (DRY_RUN) {
+    console.log('[dry-run] Would reorganise oauth/clients/ into groups — skipping');
+    return;
+  }
+
+  const clientsDir = join(CONTENT_DIR, 'oauth', 'clients');
+
+  for (const [group, members] of Object.entries(OAUTH_GROUPS)) {
+    const groupDir = join(clientsDir, group);
+    mkdirSync(groupDir, { recursive: true });
+
+    // Move member endpoint folders into the group
+    for (const member of members) {
+      const src = join(clientsDir, member);
+      const dst = join(groupDir, member);
+      if (existsSync(src)) {
+        if (existsSync(dst)) rmSync(dst, { recursive: true });
+        renameSync(src, dst);
+      }
+    }
+
+    // Write index.mdx
+    writeFileSync(join(groupDir, 'index.mdx'), [
+      '---',
+      `title: ${GROUP_TITLES[group]}`,
+      `description: ${GROUP_DESCRIPTIONS[group]}`,
+      '---',
+    ].join('\n') + '\n');
+
+    // Write meta.json — include index + all members that now exist in the folder
+    const allMembers = existsSync(join(groupDir, group))
+      ? [group, ...members]   // self-named folder (orders, bookings, promotions)
+      : members;
+    const pages = ['index', ...allMembers.filter(m => existsSync(join(groupDir, m)))];
+    writeFileSync(
+      join(groupDir, 'meta.json'),
+      JSON.stringify({ title: GROUP_TITLES[group], pages }, null, 2) + '\n',
+    );
+  }
+
+  // Rewrite oauth/meta.json to reference the groups
+  const oauthMeta = {
+    title: 'OAuth API',
+    pages: Object.keys(OAUTH_GROUPS).map(g => `clients/${g}`),
+  };
+  writeFileSync(
+    join(CONTENT_DIR, 'oauth', 'meta.json'),
+    JSON.stringify(oauthMeta, null, 2) + '\n',
+  );
+
+  console.log('Reorganised oauth/clients/ into groups.');
 }
 
 // ---------------------------------------------------------------------------
@@ -158,6 +261,7 @@ async function main() {
 
   await patchSpec();
   await generateMdx();
+  await reorganiseOAuthDocs();
 
   console.log('\n=== Done ===');
   console.log('Next steps:');

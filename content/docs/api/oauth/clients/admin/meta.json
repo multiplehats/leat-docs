@@ -1,0 +1,11 @@
+{
+  "title": "Admin",
+  "pages": [
+    "index",
+    "shops",
+    "custom-attributes",
+    "custom-attribute-groups",
+    "brand-kit",
+    "subscription-types"
+  ]
+}

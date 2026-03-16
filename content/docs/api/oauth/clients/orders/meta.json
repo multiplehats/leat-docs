@@ -1,0 +1,9 @@
+{
+  "title": "Orders API",
+  "pages": [
+    "index",
+    "order-returns",
+    "products",
+    "product-categories"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Giftcard & Prepaid",
+  "pages": [
+    "index",
+    "giftcards",
+    "giftcard-transactions",
+    "giftcard-programs",
+    "prepaid-transactions"
+  ]
+}

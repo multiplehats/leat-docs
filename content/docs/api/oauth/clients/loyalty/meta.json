@@ -1,0 +1,17 @@
+{
+  "title": "Loyalty & Rewards",
+  "pages": [
+    "index",
+    "loyalty-program",
+    "loyalty-transactions",
+    "loyalty-tokens",
+    "loyalty-transaction-attributes",
+    "credit-receptions",
+    "rewards",
+    "reward-receptions",
+    "reward-attributes",
+    "collectable-rewards",
+    "perks",
+    "units"
+  ]
+}
