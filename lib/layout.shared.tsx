@@ -1,16 +1,37 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
-// fill this with your actual GitHub info, for example:
 export const gitConfig = {
-  user: 'fuma-nama',
-  repo: 'fumadocs',
+  user: 'leatapp',
+  repo: 'leat-docs',
   branch: 'main',
 };
+
+function LeatLogo() {
+  return (
+    <div className="flex items-center gap-2.5">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="20"
+        viewBox="0 0 331 297"
+        fill="none"
+        aria-hidden="true"
+        className="text-fd-primary"
+      >
+        <path
+          fill="currentColor"
+          d="M260.633 120.234c-4.381 21.742-10.951 32.565-19.712 32.565-6.337 0-11.834-3.945-16.448-11.929-4.614-7.938-10.812-20.636-18.593-38-9.274-21.02-17.802-38.192-25.583-51.613-7.781-13.372-17.754-25.157-29.916-35.306-12.21-10.1-26.796-15.2-43.85-15.2-40.4 0-68.966 27.706-85.788 83.118C8.57 124.043 1.843 172.38.554 228.78c-.12 5.298-.181 7.947.845 10.043a9.681 9.681 0 0 0 4.194 4.291c2.072 1.074 4.764 1.074 10.148 1.074h34.242c5.176 0 7.764 0 9.742-.959a9.406 9.406 0 0 0 4.144-3.876c1.088-1.91 1.265-4.567 1.62-9.881 1.37-20.542 3.859-37.764 7.49-51.662 5.826-22.463 13.609-33.67 23.346-33.67 6.805 0 12.676 3.992 17.523 11.929 4.845 7.985 11.416 21.357 19.71 40.213 12.676 31.121 25.816 55.556 39.424 73.305 13.652 17.749 32.153 26.6 55.498 26.6 39.468 0 67.056-27.514 82.899-82.541 11.496-40.044 17.928-88.53 19.269-145.457.125-5.314.188-7.972-.838-10.07a9.667 9.667 0 0 0-4.195-4.294c-2.072-1.074-4.769-1.074-10.164-1.074h-33.699c-5.231 0-7.846 0-9.844.982a9.453 9.453 0 0 0-4.157 3.963c-1.076 1.95-1.204 4.616-1.458 9.95-1.021 21.386-2.906 38.917-5.66 52.588Z"
+        />
+      </svg>
+      <span className="font-semibold text-sm tracking-tight">Leat Docs</span>
+    </div>
+  );
+}
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      title: 'My App',
+      title: <LeatLogo />,
     },
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
   };
