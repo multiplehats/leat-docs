@@ -1,0 +1,287 @@
+---
+title: "Perks"
+description: "Perks are benefits associated with different Tiers in our system, designed to enhance customer engagement and loyalty Each tier, such as Bronze, Silver, and Gol"
+---
+
+## Perks
+
+Perks are benefits associated with different Tiers in our system, designed to enhance customer engagement and loyalty Each tier, such as Bronze, Silver, and Gold, comes with specific perks like percentage discounts or free delivery. These Perks can be retrieved via our API to implement and manage the associated benefits, like applying set discount Perks.
+
+---
+
+### List Perks
+
+This API call fetches a list of all Perks with their Perk Options.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//perks
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+            "label": "Discount",
+            "name": "discount",
+            "data_type": "single_select",
+            "options": [
+                {
+                    "label": "No discount",
+                    "value": "0_off",
+                    "default": true,
+                },
+                {
+                    "label": "10% off",
+                    "value": "10_off",
+                    "default": false,
+                },
+                {
+                    "label": "25% off",
+                    "value": "25_off",
+                    "default": false,
+                }
+            ]
+        }
+    ]
+}
+```
+
+---
+
+### Create Perk
+
+Creates a new Perk.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//perks
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Body
+
+`label``string`
+
+`REQUIRED`
+
+The label of the perk.
+
+`name``string`
+
+`REQUIRED`
+
+The name of the perk (used internally).
+
+`data_type``string`
+
+`REQUIRED`
+
+The data type of the perk, available options: single_select or boolean.
+
+`options``array`
+
+`REQUIRED`
+
+The options of the perk (should contain a label, value and default key with values). When data_type is boolean, only true and false values are allowed. A default option is required: this one will be assigned to your existing tiers.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+        "label": "Discount",
+        "name": "discount",
+        "data_type": "single_select",
+        "options": []
+    },
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+---
+
+### Get Perk
+
+Retrieve a Perk with its Perk Options using its UUID.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//perks/{{perk_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`perk_uuid``string`
+
+`REQUIRED`
+
+The Perk's UUID
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+        "label": "Discount",
+        "name": "discount",
+        "data_type": "single_select",
+        "options": [
+            {
+                "label": "No discount",
+                "value": "0_off",
+                "default": true,
+            },
+            {
+                "label": "10% off",
+                "value": "10_off",
+                "default": false,
+            },
+            {
+                "label": "25% off",
+                "value": "25_off",
+                "default": false,
+            }
+        ]
+    },
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`110000`
+
+Perk not found.
+
+---
+
+### Update Perk
+
+Updates an existing Perk.
+
+**PUT**
+
+```text
+https://api.piggy.eu/api//perks/{{perk_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`perk_uuid``string`
+
+`REQUIRED`
+
+The Perk's UUID
+
+Body
+
+`label``string`
+
+`REQUIRED`
+
+The label of the perk.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+        "label": "Discount",
+        "name": "discount",
+        "data_type": "single_select",
+        "options": [
+            {
+                "label": "No discount",
+                "value": "0_off",
+                "default": true,
+            },
+            {
+                "label": "10% off",
+                "value": "10_off",
+                "default": false,
+            },
+            {
+                "label": "25% off",
+                "value": "25_off",
+                "default": false,
+            }
+        ]
+    },
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`110000`
+
+Perk not found.

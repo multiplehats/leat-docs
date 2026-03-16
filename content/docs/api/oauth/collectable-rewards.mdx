@@ -1,0 +1,191 @@
+---
+title: "Collectable Rewards"
+description: "Collectable Rewards represent Physical Rewards that have been claimed but are yet to be collected. These Rewards are stored at your Shop and await pickup by the"
+---
+
+## Collectable Rewards
+
+Collectable Rewards represent Physical Rewards that have been claimed but are yet to be collected. These Rewards are stored at your Shop and await pickup by the Contact who claimed them. This section of the API deals with managing and tracking these Rewards.
+
+---
+
+### List Collectable Rewards
+
+Retrieve a collection of Physical Rewards that still need to be picked up at the Shop by the Contact that has claimed them remotely.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//collectable-rewards
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+Retrieve an overview of all uncollected rewards for the Contact using their UUID.
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "contact": {
+                "uuid": "123",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "balance": 250
+                }
+            },
+            "created_at": "2023-11-13T14:37:04+00:00",
+            "uuid": "abc012-def789-u4k3l2-890xyz",
+            "title": "Krabby Patty",
+            "reward": {
+                "id": 20002,
+                "uuid": "539483d0-fab4-40db-add5-2ec65ef12901",
+                "title": "Krabby Patty",
+                "description": "Kelp Juice or Sea Water",
+                "reward_type": "PHYSICAL",
+                "media": {
+                    "type": "image",
+                    "value": "http://images.google.com/image/coffee/300x200.jpg"
+                },
+                "required_credits": 2,
+                "pre_redeemable": true,
+                "expiration_duration": 6307200,
+                "is_active": true,
+                "cost_price": null,
+                "stock": null,
+            },
+            "expires_at": "2024-01-25T14:37:04+00:00",
+            "has_been_collected": false
+        }
+    ],
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+---
+
+### Redeem Collectable Reward
+
+To collect a Reward, the UUID of the Loyalty Transaction needs to be stated as query parameter inside the URI. It updates the existing Reward resource and sets the `has_been_collected`property to true.
+
+**PUT**
+
+```text
+https://api.piggy.eu/api//collectable-rewards/collect/{{loyalty_transaction_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`loyalty_transaction_uuid``string`
+
+`REQUIRED`
+
+UUID of the Loyalty Transaction that was generated when the Reward was claimed by the Contact.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "13ac4cc1-3522-4dfc-ae4a-a821e5090108",
+        "status": "COLLECTED"
+    },
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`6003`
+
+Reward not found.
+
+`80300`
+
+Reward not found.
+
+`80300`
+
+Reward is expired.
+
+---
+
+### Reverse Collectable Reward Redemption
+
+Reverses a previous Collectable Reward Redemption, in the event of an order return or some other cancellation.
+
+**POST**
+
+```text
+https://api.piggy.eu/api/v3/oauth/clients/collectable-rewards/{{collectable_reward_redemption_uuid}}/reverse
+```
+
+Headers
+
+Authorization
+
+Accept
+
+`Bearer {{ personal_access_token }}`
+
+`application/json`
+
+Input parameters
+
+`uuid``string`
+
+`required`
+
+The UUID of the Collectable Reward Redemption to be reversed
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "13ac4cc1-3522-4dfc-ae4a-a821e5090108",
+        "status": "REVERSED",
+    },
+    "meta": {}
+}
+```

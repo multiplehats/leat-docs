@@ -1,0 +1,51 @@
+---
+title: "Migrate to V3"
+description: "V3 of the public API is now live. There are some breaking changes here. While we will continue to support the V1 & V2 for the time being, at some point new deve"
+---
+
+V3 of the public API is now live. There are some breaking changes here. While we will continue to support the V1 & V2 for the time being, at some point new developments in our product will inevitably lead to deprecation of the older versions. Also, newer features – like prepaid API calls and the creation of custom Reward Attributes via API – will only be available in the V3 version and onwards. We therefore urge you to migrate to V3 as soon as you can.
+
+#### Summary of breaking changes
+
+The V3 version comes with some breaking changes:
+
+-   **Contact based - replacing Members and Recipients:** The entire API is now Contact based, meaning 'Members' and 'Recipients' no longer play a role anymore and have been replaced with Contacts for all relevant API calls.
+-   **Contact Identifiers - replacing Loyalty cards:** The Loyalty system will no longer be limited to the standard Loyalty cards, so anything unique can be used to identify Contacts. Therefore, although Loyalty cards can still be used, they will now be represented by Contact Identifiers.
+-   **Orders:** Implicitly, all credit receptions were created using 'purchase_amount'. This has been replaced by the more dynamic and diverse Orders. Clients can create Orders with line items, charges, applied discounts and even link applied reward redemptions, giftcard transactions et cetera.
+-   **Loyalty Tokens - replacing Staged Credit Receptions:** A new process for creating Staged Credit Receptions has been implemented, which doesn't require any API calls. This way is quicker and independent of a stable internet connection, and has been rebranded 'Loyalty Tokens'.
+-   **Single Rewards list and reception calls:** Instead of getting three separate lists of Rewards, as well as having to do a separate 'Create Reward Reception' API call per Reward type, you now get one unified list of Rewards and only need one reception call for all types.
+-   **Use of UUIDs:** The new API is based mostly on UUIDs, instead of the simpler IDs used in the past. One or two API calls still use regular IDs, but they will be refactored to UUIDs soon enough, so keep that in mind.
+
+---
+
+### Refactoring processes
+
+Here we'll give a short guide on how to migrate all the old processes to the new v3 versions.
+
+If you're retrieving Member information using the public API, you will now need to retrieve Contacts instead. The new API calls are self-evident enough, but keep a couple of things in mind.
+
+Firstly, we now use UUIDs, which are strings, instead of the previous numeric IDs. Secondly, the responses for retrieving Contact Information– primarily how custom attributes are returned – have changed a bit.
+
+Previously, a Loyalty card ID or hash was used to retrieve a Member or perform a credit reception or reward reception. Now, as we'll soon accept virtually anything as an identifier, this has been expanded a bit. Instead of the 'hash', we'll now be using the 'contact_identifier_value', which can of course still represent a hash. The loyalty_card_id will not be used at all, nor will it be replaced by a contact identifier ID.
+
+#### Contacts
+
+Instead of the 'Get Member' API call, implement the new 'Create or Find Contact' API call, and then use the **UUID** returned in the response.
+
+Instead of the 'Find Loyalty Card by Hash' to retrieve the Member information, implement the 'Find Contact Identifier' API call. Again, use the Contact's **UUID** from the response. Or directly use the Loyalty card hash as the 'contact_identifier_value' in the new Create Credit Reception API call (make sure to do proper error handling in case it is not yet linked to a contact).
+
+#### Orders
+
+Instead of creating 'Credit Receptions', you can now create a full 'Order' and have the system process it for you. This will calculate the points for you.
+
+Rewards are now returned as a single list, instead of a separate list for each reward type, which should make life easier. If for some reason you still want to separate the types, you can do so using the 'reward_type' attribute.
+
+You can now create Reward attributes using the API. This way, when a Client enables their integration in the backoffice, an API call can be done to create all necessary attributes (if they exist), such as PLU or discount code.
+
+Now, the Reward's **UUID** instead of ID is returned and used in subsequent API calls. Also make sure you use the Contact's UUID instead of the Member ID and the Shop's UUID instead of the Shop's ID, if needed.
+
+Reward Receptions can now be conducted using a single API calls, instead of an API call per reward type. Beware that you now need to use the Reward's **UUID** rather than its ID, and Contact Identifiers instead of Loyalty cards.
+
+Make sure you use the Contact's UUID instead of the Member ID and the Shop's UUID instead of the Shop's ID, if needed.
+
+Currently, the API calls concerning Giftcards and Giftcard Transactions are unchanged. However, where an ID is used (Giftcard ID, Giftcard Program ID, Giftcard Transaction ID), this will soon be refactored to UUIDs as well.

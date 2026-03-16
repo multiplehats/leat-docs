@@ -1,0 +1,158 @@
+---
+title: "Custom Attribute Groups"
+description: "Retrieve all Custom Attribute Groups for a specific entity."
+---
+
+### List Custom Attribute Groups
+
+Retrieve all Custom Attribute Groups for a specific entity.
+
+**GET**
+
+```text
+https://api.piggy.eu/api/v3/oauth/clients/custom-attribute-groups
+```
+
+Headers
+
+Authorization
+
+Accept
+
+`Bearer {{ personal_access_token }}`
+
+`application/json`
+
+Input parameters
+
+`entity``string`
+
+`required`
+
+Entity for which Custom Attribute Groups are to be retrieved
+
+Possible values:
+
+`business_profiles`For entity: Business Profile (or Shop)
+
+`contact`For entity: Contact
+
+`reward`For entity: Reward
+
+`promotion`For entity: Promotion (note: use this one when working with Vouchers)
+
+`voucher`For entity: Voucher (note: this is for individual vouchers, you'll likely need Promotion instead
+
+`giftcard`For entity: Giftcard
+
+`giftcard_transaction`For entity: Giftcard Transaction
+
+`prepaid`For entity: Prepaid Transaction
+
+`booking`For entity: Booking
+
+`visit`For entity: Visit
+
+`shift`For entity: Shift
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "entity": "promotion",
+            "name": "acme_integration",
+            "label": "Acme Integration Attributes",
+            "created_at": "2023-11-13T16:04:14+00:00",
+        },
+        {
+            "entity": "promotion",
+            "name": "general",
+            "label": "General",
+            "created_at": "2023-10-12T14:32:15+00:00",
+        },
+    ],
+    "meta": []
+}
+```
+
+---
+
+### Create Custom Attribute Group
+
+Custom Attributes can be grouped, which can be helpful to identify those attributes that are associated to your integration.
+
+**POST**
+
+```text
+https://api.piggy.eu/api/v3/oauth/clients/custom-attribute-groups
+```
+
+Headers
+
+Authorization
+
+Accept
+
+`Bearer {{ personal_access_token }}`
+
+`application/json`
+
+Input parameters
+
+`name``string`
+
+`required`
+
+A unique internal identifier for this group
+
+`label``string`
+
+`optional`
+
+Display value for this group
+
+`entity``string`
+
+`required`
+
+Entity for which this Custom Attribute Group is to be created
+
+Possible values:
+
+`business_profiles`For entity: Business Profile (or Shop)
+
+`contact`For entity: Contact
+
+`reward`For entity: Reward
+
+`promotion`For entity: Promotion (note: use this one when working with Vouchers)
+
+`voucher`For entity: Voucher (note: this is for individual vouchers, you'll likely need Promotion instead
+
+`giftcard`For entity: Giftcard
+
+`giftcard_transaction`For entity: Giftcard Transaction
+
+`prepaid`For entity: Prepaid Transaction
+
+`booking`For entity: Booking
+
+`visit`For entity: Visit
+
+`shift`For entity: Shift
+
+Response Example
+
+```json
+{
+    "data": {
+        "entity": "promotion",
+        "name": "acme_integration",
+        "label": "Acme Integration Attributes",
+        "created_at": "2023-11-13T16:04:14+00:00",
+    },
+    "meta": []
+}
+```

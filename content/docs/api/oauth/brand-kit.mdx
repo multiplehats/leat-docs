@@ -1,0 +1,45 @@
+---
+title: "Brand Kit"
+description: "A Brand kit expresses the identity of your company. A brand kit is a collection of designs and features that shape the personality and look of your company. Thi"
+---
+
+A Brand kit expresses the identity of your company. A brand kit is a collection of designs and features that shape the personality and look of your company. Think about your logo, colors used and font. You can also add links to your social media accounts in emails and custom app through the Brand Kit.
+
+---
+
+### Get Brand Kit
+
+Retrieve the details of your account's Brand Kit with this call. It allows you to access all the branding elements associated with your account, including logos, color schemes, and font styles.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//brand-kit
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": {
+        "small_logo_url": "https://images.google.com/photo_small",
+        "large_logo_url": "https://images.google.com/photo_large",
+        "primary_color": "#ad5959",
+        "secondary_color": "#c8bcbc",
+        "tertiary_color": "#a72f2f",
+        "quarternary_color": "#317f88",
+        "font_family": "Arial"
+    },
+    "meta": []
+}
+```

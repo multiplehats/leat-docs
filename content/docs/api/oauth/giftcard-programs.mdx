@@ -1,0 +1,62 @@
+---
+title: "Giftcard Programs"
+description: "The Piggy Giftcards system has two types of giftcards: physical and digital giftcards, which are tied to a specific Giftcard Program. Each program includes deta"
+---
+
+The Piggy Giftcards system has two types of giftcards: physical and digital giftcards, which are tied to a specific Giftcard Program. Each program includes details like `card_count`, status, and `expiration_days`. For a more detailed description of what comprises a Giftcard, please checkout the Giftcard section.
+
+---
+
+### List Giftcard Programs
+
+Retrieve a list of your Giftcard Programs.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//giftcard-programs
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "card_count": 29928,
+            "settles": 0,
+            "uuid": "123",
+            "name": "Bikini Bottom Bucks",
+            "active": true,
+            "expiration_days": 394,
+            "max_amount_in_cents": 51000,
+            "min_amount_in_cents": null,
+            "calculator_flow": "DEFAULT"
+        },
+        {
+            "id": 54,
+            "card_count": 81,
+            "settles": 0,
+            "uuid": "8fb59dcf-fb5b-4cee-88d8-35e361e55a12",
+            "name": "asdas",
+            "active": true,
+            "expiration_days": null,
+            "max_amount_in_cents": null,
+            "min_amount_in_cents": null,
+            "calculator_flow": "DEFAULT"
+        }
+    ],
+    "meta": []
+}
+```

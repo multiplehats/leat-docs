@@ -1,0 +1,11 @@
+{
+  "title": "Getting Started",
+  "pages": [
+    "authentication",
+    "testing",
+    "error-handling",
+    "webhooks",
+    "loyalty-tokens",
+    "register-api"
+  ]
+}

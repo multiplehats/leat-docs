@@ -1,0 +1,847 @@
+---
+title: "Order at Table"
+description: "This guide covers how to build a loyalty integration for Order at Table systems. These are typically mobile web applications where customers scan a QR code at t"
+---
+
+## Introduction
+
+This guide covers how to build a loyalty integration for Order at Table systems. These are typically mobile web applications where customers scan a QR code at their table and order directly from their own device.
+
+Order at Table integrations differ from kiosks and POS systems in several key ways: customers use their own mobile devices, authentication is typically email-based (passwordless), and the experience should feel native to mobile browsing.
+
+### In this tutorial
+
+-   [1. Adding Blocks to Page](#oat-menu-start)— Display loyalty prompts on the menu page
+-   [2. Identifying Customer](#oat-member-login)— Email-based login, verification, and sign up
+-   [3. Showcasing Rewards and Vouchers](#oat-menu-logged-in)— Display available offers to logged-in customers
+-   [4. Redeeming Offers](#oat-redeem-voucher)— Lock and redeem vouchers and rewards
+-   [5. Finalising the Order](#oat-basket)— Basket with applied offers
+-   [6. Order Successful](#oat-order-success)— Display earned points after payment
+
+---
+
+## Main Loyalty Flow
+
+This flow covers the complete Order at Table loyalty experience: from displaying offers to non-authenticated users, through login/signup, to redeeming offers and completing orders. Hover over the interactive previews to see which API endpoints are used at each step.
+
+1
+
+#### Adding Blocks to Page
+
+LOGO
+
+Offers
+
+[
+
+Start earning rewards!
+
+Join as a member and enjoy exclusive rewards
+
+](/v3/tutorials/order-at-table#oat-member-login)
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+1
+
+#### Adding Blocks to Page
+
+In an Order at Table integration, customers browse and order from their own mobile device. The loyalty integration should be seamlessly embedded into the ordering experience, with an offers section prominently displayed on the menu page.
+
+For non-authenticated users, show a prompt to join the loyalty program or log in to access their rewards and offers.
+
+**Try it:** Click the **"Start earning rewards now!"** banner to simulate a customer wanting to log in.
+
+2
+
+#### Identifying Customer
+
+Unlike kiosks where customers scan a card, Order at Table integrations typically use email-based authentication. When a customer enters their email, first check if they already exist in the system.
+
+LOGO
+
+Offers
+
+Start earning rewards now!
+
+Join as a member and enjoy exclusive rewards
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+### Members login
+
+Enjoy member benefits like free rewards and seasonal discounts
+
+[](/v3/tutorials/order-at-table#oat-menu-start)
+
+Enter email address
+
+[
+
+Login→
+
+](/v3/tutorials/order-at-table#oat-verification-code)
+
+API endpoint
+
+[
+
+Find Contact
+
+](/v3/oauth/contacts#find-one-by)
+
+2
+
+#### Identifying Customer
+
+Unlike kiosks where customers scan a card, Order at Table integrations typically use email-based authentication. When a customer enters their email, first check if they already exist in the system.
+
+**Authentication Flow:**
+
+Use your own authentication layer if you have your own, otherwise, follow these steps below
+
+1.  Customer enters their email address
+2.  Call [Find Contact](/v3/oauth/contacts#find-one-by) to check if the email exists
+3.  **If found:** Send verification code via [Send Contact Verification Email](/v3/oauth/contact-verification#send)
+4.  **If not found:** Redirect to sign up form
+
+2
+
+#### Verification Code
+
+For existing customers, send a verification code to their email. This provides a passwordless authentication experience that's secure and user-friendly on mobile devices.
+
+LOGO
+
+Offers
+
+Start earning rewards now!
+
+Join as a member and enjoy exclusive rewards
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+### Enter verification code
+
+Enter the six-digit code you've received in your email
+
+[](/v3/tutorials/order-at-table#oat-menu-start)
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+[
+
+Login
+
+](/v3/tutorials/order-at-table#oat-menu-logged-in)
+
+API endpoint
+
+[
+
+Send Contact Verification Email
+
+](/v3/oauth/contact-verification#send)[
+
+Verify Login Code
+
+](/v3/oauth/contact-verification#verify)
+
+2
+
+#### Verification Code (continued)
+
+For existing customers, send a verification code to their email. This provides a passwordless authentication experience that's secure and user-friendly on mobile devices.
+
+If your Order at Table system already has its own authentication layer (e.g., customers log in to your app), you can skip this verification step and directly link the session to the customer's contact record using their authenticated email or user ID.
+
+2
+
+#### Sign Up (New Customers)
+
+For new customers, collect their basic information to create a loyalty account. Keep the form simple to reduce friction.
+
+LOGO
+
+Offers
+
+Start earning rewards now!
+
+Join as a member and enjoy exclusive rewards
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+### Sign up
+
+We wanna get to know you! Tell us a bit about yourself.
+
+[](/v3/tutorials/order-at-table#oat-menu-start)
+
+First name*
+
+Last name*
+
+Birthdate
+
+I agree to the Terms and Conditions
+
+[
+
+Signup
+
+](/v3/tutorials/order-at-table#oat-menu-logged-in)
+
+API endpoint
+
+[
+
+Create Contact
+
+](/v3/oauth/contacts#create-contact)
+
+2
+
+#### Sign Up (New Customers)
+
+For new customers, collect their basic information to create a loyalty account. Keep the form simple to reduce friction.
+
+**Recommended fields:**
+
+-   Email (pre-filled from login attempt - required)
+-   First name (optional but highly recommended)
+-   Last name (optional but highly recommended)
+-   Birthdate (optional - useful for birthday rewards)
+-   Terms & Conditions acceptance
+
+3
+
+#### Showcasing Rewards and Vouchers
+
+Once logged in, the customer sees their available offers directly on the menu page. This includes vouchers and collectable rewards that can be redeemed with their order.
+
+LOGO
+
+Offers[See all](/v3/tutorials/order-at-table#oat-all-offers)
+
+Balance:425 Shells
+
+[
+
+Free Kelp Shake
+
+Expires soon
+
+Free
+
+](/v3/tutorials/order-at-table#oat-redeem-voucher)[
+
+10% off
+
+*Min. spend €15
+
+150 points
+
+](/v3/tutorials/order-at-table#oat-redeem-voucher)
+
+API endpoint
+
+[
+
+List Vouchers
+
+](/v3/oauth/vouchers#list-vouchers)[
+
+List Collectable Rewards
+
+](/v3/oauth/collectable-rewards#list-collectable-rewards)[
+
+List Rewards
+
+](/v3/oauth/rewards#list-rewards)
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+3
+
+#### Showcasing Rewards and Vouchers
+
+Once logged in, the customer sees their available offers directly on the menu page. This includes vouchers and collectable rewards that can be redeemed with their order.
+
+**Displaying Offers:**
+
+-   Show the customer's current point balance
+-   Display available vouchers with expiry dates
+-   Show collectable rewards (pre-redeemed rewards)
+-   Both vouchers and collectable rewards can be redeemed free of charge
+-   Provide a "See all" link to view all available offers
+
+3
+
+#### All Offers View
+
+The "All offers" screen shows both available offers (vouchers and collectable rewards) and purchasable rewards that customers can redeem with their points.
+
+LOGO
+
+Offers
+
+Start earning rewards now!
+
+Join as a member and enjoy exclusive rewards
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+### All offers
+
+Your current balance: 425 Shells
+
+[](/v3/tutorials/order-at-table#oat-menu-logged-in)
+
+Available offers
+
+[
+
+Free Kelp ShakeExpires soon
+
+Redeem
+
+](/v3/tutorials/order-at-table#oat-redeem-voucher)
+
+API endpoint
+
+[
+
+List Vouchers
+
+](/v3/oauth/vouchers#list-vouchers)[
+
+List Collectable Rewards
+
+](/v3/oauth/collectable-rewards#list-collectable-rewards)
+
+Purchase more offers
+
+[
+
+Seafoam Soda
+
+Refreshing underwater fizz
+
+100pointsRedeem
+
+](/v3/tutorials/order-at-table#oat-all-offers)[
+
+Krabby Patty
+
+The finest underwater burger
+
+250pointsRedeem
+
+](/v3/tutorials/order-at-table#oat-all-offers)[
+
+€10 Off
+
+On orders over €25
+
+500pointsNot enough points
+
+](/v3/tutorials/order-at-table#oat-all-offers)[
+
+Krusty Krew Merch
+
+Exclusive employee hat
+
+650pointsNot enough points
+
+](/v3/tutorials/order-at-table#oat-all-offers)
+
+API endpoint
+
+[
+
+List Rewards
+
+](/v3/oauth/rewards#list-rewards)
+
+3
+
+#### All Offers View (continued)
+
+The "All offers" screen shows both available offers (vouchers and collectable rewards) and purchasable rewards that customers can redeem with their points.
+
+##### Vouchers
+
+Pre-issued offers that customers receive through promotions, campaigns, or as gifts. Can be redeemed for free.
+
+##### Collectable Rewards
+
+Rewards that were pre-redeemed (points already deducted) but not yet collected. Can be redeemed for free.
+
+##### Rewards
+
+Items that customers can purchase with their points. Requires sufficient point balance to redeem.
+
+4
+
+#### Redeeming Offers
+
+When a customer selects an offer, show a confirmation screen before applying it to their order. This prevents accidental redemptions.
+
+LOGO
+
+Offers
+
+Start earning rewards now!
+
+Join as a member and enjoy exclusive rewards
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+### Redeem offer
+
+The offer will be added to your order immediately
+
+[](/v3/tutorials/order-at-table#oat-menu-logged-in)
+
+Free Kelp ShakeExpires 20 September 2025
+
+Do you want to redeem this voucher now?
+
+You can only use this voucher once.
+
+[
+
+Redeem
+
+](/v3/tutorials/order-at-table#oat-offer-redeemed)
+
+API endpoint
+
+[
+
+Create Reward Reception
+
+](/v3/oauth/reward-receptions#create-reward-reception)[
+
+Lock Voucher
+
+](/v3/oauth/vouchers#lock-voucher)
+
+4
+
+#### Redeeming Offers
+
+When a customer selects an offer, show a confirmation screen before applying it to their order. This prevents accidental redemptions.
+
+For Order at Table, we recommend the **Lock → Redeem** approach:
+
+1.  [Lock Voucher](/v3/oauth/vouchers#lock-voucher) — reserves the voucher when customer confirms
+2.  Customer completes their order and pays
+3.  On success: [Redeem Voucher](/v3/oauth/vouchers#redeem-voucher)
+4.  On failure/timeout: [Release Voucher](/v3/oauth/vouchers#release-voucher) (or let it expire automatically)
+
+This prevents vouchers from being permanently consumed if the customer abandons their order.
+
+Applying discounts to the order is often the most complex part of the integration. To enable your Order at Table system to handle this correctly, you'll need to create custom attributes that define the discount logic.
+
+**Important:** Custom attributes must be created on the correct entity:
+
+-   **For Rewards:** Create custom attributes on the **Rewards** entity
+-   **For Vouchers:** Create custom attributes on the **Promotions** entity (the parent of Vouchers)
+
+**Common custom attributes:**
+
+-   `discount_type` - Dropdown: _percentage_discount_, _absolute_discount_, or _free_item_
+-   `discount_value` - Number field (e.g., 100 for 100% off = free item, or 5 for €5 off)
+-   `product_code` - SKU of the specific product
+-   `category` - If the reward applies to any product in a category
+
+4
+
+#### Offer Applied
+
+After confirming, show a success message and add the discounted item to the customer's basket.
+
+LOGO
+
+Offers
+
+Start earning rewards now!
+
+Join as a member and enjoy exclusive rewards
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+[](/v3/tutorials/order-at-table#oat-menu-logged-in)
+
+### Offer redeemed!
+
+Your offer was added to your basket!
+
+[
+
+Close
+
+](/v3/tutorials/order-at-table#oat-basket)
+
+4
+
+#### Offer Applied (continued)
+
+After confirming, show a success message and add the discounted item to the customer's basket.
+
+5
+
+#### Finalising the Order
+
+The basket shows all items including any applied offers. Customers can still add more offers before checking out.
+
+LOGO
+
+Offers
+
+Start earning rewards now!
+
+Join as a member and enjoy exclusive rewards
+
+Burgers
+
+Drinks
+
+Sides
+
+Desserts
+
+Krabby PattyThe finest underwater burger
+
+€9,00
+
+Double Krabby PattyTwice the patty, twice the taste
+
+€12,00
+
+Kelp FriesCrispy seaweed fries
+
+€4,50
+
+### Basket
+
+[](/v3/tutorials/order-at-table#oat-menu-logged-in)
+
+Krabby Patty€9,00
+
+1
+
+Kelp Shake
+
+€3,50€0,00
+
+Offer applied: Free Kelp Shake
+
+1
+
+Total€9,00
+
+OffersBalance: 425 Shells
+
+[
+
+10% off
+
+*Min. spend €15
+
+150 points
+
+](/v3/tutorials/order-at-table#oat-redeem-voucher)[
+
+Krabby Patty
+
+250 Shells
+
+250 points
+
+](/v3/tutorials/order-at-table#oat-redeem-voucher)
+
+API endpoint
+
+[
+
+List Vouchers
+
+](/v3/oauth/vouchers#list-vouchers)[
+
+List Collectable Rewards
+
+](/v3/oauth/collectable-rewards#list-collectable-rewards)
+
+[
+
+Go to checkout
+
+](/v3/tutorials/order-at-table#oat-order-success)
+
+API endpoint
+
+[
+
+Create and Process Order
+
+](/v3/oauth/orders#create-and-process-order)[
+
+Redeem Voucher
+
+](/v3/oauth/vouchers#redeem-voucher)[
+
+Collect Collectable Reward
+
+](/v3/oauth/collectable-rewards#collect-reward)
+
+[
+
+Back to menu
+
+](/v3/tutorials/order-at-table#oat-menu-logged-in)
+
+5
+
+#### Finalising the Order
+
+The basket shows all items including any applied offers. Customers can still add more offers before checking out.
+
+**Basket Display:**
+
+-   Show original price crossed out for discounted items
+-   Display the offer name that was applied
+-   Keep offers section visible for additional redemptions
+-   Show updated total reflecting all discounts
+
+6
+
+#### Order Successful
+
+After successful payment, show the customer how many points they earned from their order.
+
+LOGO
+
+### Order successful
+
+Your order was successfully processed, we're preparing it right away.
+
+Points earned:
+
++18
+
+API endpoint
+
+[
+
+Create and Process Order
+
+](/v3/oauth/orders#create-and-process-order)
+
+[
+
+Back to menu
+
+](/v3/tutorials/order-at-table#oat-menu-start)
+
+6
+
+#### Order Successful
+
+After successful payment, show the customer how many points they earned from their order.
+
+The response from the [Create and Process Order](/v3/oauth/orders#create-and-process-order) endpoint includes the points earned, which you can display to the customer.
+
+Make sure to call [Redeem Voucher](/v3/oauth/vouchers#redeem-voucher) and/or [Collect Collectable Reward](/v3/oauth/collectable-rewards#collect-reward) after successful payment to finalize any applied offers.
+
+When creating Orders, the best practice is to create the Order as completely as you can. This includes linking Products and any Leat-actions that may have been undertaken in the Order process (e.g. Reward Redemptions, Voucher Redemptions, Giftcard Transactions etc.). Some best practices to take into account:
+
+-   `external_identifier:` This is the main identifier from your system, usually a UUID or GUID or some other. It's imperative this is unique across all Orders.
+-   `order_amount, total_order_amount, total_discount_amount:` These are mainly for visual and reference purposes. When Orders are using in Order Actions (to make Points Transactions, for instance), these values will be largely ignored. To account for product-specific exclusions and rules, the order amounts used in calculations and actions will be calculated using the line items, charges and discounts. Still, please ensure these match the content to prevent any confusion.
+-   `line_items.external_identifier:` This is the unique identifier of this line item. Another line item of the same product should have their own unique identifier.
+-   `line_items.total_amount:` The total amount of a line items ought to be the line items' price times the quantity, minus the discount amount. The total amount does not include the total amounts of any sub line items. They are counted separately.
+-   `line_items.product:` For a host of features in Leat, it's imperative the product is linked (if present). The external identifier counts as the main unique identifier of the product, which is of course static for the same product across multiple line items and orders. If no product yet exists for the external identifier, one will be created. However, to fully enable the Product filtering feature, it's highly recommended to create the entire [product library](/v3/oauth/products#create-product), including [categories](/v3/oauth/categories#create-category), upon integration installation.
+-   `line_items.sub_line_items:` Line items may include sub line items, like modifiers. **Note:** the total amounts of the sub line items count separately from the line item's total amount. Example: a line item for a 'Pizza Margherita' with a total amount of 1200 ($12) may include a sub line item for 'Extra Cheese' with a total amount of 100 ($1), which would bring the total order amount to 1600 ($16). The $1 from the sub line item is _not_ included in the total amount on the parent line item. Sub line items are to be linked to products in the same way as their parent line items.
+-   `line_items.result:` This is the 'Leat result' of this line item, if any exists. Examples of this is when a customer buys a Gift card or a Voucher. This would be reflected as a line item on the Order and the resulting Giftcard Transaction (usually created after payment has succeeded) can be linked as a result. Highly recommended to link if present.
+-   `applied_discounts:` If one or more discounts have been applied to the order, these should be added here. Discounts are either applied on an Order level, or on a (Sub)Line Item level. In the latter, the applied discount should also be reflected in the discount amount on the individual (sub) line item(s).
+-   `applied_discounts:` If one or more discounts have been applied to the order, these should be added here. Discounts are either applied on an Order level, or on a (Sub)Line Item level. In the latter, the applied discount should also be reflected in the discount amount on the individual (sub) line item(s) and/or charges. In such a case, the specific items should also be linked to the discount via the line items, sub line items and charges parameters.
+-   `applied_discounts.offer:` If the applied discount was the result of a Leat offer (e.g. Reward Redemption, Voucher Redemption etc.), this offer should be added to the discount. Highly recommended to link if present.
+-   `charges:` Charges are costs that are applied after (sub) line items. Examples include gratuity, service charges, shipping, wrapping or taxes (all of these are default Charge Definitions). In the case of taxes, there are only a few use cases in which taxes are to be included as separate charges. Most often, it's preferable to include them in the line items price instead of as separate charges. Charge Definitions are what Products are to Line Items.
+-   `payments:` Currently, only Leat-specific payments can be added here. Payment methods like credit card or cash are not to be sent in. If (part of) the order was paid using Leat payment methods (Giftcards, Prepaid), these should be linked here.
+
+If you have any questions about Orders, please reach out to your partnership manager or contact us at dev@leat.com.
+
+Applying discounts to the order is often the most complex part of the integration. To enable your Order at Table system to handle this correctly, you'll need to create custom attributes that define the discount logic.
+
+**Important:** Custom attributes must be created on the correct entity:
+
+-   **For Rewards:** Create custom attributes on the **Rewards** entity
+-   **For Vouchers:** Create custom attributes on the **Promotions** entity (the parent of Vouchers)
+
+**Common custom attributes:**
+
+-   `discount_type` - Dropdown: _percentage_discount_, _absolute_discount_, or _free_item_
+-   `discount_value` - Number field (e.g., 100 for 100% off = free item, or 5 for €5 off)
+-   `product_code` - SKU of the specific product
+-   `category` - If the reward applies to any product in a category
+
+When an order is cancelled or returned, you'll need to correct the loyalty data. This involves correcting issued points and reversing any redeemed vouchers.
+
+##### 1. Correcting Issued Points
+
+Use the [Create and Process Order Return](/v3/oauth/order-returns#create-and-process-order-return) endpoint to subtract points that were originally awarded.
+
+##### 2. Reversing Redeemed Vouchers
+
+Use [Reverse Voucher Redemption](/v3/oauth/vouchers#reverse-voucher-redemption) to restore the voucher to its original state.
