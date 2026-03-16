@@ -1,0 +1,33 @@
+{
+  "title": "Register API",
+  "pages": [
+    "index",
+    "--- Contacts ---",
+    "contacts",
+    "contact",
+    "contact-identifiers",
+    "contact-subscriptions",
+    "contact-attributes",
+    "--- Loyalty ---",
+    "loyalty-program",
+    "loyalty-tokens",
+    "loyalty-transaction-attributes",
+    "credit-receptions",
+    "rewards",
+    "reward-receptions",
+    "reward-attributes",
+    "--- Promotions & Vouchers ---",
+    "promotions",
+    "promotion-attributes",
+    "vouchers",
+    "--- Giftcard & Prepaid ---",
+    "giftcards",
+    "giftcard-transactions",
+    "prepaid-transactions",
+    "--- Portal Sessions ---",
+    "portal-sessions",
+    "--- Other ---",
+    "subscription-types",
+    "pos-transactions"
+  ]
+}
