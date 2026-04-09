@@ -112,11 +112,11 @@ What you call your loyalty credits, such as "Points," "Stars," or "Coins." This 
 
 ### Credits balance format
 
-The message that shows a customer how far along they are toward a reward. Supports the placeholders `{{ credits }}`, `{{ credits_currency }}`, and `{{ credits_required }}`. Default is "You have {{ credits }} {{ credits_currency }} out of {{ credits_required }}."
+The message that shows a customer how far along they are toward a reward. Supports the placeholders `{{ credits }}`, `{{ credits_currency }}`, and `{{ credits_required }}`. Default is "You have `{{ credits }}` `{{ credits_currency }}` out of `{{ credits_required }}`."
 
 ### Title (logged in)
 
-The heading shown at the top of the dashboard for a logged-in customer. Supports `{{ credits }}` and `{{ credits_currency }}`. Default is "You have {{ credits }} {{ credits_currency }}."
+The heading shown at the top of the dashboard for a logged-in customer. Supports `{{ credits }}` and `{{ credits_currency }}`. Default is "You have `{{ credits }}` `{{ credits_currency }}`."
 
 ### Title (logged out)
 
@@ -168,7 +168,7 @@ Each dashboard section has a navigation label you can customize:
 
 | Setting | Default |
 |---|---|
-| Earn navigation item | Earn {{ credits_currency }} |
+| Earn navigation item | Earn &#123;&#123; credits_currency &#125;&#125; |
 | Rewards navigation item | Rewards |
 | Coupons navigation item | Your coupons |
 | Activity navigation item | Your activity |
@@ -262,7 +262,7 @@ Every piece of text shown during the gift card checkout experience can be custom
 | Checking balance text | Checking gift card balance... |
 | Success message | Gift card applied successfully! |
 | Applied gift cards section title | Applied gift cards: |
-| Balance text | Balance: {{ balance }} |
+| Balance text | Balance: &#123;&#123; balance &#125;&#125; |
 | Invalid code message | Please enter a valid gift card code |
 | Not found message | Gift card not found |
 | No balance message | Gift card has no balance |
