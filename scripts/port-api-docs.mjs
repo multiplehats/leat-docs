@@ -177,6 +177,15 @@ td.addRule('button', {
   replacement: () => '',
 });
 
+// Skip data-md-table divs entirely — they contain pre-built markdown
+// that we'll extract in post-processing (the mdTablePlaceholder approach)
+td.addRule('mdTable', {
+  filter: (node) =>
+    node.nodeName === 'DIV' &&
+    node.getAttribute('data-md-table') === 'true',
+  replacement: () => '\n\n<!-- MD_TABLE_PLACEHOLDER -->\n\n',
+});
+
 // Handle fenced code blocks with language class
 td.addRule('fencedCodeBlock', {
   filter: (node) =>
@@ -193,7 +202,7 @@ td.addRule('fencedCodeBlock', {
 });
 
 // ---------------------------------------------------------------------------
-// Post-processing helpers
+// Post-processing helpers (markdown-level)
 // ---------------------------------------------------------------------------
 
 /**
@@ -217,108 +226,175 @@ function fixInternalLinks(body) {
     .replace(/\(https:\/\/docs\.leat\.com\/v3\//g, '(/api-reference/');
 }
 
+// ---------------------------------------------------------------------------
+// HTML-level preprocessing helpers (run BEFORE Turndown conversion)
+// ---------------------------------------------------------------------------
+
 /**
- * Cleans up tutorial pages (pos, kiosk, order-at-table) that contain
- * interactive UI previews which don't scrape well.
+ * Strips interactive POS/kiosk/order-at-table preview elements from tutorial
+ * page HTML before Turndown conversion.
  *
- * Removes:
- * - Duplicate sections (the interactive preview copies)
- * - Orphaned standalone numbers ("1", "2", "3" on their own line)
- * - Fake UI elements (cart items, button links pointing to anchors on the same page)
+ * The source site uses a two-column layout at the 2xl breakpoint:
+ *   - Left: an interactive POS preview (fake cart, buttons, etc.)
+ *   - Right: the actual explanatory text (div.grow.max-w-2xl)
  *
- * Applied to pages in the 'tutorials' section (except migrate-to-v3).
+ * At smaller breakpoints, duplicate headings marked with "2xl:hidden" appear
+ * so mobile users see the heading above the preview. The "hidden 2xl:block"
+ * version is the one inside the text column (shown only on wide screens).
+ *
+ * This function:
+ *   1. Removes the interactive preview containers (the scaled POS mockups)
+ *   2. Removes the mobile-only duplicate headings (2xl:hidden)
+ *   3. Unhides the desktop headings (hidden 2xl:block)
+ *   4. Removes "Try it:" callout boxes (they reference the interactive UI)
+ *   5. Removes tab switcher UI (camera/barcode/keyboard toggle pills)
  */
-function cleanTutorialPage(body) {
-  const lines = body.split('\n');
-  const cleaned = [];
-
-  // Track headings we've already seen to detect duplicate sections
-  const seenHeadings = new Set();
-  let skipUntilNextHeading = false;
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    // Remove orphaned standalone numbers (from step indicators in interactive previews)
-    if (/^\d{1,2}$/.test(trimmed)) {
+function cleanTutorialHtml(root) {
+  // 1. Remove interactive preview containers.
+  //    POS pages: scaled mock screens with classes like "origin-top-left scale-50"
+  //              inside wrappers like "w-[18rem] h-48 sm:w-[27rem]"
+  //    Kiosk/OAT pages: mockup containers with "w-[20rem]" and rounded-xl styling
+  for (const div of root.querySelectorAll('div')) {
+    const cls = div.getAttribute('class') || '';
+    // POS: outer sizing wrapper
+    if (/w-\[18rem\].*h-48/.test(cls) || /w-\[27rem\]/.test(cls)) {
+      div.remove();
       continue;
     }
-
-    // Remove fake UI cart items and anchor-only button links
-    // e.g. [Add to cart](#) or [Button Text](#some-anchor)
-    if (/^\[.*\]\(#[^)]*\)\s*$/.test(trimmed)) {
+    // POS: inner scaled container
+    if (/origin-top-left/.test(cls) && /scale-/.test(cls)) {
+      div.remove();
       continue;
     }
-
-    // Detect duplicate heading sections
-    const headingMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
-    if (headingMatch) {
-      const headingText = headingMatch[2].trim();
-      if (seenHeadings.has(headingText)) {
-        // This is a duplicate section — skip until next heading of same or higher level
-        skipUntilNextHeading = true;
-        continue;
-      }
-      seenHeadings.add(headingText);
-
-      if (skipUntilNextHeading) {
-        skipUntilNextHeading = false;
-      }
-    }
-
-    if (skipUntilNextHeading) {
+    // Kiosk/Order-at-Table: mockup container (fixed-width rounded panel)
+    // Kiosk uses w-[20rem] rounded-xl, OAT uses w-[14rem] rounded-[2rem]
+    if (/w-\[\d+rem\]/.test(cls) && /rounded-/.test(cls) && /bg-white/.test(cls) && /border/.test(cls)) {
+      div.remove();
       continue;
     }
-
-    cleaned.push(line);
   }
 
-  return cleaned.join('\n')
-    // Collapse excessive blank lines left by removals
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
+  // 2. Remove mobile-only duplicate headings (class contains "2xl:hidden")
+  for (const div of root.querySelectorAll('div')) {
+    const cls = div.getAttribute('class') || '';
+    if (/\b2xl:hidden\b/.test(cls)) {
+      div.remove();
+    }
+  }
+
+  // 3. Unhide desktop-only headings (class contains "hidden 2xl:block")
+  //    by removing the "hidden" class so Turndown sees them
+  for (const div of root.querySelectorAll('div')) {
+    const cls = div.getAttribute('class') || '';
+    if (/\bhidden\b/.test(cls) && /\b2xl:block\b/.test(cls)) {
+      div.setAttribute('class', cls.replace(/\bhidden\b/, '').replace(/\b2xl:block\b/, ''));
+    }
+  }
+
+  // 4. Remove "Try it:" callout boxes — they reference the interactive preview
+  //    which won't exist in the docs. These are divs with bg-method-post/put
+  //    containing text starting with "Try it:"
+  for (const div of root.querySelectorAll('div')) {
+    const cls = div.getAttribute('class') || '';
+    if (/bg-method-(post|put|get)/.test(cls) && /border.*rounded/.test(cls)) {
+      const text = div.textContent || '';
+      if (/Try it:/i.test(text)) {
+        div.remove();
+      }
+    }
+  }
+
+  // 5. Remove interactive tab switchers (camera/barcode/keyboard toggle pills)
+  //    These are flex containers with divide-method-* classes containing buttons
+  for (const div of root.querySelectorAll('div')) {
+    const cls = div.getAttribute('class') || '';
+    if (/divide-method-/.test(cls) && /rounded-full/.test(cls)) {
+      // Go up one level to remove the centering wrapper too
+      const parent = div.parentNode;
+      if (parent && /flex.*justify-center/.test(parent.getAttribute('class') || '')) {
+        parent.remove();
+      } else {
+        div.remove();
+      }
+    }
+  }
+
+  return root;
 }
 
 /**
- * Cleans up the error-handling page where error code tables get scraped
- * with everything incorrectly wrapped in backticks.
+ * Converts the error-handling page's custom flex-based error list into a
+ * proper HTML <table> before Turndown conversion.
  *
- * Applied when outputPath matches 'getting-started/error-handling.mdx'.
+ * The source HTML uses this structure for each error:
+ *   <div class="flex mb-5">
+ *     <div class="w-32 min-w-[8rem]">
+ *       <code ...>7002</code>
+ *     </div>
+ *     <div class="error-middle-column">
+ *       <span class="error-values">Account inactive.</span>
+ *     </div>
+ *   </div>
+ *
+ * There's also a header row using <p class="error-keys">.
+ *
+ * This converts the whole collapsible "Possible errors" section into a
+ * markdown-friendly <table>.
  */
-function cleanErrorHandlingPage(body) {
-  // Fix rows where the entire cell content is wrapped in backticks
-  // e.g. | `400` | `Bad Request` | `The request was invalid` |
-  // should be: | 400 | Bad Request | The request was invalid |
-  // But keep actual code values (like error codes) in backticks.
+function cleanErrorHandlingHtml(root) {
+  // Find the collapsible container with error rows.
+  // The errors live inside a div with class "invisible opacity-0 h-0" (collapsed state).
+  // We need to extract them and make them visible.
+  for (const div of root.querySelectorAll('div')) {
+    const cls = div.getAttribute('class') || '';
+    if (!cls.includes('invisible')) continue;
 
-  // Remove backticks wrapping plain English phrases in table cells
-  // Match table rows and selectively clean them
-  body = body.replace(/\|([^|]*)\|/g, (match, cell) => {
-    // Remove backticks from cells that contain full English descriptions
-    // (more than 2 words or containing spaces)
-    const trimmed = cell.trim();
-    if (/^`[^`]+`$/.test(trimmed)) {
-      const inner = trimmed.slice(1, -1);
-      // Keep backticks for: HTTP status codes, error code strings, URLs, paths
-      if (/^\d{3}$/.test(inner) || /^[A-Z_]+$/.test(inner) || inner.startsWith('/') || inner.startsWith('http')) {
-        return match; // keep backticks for code-like values
-      }
-      // Remove backticks from descriptive text
-      if (inner.includes(' ') && inner.length > 10) {
-        return `| ${inner} |`;
+    // Check if this div contains error rows
+    const errorRows = div.querySelectorAll('div.flex.mb-5');
+    if (errorRows.length === 0) continue;
+
+    // Build a markdown table as plain text.
+    // We wrap it in a div so Turndown passes it through as raw HTML,
+    // then we'll unwrap the markdown in post-processing.
+    const mdRows = [];
+    mdRows.push('| Code | Message |');
+    mdRows.push('|------|---------|');
+
+    for (const row of errorRows) {
+      const codeEl = row.querySelector('code');
+      const messageEl = row.querySelector('span.error-values') || row.querySelector('span');
+      const code = codeEl ? codeEl.textContent.trim() : '';
+      const message = messageEl ? messageEl.textContent.trim() : '';
+      if (code || message) {
+        // Escape pipe characters in message text
+        const escapedMessage = message.replace(/\|/g, '\\|');
+        mdRows.push(`| \`${code}\` | ${escapedMessage} |`);
       }
     }
-    return match;
-  });
 
-  // Fix cases where backtick-wrapped content spans create broken markdown
-  // e.g. ``code`` → `code`
-  body = body.replace(/``([^`]+)``/g, '`$1`');
+    const mdTable = mdRows.join('\n');
 
-  // Fix empty backtick pairs
-  body = body.replace(/`\s*`/g, '');
+    // Store the table for post-processing replacement
+    root._mdTableContent = mdTable;
 
-  return body;
+    // Replace the entire wrapper with a placeholder that Turndown will pass through
+    const wrapper = div.parentNode;
+    if (wrapper) {
+      wrapper.replaceWith(parse(`<div data-md-table="true">MD_TABLE_PLACEHOLDER</div>`));
+    } else {
+      div.replaceWith(parse(`<div data-md-table="true">MD_TABLE_PLACEHOLDER</div>`));
+    }
+  }
+
+  // Also remove the "cursor-pointer" accordion button if it still exists
+  for (const btn of root.querySelectorAll('button')) {
+    const cls = btn.getAttribute('class') || '';
+    if (cls.includes('cursor-pointer') && /Possible errors/i.test(btn.textContent)) {
+      btn.remove();
+    }
+  }
+
+  return root;
 }
 
 // ---------------------------------------------------------------------------
@@ -380,8 +456,13 @@ function decodeEntities(str) {
  * Cleans up a raw HTML string before Turndown:
  * - Fixes broken internal hrefs (e.g. /v3https://...)
  * - Fixes react-syntax-highlighter code blocks (strips line numbers, wraps in <pre>)
+ *
+ * @param {string} html - Raw HTML string
+ * @param {object} [opts] - Options
+ * @param {boolean} [opts.isTutorial] - Whether this is a tutorial page with interactive previews
+ * @param {boolean} [opts.isErrorHandling] - Whether this is the error-handling page
  */
-function cleanHtml(html) {
+function cleanHtml(html, opts = {}) {
   // Fix malformed hrefs like /v3https://...
   html = html.replace(/href="\/v3https?:\/\//g, 'href="https://');
 
@@ -438,14 +519,27 @@ function cleanHtml(html) {
     btn.remove();
   }
 
-  return root.toString();
+  // --- Page-specific HTML preprocessing ---
+
+  if (opts.isTutorial) {
+    cleanTutorialHtml(root);
+  }
+
+  if (opts.isErrorHandling) {
+    cleanErrorHandlingHtml(root);
+  }
+
+  return { html: root.toString(), mdTableContent: root._mdTableContent || null };
 }
 
 /**
  * Converts a section element into Markdown.
  * Handles both prose sections and API endpoint sections.
+ *
+ * @param {object} sectionEl - Parsed HTML element
+ * @param {object} [cleanHtmlOpts] - Options passed through to cleanHtml
  */
-function sectionToMarkdown(sectionEl) {
+function sectionToMarkdown(sectionEl, cleanHtmlOpts = {}) {
   // Remove anchor div used for deep linking (e.g. <div id="list-contact" …>)
   for (const anchor of sectionEl.querySelectorAll('div[id]')) {
     if (!anchor.querySelector('h1,h2,h3,h4,h5,h6,p,ul,ol')) {
@@ -458,8 +552,13 @@ function sectionToMarkdown(sectionEl) {
     related.remove();
   }
 
-  const rawHtml = cleanHtml(sectionEl.innerHTML);
+  const { html: rawHtml, mdTableContent } = cleanHtml(sectionEl.innerHTML, cleanHtmlOpts);
   let md = td.turndown(rawHtml);
+
+  // Replace markdown table placeholder with actual table content
+  if (mdTableContent) {
+    md = md.replace(/<!-- MD_TABLE_PLACEHOLDER -->/g, mdTableContent);
+  }
 
   // Clean up artefacts
   md = md
@@ -472,8 +571,12 @@ function sectionToMarkdown(sectionEl) {
 
 /**
  * Converts a full page DOM to frontmatter + MDX body.
+ *
+ * @param {string} pageTitle - The page title for frontmatter
+ * @param {object} innerEl - Parsed HTML element
+ * @param {object} [cleanHtmlOpts] - Options passed through to cleanHtml
  */
-function pageToMdx(pageTitle, innerEl) {
+function pageToMdx(pageTitle, innerEl, cleanHtmlOpts = {}) {
   // Remove the page heading if it duplicates the frontmatter title
   const titleEl = innerEl.querySelector('h2.title, h1.title');
   if (titleEl) titleEl.remove();
@@ -486,16 +589,19 @@ function pageToMdx(pageTitle, innerEl) {
     // Structured page with <section> blocks
     const parts = [];
     for (const sec of sections) {
-      const md = sectionToMarkdown(sec);
+      const md = sectionToMarkdown(sec, cleanHtmlOpts);
       if (md) parts.push(md);
     }
     body = parts.join('\n\n---\n\n');
   } else {
     // Fallback: convert whatever is in the inner div
-    const rawHtml = cleanHtml(innerEl.innerHTML);
+    const { html: rawHtml, mdTableContent } = cleanHtml(innerEl.innerHTML, cleanHtmlOpts);
     body = td.turndown(rawHtml)
       .replace(/\n{3,}/g, '\n\n')
       .trim();
+    if (mdTableContent) {
+      body = body.replace(/<!-- MD_TABLE_PLACEHOLDER -->/g, mdTableContent);
+    }
   }
 
   // Remove the "Related" block at the very bottom of the body
@@ -718,23 +824,20 @@ async function main() {
     try {
       const html = await fetchPage(fullUrl);
       const innerEl = extractMain(html);
-      let mdx = pageToMdx(page.title, innerEl);
 
-      // --- Post-processing ---
+      // Determine which HTML-level preprocessing to apply
+      const interactiveTutorials = ['tutorials/pos', 'tutorials/kiosk', 'tutorials/order-at-table'];
+      const cleanHtmlOpts = {
+        isTutorial: page.section === 'tutorials' && interactiveTutorials.some((t) => page.outputPath.includes(t)),
+        isErrorHandling: page.outputPath === 'getting-started/error-handling.mdx',
+      };
+
+      let mdx = pageToMdx(page.title, innerEl, cleanHtmlOpts);
+
+      // --- Post-processing (markdown-level) ---
 
       // Fix internal links on all pages
       mdx = fixInternalLinks(mdx);
-
-      // Clean up tutorial pages with interactive UI previews
-      const interactiveTutorials = ['tutorials/pos', 'tutorials/kiosk', 'tutorials/order-at-table'];
-      if (page.section === 'tutorials' && interactiveTutorials.some((t) => page.outputPath.includes(t))) {
-        mdx = cleanTutorialPage(mdx);
-      }
-
-      // Fix error table scraping on the error-handling page
-      if (page.outputPath === 'getting-started/error-handling.mdx') {
-        mdx = cleanErrorHandlingPage(mdx);
-      }
 
       if (DRY_RUN) {
         console.log(`[dry-run] Would write ${outFile.replace(ROOT + '/', '')}`);

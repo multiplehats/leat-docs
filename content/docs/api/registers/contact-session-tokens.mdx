@@ -1,0 +1,78 @@
+---
+title: "Contact Session Tokens"
+description: "Find a Contact's Session Token to identify and validate them."
+---
+
+### Find Contact Session Token
+
+Find a Contact's Session Token to identify and validate them.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contact-session-tokens/{{contact_session_token}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": {
+        "token": "12345abcdefg",
+        "contact": {
+            "uuid": "123abc-def789-qwerty-34567"
+            "email": "spongebob@bikinibottom.sea
+        },
+        "status": "active",
+    },
+    "meta": []
+}
+```
+
+---
+
+### Use Contact Session Token
+
+Mark a session token as used, making it invalid for next attempts.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//contact-session-tokens/{{contact_session_token}}/use
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": {
+        "token": "12345abcdefg",
+        "contact": {
+            "uuid": "123abc-def789-qwerty-34567",
+            "email": "spongebob@bikinibottom.sea
+        },
+        "status": "used",
+    },
+    "meta": []
+}
+```

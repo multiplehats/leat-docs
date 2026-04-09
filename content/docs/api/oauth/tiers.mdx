@@ -1,0 +1,104 @@
+---
+title: "Tiers"
+description: "You can now offer your Contacts an extra bonus by using Tiers. Tiers allow you to automatically assign Contacts a certain status. For example, consider Bronze, "
+---
+
+## Tiers
+
+You can now offer your Contacts an extra bonus by using Tiers. Tiers allow you to automatically assign Contacts a certain status. For example, consider Bronze, Silver and Gold as Tiers, where a higher total credits received or number of transactions leads to a higher Tier. You can then apply alternative loyalty rules that apply to a specific Tiers.
+
+---
+
+### List Tiers
+
+This API call fetches a list of all Tiers available in your Loyalty Program. It's a handy way to view the different status levels that Contacts can achieve.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//tiers
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "name": "Krusty Krew",
+            "description": "Krusty Krew Members only",
+            "position": 1,
+            "media": null,
+            "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839"
+        }
+    ],
+    "meta": []
+}
+```
+
+---
+
+### Get Tier
+
+Use this endpoint to retrieve the current loyalty Tier of a specific Contact. It’s useful for understanding a Contact's loyalty status and offering them tailored Rewards based on their Tier.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/{{contact_uuid}}/tier
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+The Contact's UUID from whom you want to retrieve the Tier.
+
+Response Example
+
+```json
+{
+    "data": {
+        "name": "Krusty Krew",
+        "description": "Krusty Krew Members only",
+        "position": 1,
+        "media": null,
+        "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.

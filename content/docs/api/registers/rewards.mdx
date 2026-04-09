@@ -1,0 +1,267 @@
+---
+title: "Rewards"
+description: "Once end-users have saved up enough credits at a certain Loyalty Program, they can use those credits to redeem Rewards. These Rewards can be accessed through ou"
+---
+
+Once end-users have saved up enough credits at a certain Loyalty Program, they can use those credits to redeem Rewards. These Rewards can be accessed through our API, which allows listing of available Rewards at a specific Shop or for a specific Contact. If claimable Rewards are found for a Contact, they can be redeemed through Reward Receptions.
+
+---
+
+### List Rewards
+
+This API endpoint is used to list Rewards available for to be shown in-store or to list Rewards that a specific Contact can claim, with potentially a subsequent Create Reward Reception call when a Contact claims a Reward. The list of Rewards for a particular Contact might differ from the full list of Rewards.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//rewards
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``number`
+
+`REQUIRED`
+
+The Contact's UUID
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "uuid": "6bfe1e50-b13a-49ab-85c9-98cd8b734da2",
+            "title": "Jellyfish Net",
+            "type": "DIGITAL",
+            "is_active": true,
+            "reward_type": "DIGITAL",
+            "description": "Help save the jellyfish",
+            "required_credits": 25,
+            "media": {
+                "type": "image",
+                "value": "https://images.unsplash.com/photo-1565945887714-d5139f4eb0ce"
+            },
+            "custom_attribute_one": "ABC",
+            "custom_attribute_two": "123"
+        },
+        {
+            "id": 2,
+            "uuid": "bcd51b4b-88be-4a5d-b658-0e59dc1dabbc",
+            "title": "Krabby Patty",
+            "type": "PHYSICAL",
+            "is_active": true,
+            "reward_type": "PHYSICAL",
+            "description": "Choice between Kelp Shake, Coral Bits or Barnacle Chips",
+            "required_credits": 50,
+            "media": {
+                "type": "image",
+                "value": "https://images.unsplash.com/photo-1565945887714-d5139f4eb0ce"
+            },
+            "custom_attribute_one": "DEF",
+            "custom_attribute_two": "456",
+            "pre_redeemable": false,
+            "expiration_duration": null
+        },
+        {
+            "id": 3,
+            "uuid": "539483d0-fab4-40db-add5-2ec65ef12901",
+            "title": "Kelp Shake Deluxe",
+            "type": "PHYSICAL",
+            "is_active": true,
+            "reward_type": "PHYSICAL",
+            "description": "Choice between Kelp Fries, Coral Shake or Seaweed Salad",
+            "required_credits": 75,
+            "media": {
+                "type": "image",
+                "value": "https://images.unsplash.com/photo-1565945887714-d5139f4eb0ce"
+            },
+            "custom_attribute_one": "GHI",
+            "custom_attribute_two": "789",
+            "pre_redeemable": true,
+            "expiration_duration": 6307200
+        },
+        {
+            "id": 4,
+            "uuid": "31909cd8-a078-49a9-a7e1-aa95aa9e8c4d",
+            "title": "Krusty Krab Hat",
+            "type": "PHYSICAL",
+            "is_active": true,
+            "reward_type": "PHYSICAL",
+            "description": "Size: Small Fry/Regular/Krabby/Super-Sized",
+            "required_credits": 150,
+            "media": {
+                "type": "image",
+                "value": "https://images.unsplash.com/photo-1565945887714-d5139f4eb0ce"
+            },
+            "custom_attribute_one": "JKL",
+            "custom_attribute_two": "012",
+            "pre_redeemable": false,
+            "expiration_duration": null
+        }
+    ],
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`1008`
+
+Shop not found.
+
+`55031`
+
+Contact not found.
+
+---
+
+### Get Reward
+
+Retrieve a specific Reward by specifying its UUID.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//rewards/{{reward_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`reward_uuid``string`
+
+`REQUIRED`
+
+The UUID of the Reward you want to retrieve.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "539483d0-fab4-40db-add5-2ec65ef12901",
+        "title": "Krabby Patty",
+        "description": null,
+        "cost_price": null,
+        "required_credits": 2,
+        "media": {
+            "type": "image",
+            "value": "http://localhost:8001/storage/accounts/ea8b731d-9db1-4deb-8e12-e0d9d89b194e/uploads/1699885865/conversions/300x200.jpg"
+        },
+        "is_active": true,
+        "active": true,
+        "reward_type": "PHYSICAL",
+        "stock": null,
+        "example_attribute": "custom attributes for rewards are included like this"
+    },
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`6003`
+
+Reward not found.
+
+---
+
+### Update Reward
+
+You can modify both global values and custom Reward Attributes. If you need to update a custom attribute—one that you've created specifically for a Reward—simply include it in the parameters, just as you would with the title, description, and required credits.
+
+**PUT**
+
+```text
+https://api.piggy.eu/api//rewards/{{reward_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`title``string`
+
+`OPTIONAL`
+
+A new title for the Reward.
+
+`description``string`
+
+`OPTIONAL`
+
+A new description for the Reward.
+
+`required_credits``number`
+
+`OPTIONAL`
+
+Number of credits required to claim this Reward.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "539483d0-fab4-40db-add5-2ec65ef12901",
+        "title": "Krabby Patty",
+        "description": null,
+        "cost_price": null,
+        "required_credits": 2,
+        "media": {
+            "type": "image",
+            "value": "http://localhost:8001/storage/accounts/ea8b731d-9db1-4deb-8e12-e0d9d89b194e/uploads/1699885865/conversions/300x200.jpg"
+        },
+        "is_active": true,
+        "active": true,
+        "reward_type": "PHYSICAL",
+        "stock": null,
+    },
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`6003`
+
+Reward not found.

@@ -1,0 +1,345 @@
+---
+title: "Webhooks"
+description: "Lists an Account's current Webhook Subscriptions."
+---
+
+### List Webhook Subscriptions
+
+Lists an Account's current Webhook Subscriptions.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//webhook-subscriptions
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`event_type``string`
+
+`OPTIONAL`
+
+Only retrieve Webhook Subscription of a specific event type (options: see available webhook event types).
+
+`status``string`
+
+`OPTIONAL`
+
+Only retrieve Webhook Subscription of a specific status (options: ACTIVE, INACTIVE).
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "uuid": "f1dc2d67-caa8-4919-a537-66491a94ed2f",
+            "name": "New Krusty Krew Member",
+            "event_type": "contact_created",
+            "url": "http://api.example.com/piggy/webhooks",
+            "status": "ACTIVE",
+            "version": "V1",
+            "created_at": "2023-10-20T11:46:22+00:00"
+        },
+        {
+            "uuid": "5062eeac-bbeb-4903-b81e-2422793ff151",
+            "name": "Krabby Patty Special Updated",
+            "event_type": "promotion_updated",
+            "url": "http://api.example.com/piggy/webhooks",
+            "status": "ACTIVE",
+            "version": "V1",
+            "created_at": "2023-10-20T11:48:43+00:00"
+        },
+        {
+            "uuid": "33ee3999-4230-4e3e-b320-cbcbe719bc45",
+            "name": "Friend Brought to Krusty Krab",
+            "event_type": "referral_completed",
+            "url": "http://api.example.com/piggy/webhooks",
+            "status": "INACTIVE",
+            "version": "V1",
+            "created_at": "2023-10-20T11:49:19+00:00"
+        },
+    ],
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+---
+
+### Create Webhook Subscription
+
+Subscribes to a specific Webhook event.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//webhook-subscriptions
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Body
+
+`name``string`
+
+`REQUIRED`
+
+A name given to the subscription for internal purposes.
+
+`event_type``string`
+
+`REQUIRED`
+
+The event type to listen to, can only choose from available event types.
+
+`url``string`
+
+`REQUIRED`
+
+The endpoint to which webhook data is to be sent.
+
+`secret``string`
+
+`OPTIONAL`
+
+The event type to listen to, can only choose from available event types.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "59165ef0-1afd-4baf-b1f7-ffee287aff32",
+        "name": "New Krusty Krew Member",
+        "event_type": "contact_created",
+        "url": "http://api.example.com/piggy/webhooks",
+        "status": "ACTIVE",
+        "version": "V1",
+        "created_at": "2023-11-13T12:32:43+00:00"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+---
+
+### Get Webhook Subscription
+
+Retrieve a specific Webhook Subscription by specifying its UUID.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//webhook-subscriptions/{{webhook_subscription_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`webhook_subscription_uuid``string`
+
+`REQUIRED`
+
+The UUID of the Webhook Subscription you want to retrieve.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "59165ef0-1afd-4baf-b1f7-ffee287aff32",
+        "name": "Bikini Bottom Alert",
+        "event_type": "contact_created",
+        "url": "http://yourwebsite.com/somethingsomething",
+        "properties": [],
+        "status": "ACTIVE",
+        "version": "V1",
+        "created_at": "2023-11-13T12:32:43+00:00"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`80300`
+
+Webhook subscription not found.
+
+---
+
+### Update Webhook Subscription
+
+Updates an existing Webhook Subscription. The subscription's `event_type`and `secret`cannot be altered after creation.
+
+**PUT**
+
+```text
+https://api.piggy.eu/api//webhook-subscriptions/{{webhook_subscription_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`webhook_subscription_uuid``string`
+
+`REQUIRED`
+
+The UUID of the Webhook Subscription you want to update.
+
+Body
+
+`name``string`
+
+`OPTIONAL`
+
+A name given to the subscription for internal purposes.
+
+`url``string`
+
+`OPTIONAL`
+
+The endpoint to which webhook data is to be sent.
+
+`status``string`
+
+`OPTIONAL`
+
+The subscription's status (options: ACTIVE, INACTIVE).
+
+`attributes``array`
+
+`REQUIRED | OPTIONAL`
+
+Required if event_type is contact_updated, array of one or more contact attributes. Optional when event_type is not contact_updated.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "59165ef0-1afd-4baf-b1f7-ffee287aff32",
+        "name": "Updated Bikini Bottom Alert",
+        "event_type": "contact_created",
+        "url": "http://yourwebsite.com/somethingsomething",
+        "properties": [],
+        "status": "ACTIVE",
+        "version": "V1",
+        "created_at": "2023-11-13T12:32:43+00:00"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`80300`
+
+Webhook subscription not found.
+
+---
+
+### Delete Webhook Subscription
+
+Removes an existing Webhook Subscription.
+
+**DELETE**
+
+```text
+https://api.piggy.eu/api//webhook-subscriptions/{{webhook_subscription_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`webhook_subscription_uuid``string`
+
+`REQUIRED`
+
+The UUID of the Webhook Subscription you want to delete.
+
+Response Example
+
+```json
+{
+    "data": [],
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`80300`
+
+Webhook subscription not found.

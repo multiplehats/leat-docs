@@ -1,0 +1,250 @@
+---
+title: "Giftcard Transactions"
+description: "Only physical giftcards can be incremented after their initial incrementation. Digital giftcards can only be incremented once. Giftcards cannot have negative ba"
+---
+
+Only physical giftcards can be incremented after their initial incrementation. Digital giftcards can only be incremented once. Giftcards cannot have negative balances, meaning that giftcards can never be decremented with an amount larger than the current amount stored on the giftcard.
+
+---
+
+### Get Giftcard Transaction
+
+Retrieve details of a specific Giftcard Transaction. By providing the transaction's UUID, you can access comprehensive information about individual transactions, allowing you to see and keep track of Giftcard Transactions, making it easier to manage Giftcards.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//giftcard-transactions/{{giftcard_transaction_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`giftcard_transaction_uuid``string`
+
+`REQUIRED`
+
+The UUID of the Giftcard Transaction that you want to retrieve.
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 2268,
+        "uuid": "9e6426ef-1916-4f3c-a94f-4cf6af4f945b",
+        "amount_in_cents": 5,
+        "type": "STANDARD",
+        "settled": false,
+        "card": {
+            "id": 41592,
+            "uuid": "f12e8cd7-47de-4f6d-bdf3-e282ace87eb0"
+        },
+        "shop": {
+            "id": 15,
+            "uuid": "123123",
+            "name": "Krusty Krab"
+        },
+        "settlements": [],
+        "created_at": "2023-10-09T10:02:43+00:00"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`5010`
+
+Giftcard transaction not found.
+
+---
+
+### Create Giftcard Transaction
+
+This API call facilitates the creation of a transaction for a specific Giftcard. It handles both increment and decrement transactions. A negative amount will trigger a decrementation, adjusting the Giftcard's balance accordingly.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//giftcard-transactions
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Body
+
+`giftcard_uuid``string`
+
+`REQUIRED`
+
+The giftcard UUID.
+
+`amount_in_cents``number`
+
+`REQUIRED`
+
+The amount in cents with which the giftcard is to be incremented or decremented. Positive for incrementation, negative amount for a decrementation.
+
+`custom_attributes``array`
+
+`OPTIONAL`
+
+Additional Custom Attributes as a key-value array.
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 2271,
+        "uuid": "355892c5-6bf7-4167-bae2-3bf2bf44c3dc",
+        "amount_in_cents": -1000,
+        "type": "STANDARD",
+        "settled": false,
+        "card": {
+            "id": 41650,
+            "uuid": "45d7ce10-16cc-4bb7-b37f-e8c4bc553fdf"
+        },
+        "shop": {
+            "id": 15,
+            "uuid": "123123",
+            "name": "Krusty Krab"
+        },
+        "settlements": [],
+        "created_at": "2023-11-12T16:10:15+00:00"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`5006`
+
+Deze giftcard kan niet opgewaardeerd worden. | This giftcard cannot be incremented.
+
+`5008`
+
+Maximale limiet op kaart bereikt. | Max amount will be exceeded.
+
+`5003`
+
+Het bedrag op de kaart is niet toereikend. | Insufficient amount on giftcard.
+
+`5002`
+
+Het bedrag op de kaart is verlopen. | This giftcard has expired.
+
+`1000`
+
+Interne fout. | Internal error.
+
+---
+
+### Reverse Giftcard Transaction
+
+At times, an initial Giftcard Transaction needs to be reversed, because of a refund for instance. This will create a new Giftcard Transaction with the same data as initially used, but for the negative amount issued.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//giftcard-transactions/{{giftcard_transaction_uuid}}/reverse
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`giftcard_transaction_uuid``string`
+
+`REQUIRED`
+
+The UUID of the Giftcard Transaction that is to be reversed.
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 2271,
+        "uuid": "355892c5-6bf7-4167-bae2-3bf2bf44c3dc",
+        "amount_in_cents": -1000,
+        "type": "STANDARD",
+        "settled": false,
+        "card": {
+            "id": 41650,
+            "uuid": "45d7ce10-16cc-4bb7-b37f-e8c4bc553fdf"
+        },
+        "shop": {
+            "id": 15,
+            "uuid": "123123",
+            "name": "Krusty Krab"
+        },
+        "settlements": [],
+        "created_at": "2023-11-12T16:10:15+00:00"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`5010`
+
+Giftcard transaction not found.
+
+`5006`
+
+Deze giftcard kan niet opgewaardeerd worden. | This giftcard cannot be incremented.
+
+`5008`
+
+Maximale limiet op kaart bereikt. | Max amount will be exceeded.
+
+`5003`
+
+Het bedrag op de kaart is niet toereikend. | Insufficient amount on giftcard.
+
+`5002`
+
+Het bedrag op de kaart is verlopen. | This giftcard has expired.
+
+`55025`
+
+This is not the giftcards last transaction.
+
+`1000`
+
+Interne fout. | Internal error.

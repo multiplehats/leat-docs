@@ -1,0 +1,1960 @@
+---
+title: "Contacts"
+description: "Contacts are the end-users of Clients. Contacts are provided with basic attributes, such as an email address, first name, last name, and so forth. Any custom at"
+---
+
+Contacts are the end-users of Clients. Contacts are provided with basic attributes, such as an email address, first name, last name, and so forth. Any custom attributes can also be created, either in the Business Dashboard or via API. Their email address is the standard unique identifier, via which Contacts can be found. Aside from the email address, Contact Identifiers can also be used to find a Contact.
+
+---
+
+### Get Contact
+
+Retrieve a specific Contact with the the using its UUID.
+
+**Please note:** the `attributes` array is now deprecated.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/{{contact_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+The Contact's UUID
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 22,
+        "uuid": "123",
+        "email": "spongebob@bikinibottom.sea",
+        "tier": {
+            "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+            "name": "Krusty Krew",
+            "description": "Krusty Krew Members only",
+            "position": 1,
+            "media": null
+        },
+        "subscriptions": [
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Marketing",
+                    "description": "Subscribe here for marketing purposes",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": "123123123",
+                    "id": 1
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Bikini Bottom Deals",
+                    "description": "A monthly email blast with our best offers!",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": null,
+                    "id": 3
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Events",
+                    "description": "Stay in the loop for all our special events",
+                    "active": true,
+                    "strategy": "OPT_IN",
+                    "uuid": null,
+                    "id": 4
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Krusty Krab News",
+                    "description": "Never miss out on any of our newest features",
+                    "active": true,
+                    "strategy": "OPT_OUT",
+                    "uuid": null,
+                    "id": 5
+                }
+            }
+        ],
+        "credit_balance": {
+            "balance": 1612,
+        },
+        "prepaid_balance": {
+            "balance_in_cents": 2000
+        },
+        "current_values": {
+            "age": null,
+            "city": "Bikini Bottom",
+            "dier": null,
+            "tier": "1",
+            "uuid": "123",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": null,
+            "status": "ACTIVE",
+            "address": "",
+            "channel": null,
+            "lastname": "",
+            "birthdate": null,
+            "firstname": "",
+            "created_at": "2021-10-20T18:06:09+00:00",
+            "postalcode": "9999YZ",
+            "updated_at": "2023-11-06T16:47:00+00:00",
+            "housenumber": 12,
+            "phonenumber": "",
+            "is_anonymous": false,
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": null,
+            "loyalty_balance": 1612,
+            "prepaid_balance": 20,
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Ikh3ZW8yRW9pSU9Gc25SYmxRUFVVWUE9PSIsInZhbHVlIjoianhuYncxVHBlK0dqMTN4RHhXNzdZNVJ3aGJqcERFdmVWQlcxYjFNZVZYSVdoWVVMWk54K1UvQ2lFek1nMmtGaTJZNGRNOG1rUUxwRGNnU25JcitpN0d5RWVKN21kS1gvSmMvNTA2bmxqU0Z0cmxoR2pPT0Ewc1hXeEJsMkVJNGFDQlNlSWpHRXVpWndyd3g3eTVXck90Z0tlL3J2RHNRKzRjRkNGb0tmVmVzPSIsIm1hYyI6ImZlMzc0ZDYzZDVjNTNjOTc3YTc1ZTMxN2RmMzM4MDFkZWQ2YWI2MDkwNDY4OWQ1MDk0ZWRkN2Y2ZTdhZjY5ZmEiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": 198169,
+            "subscription_status_1": "UNSUBSCRIBED",
+            "subscription_status_3": "UNSUBSCRIBED",
+            "subscription_status_4": "UNSUBSCRIBED",
+            "subscription_status_5": "UNSUBSCRIBED",
+            "loyalty_associated_shops": "123123;5fd3322e-671e-430f-aa38-5ed02e600ff7",
+            "previous_loyalty_balance": 1617,
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06T11:32:00+00:00",
+            "loyalty_first_transaction_date": "2023-01-09T15:03:37+00:00",
+            "loyalty_number_of_transactions": 55,
+            "loyalty_total_credits_received": 1697,
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        },
+        "current_display_values": {
+            "age": "",
+            "city": "",
+            "dier": "False",
+            "tier": "Gold",
+            "uuid": "",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": "",
+            "status": "Active",
+            "address": "",
+            "channel": "",
+            "lastname": "",
+            "birthdate": "",
+            "firstname": "",
+            "created_at": "2021-10-20, 20:06",
+            "postalcode": "",
+            "updated_at": "2023-11-06, 17:47",
+            "housenumber": "",
+            "phonenumber": "",
+            "is_anonymous": "False",
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": "",
+            "loyalty_balance": "1612",
+            "prepaid_balance": "20",
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Imx6TzJVV1ZwNlBRd3VkQmV1NnhKbnc9PSIsInZhbHVlIjoiVnlKZWM4OG5Vdjl0QmNEY242YmZ3OFNpWjQwQXkwRThmMCttWHlwQmNSTFluNzdpVkQwY0ZEcVo5TktvUXRHSVBYUE43S2dscFpyMUJnazFrWWZWVHI3cDNLTVJsZDcwWU9zQWdIejh5YjRQOGx4RjV6aDJjR3FTWlI1RTNlQlRrZEVNcURZeFlaZlYvQ2R2STdSU1RDdFdZT0RRdkxNN01vOXhLQnhaZkNVPSIsIm1hYyI6ImJjMzczNWQ2NGEwNzZlNjZhZTU0OTk3MzIxOTczODYzZjMxZjYwNzM2MjY5ZWJkODRkMTEzODU0NmQxMDU4OTQiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": "198169",
+            "subscription_status_1": "Unsubscribed",
+            "subscription_status_3": "Unsubscribed",
+            "subscription_status_4": "Unsubscribed",
+            "subscription_status_5": "Unsubscribed",
+            "loyalty_associated_shops": "Krusty Krab Downtown and Sesame Street",
+            "previous_loyalty_balance": "1617",
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06, 12:32",
+            "loyalty_first_transaction_date": "2023-01-09, 16:03",
+            "loyalty_number_of_transactions": "55",
+            "loyalty_total_credits_received": "1697",
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        }
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+---
+
+### Find Contact
+
+Find a Contact by email address. To find a Contact using an identifier, see [Contact Identifiers.](/api-reference/oauth/contact-identifiers)
+
+**Please note:** the `attributes` array is now deprecated.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/find-one-by
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`email``string`
+
+`REQUIRED`
+
+The Contact's email address
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 22,
+        "uuid": "123",
+        "email": "spongebob@bikinibottom.sea",
+        "tier": {
+            "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+            "name": "Krusty Krew",
+            "description": "Krusty Krew Members only",
+            "position": 1,
+            "media": null
+        },
+        "subscriptions": [
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Marketing",
+                    "description": "Subscribe here for marketing purposes",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": "123123123",
+                    "id": 1
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Bikini Bottom Deals",
+                    "description": "A monthly email blast with our best offers!",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": null,
+                    "id": 3
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Events",
+                    "description": "Stay in the loop for all our special events",
+                    "active": true,
+                    "strategy": "OPT_IN",
+                    "uuid": null,
+                    "id": 4
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Krusty Krab News",
+                    "description": "Never miss out on any of our newest features",
+                    "active": true,
+                    "strategy": "OPT_OUT",
+                    "uuid": null,
+                    "id": 5
+                }
+            }
+        ],
+        "credit_balance": {
+            "balance": 1612,
+        },
+        "prepaid_balance": {
+            "balance_in_cents": 2000
+        },
+        "current_values": {
+            "age": null,
+            "city": "Bikini Bottom",
+            "dier": null,
+            "tier": "1",
+            "uuid": "123",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": null,
+            "status": "ACTIVE",
+            "address": "",
+            "channel": null,
+            "lastname": "",
+            "birthdate": null,
+            "firstname": "",
+            "created_at": "2021-10-20T18:06:09+00:00",
+            "postalcode": "9999YZ",
+            "updated_at": "2023-11-06T16:47:00+00:00",
+            "housenumber": 12,
+            "phonenumber": "",
+            "is_anonymous": false,
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": null,
+            "loyalty_balance": 1612,
+            "prepaid_balance": 20,
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Ikh3ZW8yRW9pSU9Gc25SYmxRUFVVWUE9PSIsInZhbHVlIjoianhuYncxVHBlK0dqMTN4RHhXNzdZNVJ3aGJqcERFdmVWQlcxYjFNZVZYSVdoWVVMWk54K1UvQ2lFek1nMmtGaTJZNGRNOG1rUUxwRGNnU25JcitpN0d5RWVKN21kS1gvSmMvNTA2bmxqU0Z0cmxoR2pPT0Ewc1hXeEJsMkVJNGFDQlNlSWpHRXVpWndyd3g3eTVXck90Z0tlL3J2RHNRKzRjRkNGb0tmVmVzPSIsIm1hYyI6ImZlMzc0ZDYzZDVjNTNjOTc3YTc1ZTMxN2RmMzM4MDFkZWQ2YWI2MDkwNDY4OWQ1MDk0ZWRkN2Y2ZTdhZjY5ZmEiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": 198169,
+            "subscription_status_1": "UNSUBSCRIBED",
+            "subscription_status_3": "UNSUBSCRIBED",
+            "subscription_status_4": "UNSUBSCRIBED",
+            "subscription_status_5": "UNSUBSCRIBED",
+            "loyalty_associated_shops": "123123;5fd3322e-671e-430f-aa38-5ed02e600ff7",
+            "previous_loyalty_balance": 1617,
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06T11:32:00+00:00",
+            "loyalty_first_transaction_date": "2023-01-09T15:03:37+00:00",
+            "loyalty_number_of_transactions": 55,
+            "loyalty_total_credits_received": 1697,
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        },
+        "current_display_values": {
+            "age": "",
+            "city": "",
+            "dier": "False",
+            "tier": "Gold",
+            "uuid": "",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": "",
+            "status": "Active",
+            "address": "",
+            "channel": "",
+            "lastname": "",
+            "birthdate": "",
+            "firstname": "",
+            "created_at": "2021-10-20, 20:06",
+            "postalcode": "",
+            "updated_at": "2023-11-06, 17:47",
+            "housenumber": "",
+            "phonenumber": "",
+            "is_anonymous": "False",
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": "",
+            "loyalty_balance": "1612",
+            "prepaid_balance": "20",
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Imx6TzJVV1ZwNlBRd3VkQmV1NnhKbnc9PSIsInZhbHVlIjoiVnlKZWM4OG5Vdjl0QmNEY242YmZ3OFNpWjQwQXkwRThmMCttWHlwQmNSTFluNzdpVkQwY0ZEcVo5TktvUXRHSVBYUE43S2dscFpyMUJnazFrWWZWVHI3cDNLTVJsZDcwWU9zQWdIejh5YjRQOGx4RjV6aDJjR3FTWlI1RTNlQlRrZEVNcURZeFlaZlYvQ2R2STdSU1RDdFdZT0RRdkxNN01vOXhLQnhaZkNVPSIsIm1hYyI6ImJjMzczNWQ2NGEwNzZlNjZhZTU0OTk3MzIxOTczODYzZjMxZjYwNzM2MjY5ZWJkODRkMTEzODU0NmQxMDU4OTQiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": "198169",
+            "subscription_status_1": "Unsubscribed",
+            "subscription_status_3": "Unsubscribed",
+            "subscription_status_4": "Unsubscribed",
+            "subscription_status_5": "Unsubscribed",
+            "loyalty_associated_shops": "Krusty Krab Downtown and Sesame Street",
+            "previous_loyalty_balance": "1617",
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06, 12:32",
+            "loyalty_first_transaction_date": "2023-01-09, 16:03",
+            "loyalty_number_of_transactions": "55",
+            "loyalty_total_credits_received": "1697",
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        }
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+---
+
+### Create Contact
+
+If a Contact needs to be created, only the email address is needed. To add any additional data to the Contact, a subsequent [Update Contact](#update-contact) API call can be used.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//contacts
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Body
+
+`email``string`
+
+`REQUIRED`
+
+The email address of the Contact to be created.
+
+`referral_code``string`
+
+`OPTIONAL`
+
+A referral code used for Piggy's referral programme.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "cd183615-d1cb-402a-b618-6472d5e13890"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`60005`
+
+Contact already exists.
+
+---
+
+### Create Contact Async
+
+If a Contact needs to be created _quickly_ and any system values that are normally created upon creation aren't relevant, this function can be used. This API call is much faster than the 'regular' creation API call, focusing on basic Contact creation.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//contacts/async
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Body
+
+`email``string`
+
+`REQUIRED`
+
+The email address of the Contact to be created.
+
+`referral_code``string`
+
+`OPTIONAL`
+
+A referral code used for Piggy's referral programme.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "cd183615-d1cb-402a-b618-6472d5e13890"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`60005`
+
+Contact already exists.
+
+`60000`
+
+Usage limit reached.
+
+---
+
+### Find or Create Contact
+
+Find Contact by email address or – if no Contact exists yet for this email address – our API creates a new Contact for the email address you just supplied and returns the newly created Contact in the response.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/find-or-create
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`email``string`
+
+`REQUIRED`
+
+The Contact's email address.
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 22,
+        "uuid": "123",
+        "email": "spongebob@bikinibottom.sea",
+        "tier": {
+            "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+            "name": "Krusty Krew",
+            "description": "Krusty Krew Members only",
+            "position": 1,
+            "media": null
+        },
+        "subscriptions": [
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Marketing",
+                    "description": "Subscribe here for marketing purposes",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": "123123123",
+                    "id": 1
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Bikini Bottom Deals",
+                    "description": "A monthly email blast with our best offers!",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": null,
+                    "id": 3
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Events",
+                    "description": "Stay in the loop for all our special events",
+                    "active": true,
+                    "strategy": "OPT_IN",
+                    "uuid": null,
+                    "id": 4
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Krusty Krab News",
+                    "description": "Never miss out on any of our newest features",
+                    "active": true,
+                    "strategy": "OPT_OUT",
+                    "uuid": null,
+                    "id": 5
+                }
+            }
+        ],
+        "credit_balance": {
+            "balance": 1612,
+        },
+        "prepaid_balance": {
+            "balance_in_cents": 2000
+        },
+        "current_values": {
+            "age": null,
+            "city": "Bikini Bottom",
+            "dier": null,
+            "tier": "1",
+            "uuid": "123",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": null,
+            "status": "ACTIVE",
+            "address": "",
+            "channel": null,
+            "lastname": "",
+            "birthdate": null,
+            "firstname": "",
+            "created_at": "2021-10-20T18:06:09+00:00",
+            "postalcode": "9999YZ",
+            "updated_at": "2023-11-06T16:47:00+00:00",
+            "housenumber": 12,
+            "phonenumber": "",
+            "is_anonymous": false,
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": null,
+            "loyalty_balance": 1612,
+            "prepaid_balance": 20,
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Ikh3ZW8yRW9pSU9Gc25SYmxRUFVVWUE9PSIsInZhbHVlIjoianhuYncxVHBlK0dqMTN4RHhXNzdZNVJ3aGJqcERFdmVWQlcxYjFNZVZYSVdoWVVMWk54K1UvQ2lFek1nMmtGaTJZNGRNOG1rUUxwRGNnU25JcitpN0d5RWVKN21kS1gvSmMvNTA2bmxqU0Z0cmxoR2pPT0Ewc1hXeEJsMkVJNGFDQlNlSWpHRXVpWndyd3g3eTVXck90Z0tlL3J2RHNRKzRjRkNGb0tmVmVzPSIsIm1hYyI6ImZlMzc0ZDYzZDVjNTNjOTc3YTc1ZTMxN2RmMzM4MDFkZWQ2YWI2MDkwNDY4OWQ1MDk0ZWRkN2Y2ZTdhZjY5ZmEiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": 198169,
+            "subscription_status_1": "UNSUBSCRIBED",
+            "subscription_status_3": "UNSUBSCRIBED",
+            "subscription_status_4": "UNSUBSCRIBED",
+            "subscription_status_5": "UNSUBSCRIBED",
+            "loyalty_associated_shops": "123123;5fd3322e-671e-430f-aa38-5ed02e600ff7",
+            "previous_loyalty_balance": 1617,
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06T11:32:00+00:00",
+            "loyalty_first_transaction_date": "2023-01-09T15:03:37+00:00",
+            "loyalty_number_of_transactions": 55,
+            "loyalty_total_credits_received": 1697,
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        },
+        "current_display_values": {
+            "age": "",
+            "city": "",
+            "dier": "False",
+            "tier": "Gold",
+            "uuid": "",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": "",
+            "status": "Active",
+            "address": "",
+            "channel": "",
+            "lastname": "",
+            "birthdate": "",
+            "firstname": "",
+            "created_at": "2021-10-20, 20:06",
+            "postalcode": "",
+            "updated_at": "2023-11-06, 17:47",
+            "housenumber": "",
+            "phonenumber": "",
+            "is_anonymous": "False",
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": "",
+            "loyalty_balance": "1612",
+            "prepaid_balance": "20",
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Imx6TzJVV1ZwNlBRd3VkQmV1NnhKbnc9PSIsInZhbHVlIjoiVnlKZWM4OG5Vdjl0QmNEY242YmZ3OFNpWjQwQXkwRThmMCttWHlwQmNSTFluNzdpVkQwY0ZEcVo5TktvUXRHSVBYUE43S2dscFpyMUJnazFrWWZWVHI3cDNLTVJsZDcwWU9zQWdIejh5YjRQOGx4RjV6aDJjR3FTWlI1RTNlQlRrZEVNcURZeFlaZlYvQ2R2STdSU1RDdFdZT0RRdkxNN01vOXhLQnhaZkNVPSIsIm1hYyI6ImJjMzczNWQ2NGEwNzZlNjZhZTU0OTk3MzIxOTczODYzZjMxZjYwNzM2MjY5ZWJkODRkMTEzODU0NmQxMDU4OTQiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": "198169",
+            "subscription_status_1": "Unsubscribed",
+            "subscription_status_3": "Unsubscribed",
+            "subscription_status_4": "Unsubscribed",
+            "subscription_status_5": "Unsubscribed",
+            "loyalty_associated_shops": "Krusty Krab Downtown and Sesame Street",
+            "previous_loyalty_balance": "1617",
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06, 12:32",
+            "loyalty_first_transaction_date": "2023-01-09, 16:03",
+            "loyalty_number_of_transactions": "55",
+            "loyalty_total_credits_received": "1697",
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        }
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`60000`
+
+Usage limit reached.
+
+---
+
+### Find or Create Contact Async
+
+If a Contact needs to be retrieved or created _quickly_ and any system values that are normally created upon contact creation aren't relevant, this can be used. This API call is much faster than the 'regular' find or create API call; only the Contact's UUID will be returned on the response in this instance.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/find-or-create/async
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Body
+
+`email``string`
+
+`REQUIRED`
+
+The email address of the Contact to be created or to be found.
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "cd183615-d1cb-402a-b618-6472d5e13890"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`60000`
+
+Usage limit reached.
+
+---
+
+### Create Anonymous Contact
+
+Creates an anonymous Contact with a fictitious email address. This can be used whenever a new Contact cannot (yet) be identified by their email address, but some actions are already desired (e.g. creation of Credit Receptions). The Contact in question can later create a Contact with their actual email address, and subsequently 'claim' the anonymous Contact, which is then merged with the new Contact.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//contacts/anonymous
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Body
+
+`contact_identifier_value``string`
+
+`OPTIONAL`
+
+The unique value for the Contact Identifier, which will serve as the identifier
+
+Response Example
+
+```json
+{
+    "data": {
+        "uuid": "cd183615-d1cb-402a-b618-6472d5e13890"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`60005`
+
+Contact already exists.
+
+`60014`
+
+Contact identifier is already linked.
+
+`60003`
+
+Contact identifier not found.
+
+`60000`
+
+Usage limit reached.
+
+---
+
+### Claim Anonymous Contact
+
+This function enables the conversion of an anonymous Contact (registered with a fictional email address) into a recognized Contact with a real email address. If a Contact already exists with the provided real email address, the anonymous and existing Contacts will be merged.
+
+**PUT**
+
+```text
+https://api.piggy.eu/api//contacts/{{anonymous_contact_uuid}}/claim
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`anonymous_contact_uuid``string`
+
+`OPTIONAL`
+
+The anonymous Contact's UUID that contains a fictional email address
+
+Body
+
+`email``string`
+
+`OPTIONAL`
+
+The real email address for the Contact that is about to be not anonymous anymore.
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 45842,
+        "uuid": "999",
+        "email": "patrick@bikinibottom.sea",
+        "tier": null,
+        "subscriptions": [
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Marketing",
+                    "description": "Subscribe here for marketing purposes",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": "123123123",
+                    "id": 1
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Bikini Bottom Deals",
+                    "description": "A monthly email blast with our best offers!",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": null,
+                    "id": 3
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Events",
+                    "description": "Stay in the loop for all our special events",
+                    "active": true,
+                    "strategy": "OPT_IN",
+                    "uuid": null,
+                    "id": 4
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Krusty Krab News",
+                    "description": "Never miss out on any of our newest features",
+                    "active": true,
+                    "strategy": "OPT_OUT",
+                    "uuid": null,
+                    "id": 5
+                }
+            }
+        ],
+        "credit_balance": {
+            "balance": 0,
+            "id": 2625795
+        },
+        "prepaid_balance": {
+            "balance_in_cents": 0
+        },
+        "current_values": {
+            "age": null,
+            "city": "Bikini Bottom",
+            "dier": "false",
+            "tier": null,
+            "uuid": "3a685add-1711-425d-9184-fc6db18e0e1d",
+            "email": "plankton@bikinibottom.sea",
+            "avatar": "",
+            "locale": null,
+            "status": "ACTIVE",
+            "address": "",
+            "channel": "OAUTH_API",
+            "lastname": "",
+            "birthdate": null,
+            "firstname": "",
+            "created_at": "2023-11-01T14:59:14+00:00",
+            "postalcode": "9999YZ",
+            "updated_at": "2023-11-01T15:05:00+00:00",
+            "housenumber": 12,
+            "phonenumber": "",
+            "is_anonymous": true,
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=3a685add-1711-425d-9184-fc6db18e0e1d",
+            "a_custom_attribute": null,
+            "loyalty_balance": 0,
+            "prepaid_balance": 0,
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Ikx2dDRqSTF4U3phV21PL1BIcG1STWc9PSIsInZhbHVlIjoiVnc0dUdhblAzZDdod29NQnhmVDlqbFdxYkF3S041WnhlN3hJQ3hrYklaa3BVVzhGbkIrM2R3citUWDVRQnRFL0IrSFJtY1JoQ09WRmR4N3hrZGFzdXBUL2pQVDF4aW9nWFEwQTFUcmliQk5EYXVBaEVpODZiMzh6Qm9Kb0E5QjZaOXM4bjQ3bFhIVEY3SVovRzRnejJZZlVYZUp0ZnA2RUNlUHVYYWlYNytucER5QndxYVNUSnRYVm9na1FrempOTDBmRFE0QkhJOFFIYTM2SnMvcTJ2QT09IiwibWFjIjoiN2JiZTQ5ZDVjMjgyMjY3NDkzYjE2ZTQ0ZTc5M2UyNjUyZWU3ODdiYmFlNzg2N2FjZjJjMDg3MDcxMGUzNTcxNSIsInRhZyI6IiJ9",
+            "custom_app_login_code": 184014,
+            "subscription_status_1": "UNSUBSCRIBED",
+            "subscription_status_3": "UNSUBSCRIBED",
+            "subscription_status_4": "UNSUBSCRIBED",
+            "subscription_status_5": "UNSUBSCRIBED",
+            "loyalty_associated_shops": "",
+            "previous_loyalty_balance": 0,
+            "default_contact_identifier": null,
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/3a685add-1711-425d-9184-fc6db18e0e1d",
+            "loyalty_last_transaction_date": null,
+            "loyalty_first_transaction_date": null,
+            "loyalty_number_of_transactions": 0,
+            "loyalty_total_credits_received": 0,
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=3a685add-1711-425d-9184-fc6db18e0e1d&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=3a685add-1711-425d-9184-fc6db18e0e1d&subscription_type=3"
+        },
+        "current_display_values": {
+            "age": "",
+            "city": "",
+            "dier": "False",
+            "tier": "",
+            "uuid": "",
+            "email": "plankton@bikinibottom.sea",
+            "avatar": "",
+            "locale": "",
+            "status": "Active",
+            "address": "",
+            "channel": "Oauth API",
+            "lastname": "",
+            "birthdate": "",
+            "firstname": "",
+            "created_at": "2023-11-01, 15:59",
+            "postalcode": "",
+            "updated_at": "2023-11-01, 16:05",
+            "housenumber": "",
+            "phonenumber": "",
+            "is_anonymous": "True",
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=3a685add-1711-425d-9184-fc6db18e0e1d",
+            "a_custom_attribute": "",
+            "loyalty_balance": "0",
+            "prepaid_balance": "0",
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6ImhWRlZWek8vUDBFWHpGUFRqaXVuQ1E9PSIsInZhbHVlIjoiRFU4WHF4bitIOFVuMHZvdEdFcjZYSlJOZFFxMHJ6bVpNVW4yZVRCZktna3ZXTExZb3d5RnRYNEVIU2FWM3RrMThOamZlUWRXRTdhdCtxazgvQjRyVEJrREwrNDFsSkhpUERWTTJLTTRkbDMrd1kzM3d5KzdLMXMvbVFZcGVFaHFSR0p4aG5WMUJlRHg0UFB6NllINTdYMURhMzMxY1FuVVZZeGdrcmRGaWIrQytxdXBveVZHampsbUdpUlowWktDbEpzbFlHTzBQSWFyWHo0N2ErbWFzZz09IiwibWFjIjoiOTQ4ZmExZGM2YWU4NTAwYjIxZTY4ZmI5YzhhZDFiYTQzMDQ5ZTdmNWNlNGQyNmU3Yjk3MmZkNDI5ZjJmYzE3NSIsInRhZyI6IiJ9",
+            "custom_app_login_code": "184014",
+            "subscription_status_1": "Unsubscribed",
+            "subscription_status_3": "Unsubscribed",
+            "subscription_status_4": "Unsubscribed",
+            "subscription_status_5": "Unsubscribed",
+            "loyalty_associated_shops": "",
+            "previous_loyalty_balance": "0",
+            "default_contact_identifier": "",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/3a685add-1711-425d-9184-fc6db18e0e1d",
+            "loyalty_last_transaction_date": "",
+            "loyalty_first_transaction_date": "",
+            "loyalty_number_of_transactions": "0",
+            "loyalty_total_credits_received": "0",
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=3a685add-1711-425d-9184-fc6db18e0e1d&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=3a685add-1711-425d-9184-fc6db18e0e1d&subscription_type=3"
+        }
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+`60016`
+
+Contact not anonymous.
+
+---
+
+### Update Contact
+
+Contact's attributes. Please note that system values or system defined attributes, such as 'credit balance' or 'created at', cannot be updated.
+
+Example payload:
+
+```json
+{
+    "attributes": {
+        "firstname": "John",
+        "lastname": "Doe",
+        "example_custom_attribute": "Hello",
+    }
+}
+```
+
+**PUT**
+
+```text
+https://api.piggy.eu/api//contacts/{{contact_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+The Contact's UUID
+
+Body
+
+`attributes``array`
+
+`REQUIRED`
+
+An array of the attributes to be updated.
+
+Response Example
+
+```json
+{
+    "data": {
+        "id": 22,
+        "uuid": "123",
+        "email": "spongebob@bikinibottom.sea",
+        "tier": {
+            "uuid": "ea77edd4-5a5e-4a6e-aeda-55038c43c839",
+            "name": "Krusty Krew",
+            "description": "Krusty Krew Members only",
+            "position": 1,
+            "media": null
+        },
+        "subscriptions": [
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Marketing",
+                    "description": "Subscribe here for marketing purposes",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": "123123123",
+                    "id": 1
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Bikini Bottom Deals",
+                    "description": "A monthly email blast with our best offers!",
+                    "active": true,
+                    "strategy": "DOUBLE_OPT_IN",
+                    "uuid": null,
+                    "id": 3
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Events",
+                    "description": "Stay in the loop for all our special events",
+                    "active": true,
+                    "strategy": "OPT_IN",
+                    "uuid": null,
+                    "id": 4
+                }
+            },
+            {
+                "is_subscribed": false,
+                "status": "UNSUBSCRIBED",
+                "subscription_type": {
+                    "name": "Krusty Krab News",
+                    "description": "Never miss out on any of our newest features",
+                    "active": true,
+                    "strategy": "OPT_OUT",
+                    "uuid": null,
+                    "id": 5
+                }
+            }
+        ],
+        "credit_balance": {
+            "balance": 1612,
+        },
+        "prepaid_balance": {
+            "balance_in_cents": 2000
+        },
+        "current_values": {
+            "age": null,
+            "city": "Bikini Bottom",
+            "dier": null,
+            "tier": "1",
+            "uuid": "123",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": null,
+            "status": "ACTIVE",
+            "address": "",
+            "channel": null,
+            "lastname": "",
+            "birthdate": null,
+            "firstname": "",
+            "created_at": "2021-10-20T18:06:09+00:00",
+            "postalcode": "9999YZ",
+            "updated_at": "2023-11-06T16:47:00+00:00",
+            "housenumber": 12,
+            "phonenumber": "",
+            "is_anonymous": false,
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": null,
+            "loyalty_balance": 1612,
+            "prepaid_balance": 20,
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Ikh3ZW8yRW9pSU9Gc25SYmxRUFVVWUE9PSIsInZhbHVlIjoianhuYncxVHBlK0dqMTN4RHhXNzdZNVJ3aGJqcERFdmVWQlcxYjFNZVZYSVdoWVVMWk54K1UvQ2lFek1nMmtGaTJZNGRNOG1rUUxwRGNnU25JcitpN0d5RWVKN21kS1gvSmMvNTA2bmxqU0Z0cmxoR2pPT0Ewc1hXeEJsMkVJNGFDQlNlSWpHRXVpWndyd3g3eTVXck90Z0tlL3J2RHNRKzRjRkNGb0tmVmVzPSIsIm1hYyI6ImZlMzc0ZDYzZDVjNTNjOTc3YTc1ZTMxN2RmMzM4MDFkZWQ2YWI2MDkwNDY4OWQ1MDk0ZWRkN2Y2ZTdhZjY5ZmEiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": 198169,
+            "subscription_status_1": "UNSUBSCRIBED",
+            "subscription_status_3": "UNSUBSCRIBED",
+            "subscription_status_4": "UNSUBSCRIBED",
+            "subscription_status_5": "UNSUBSCRIBED",
+            "loyalty_associated_shops": "123123;5fd3322e-671e-430f-aa38-5ed02e600ff7",
+            "previous_loyalty_balance": 1617,
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06T11:32:00+00:00",
+            "loyalty_first_transaction_date": "2023-01-09T15:03:37+00:00",
+            "loyalty_number_of_transactions": 55,
+            "loyalty_total_credits_received": 1697,
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        },
+        "current_display_values": {
+            "age": "",
+            "city": "",
+            "dier": "False",
+            "tier": "Gold",
+            "uuid": "",
+            "email": "spongebob@bikinibottom.sea",
+            "avatar": "",
+            "locale": "",
+            "status": "Active",
+            "address": "",
+            "channel": "",
+            "lastname": "",
+            "birthdate": "",
+            "firstname": "",
+            "created_at": "2021-10-20, 20:06",
+            "postalcode": "",
+            "updated_at": "2023-11-06, 17:47",
+            "housenumber": "",
+            "phonenumber": "",
+            "is_anonymous": "False",
+            "add_to_wallet": "https://leat.com/add-to-wallet/loyalty?uuid=123",
+            "a_custom_attribute": "",
+            "loyalty_balance": "1612",
+            "prepaid_balance": "20",
+            "custom_app_login_url": "https://leat.com/home?token=eyJpdiI6Imx6TzJVV1ZwNlBRd3VkQmV1NnhKbnc9PSIsInZhbHVlIjoiVnlKZWM4OG5Vdjl0QmNEY242YmZ3OFNpWjQwQXkwRThmMCttWHlwQmNSTFluNzdpVkQwY0ZEcVo5TktvUXRHSVBYUE43S2dscFpyMUJnazFrWWZWVHI3cDNLTVJsZDcwWU9zQWdIejh5YjRQOGx4RjV6aDJjR3FTWlI1RTNlQlRrZEVNcURZeFlaZlYvQ2R2STdSU1RDdFdZT0RRdkxNN01vOXhLQnhaZkNVPSIsIm1hYyI6ImJjMzczNWQ2NGEwNzZlNjZhZTU0OTk3MzIxOTczODYzZjMxZjYwNzM2MjY5ZWJkODRkMTEzODU0NmQxMDU4OTQiLCJ0YWciOiIifQ==",
+            "custom_app_login_code": "198169",
+            "subscription_status_1": "Unsubscribed",
+            "subscription_status_3": "Unsubscribed",
+            "subscription_status_4": "Unsubscribed",
+            "subscription_status_5": "Unsubscribed",
+            "loyalty_associated_shops": "Krusty Krab Downtown and Sesame Street",
+            "previous_loyalty_balance": "1617",
+            "default_contact_identifier": "hash123456",
+            "subscription_preferences_url": "http://piggy.eu/subscription-preferences/123",
+            "loyalty_last_transaction_date": "2023-11-06, 12:32",
+            "loyalty_first_transaction_date": "2023-01-09, 16:03",
+            "loyalty_number_of_transactions": "55",
+            "loyalty_total_credits_received": "1697",
+            "double_opt_in_confirmation_url_1": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=1",
+            "double_opt_in_confirmation_url_3": "http://piggy.eu/double-opt-in-confirmation?contact_uuid=123&subscription_type=3"
+        }
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+---
+
+### Delete Contact
+
+Deletes a Contact. This action is irreversible, the Contact's Credit Balance and any relation to other entities within the system will be removed, although the entities themselves may remain. When using 'DEFAULT' as the deletion type, a log is created containing detailed information. If 'GDPR' is used as the deletion type, any reference to personal data is removed.
+
+**Note:** This API call schedules the removal of the Contact, this may take a few minutes.
+
+**POST**
+
+```text
+https://api.piggy.eu/api//contacts/{{contact_uuid}}/delete
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+The Contact's UUID.
+
+Body
+
+`type``string`
+
+`REQUIRED`
+
+The deletion type. Options are DEFAULT and GDPR.
+
+Response Example
+
+```json
+{
+    "data": null,
+    "meta": {}
+}
+```
+
+Code
+
+Message
+
+`55031`
+
+Contact not found.
+
+---
+
+### Get Credit Balance
+
+Retrieve the current Credit Balance of a specific Contact, identified through their UUID.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/{{contact_uuid}}/credit-balance
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+The Contact's UUID
+
+Response Example
+
+```json
+{
+    "data": {
+        "balance": 49
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+---
+
+### Get Prepaid Balance
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/{{contact_uuid}}/prepaid/balance
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+The Contact's UUID
+
+Response Example
+
+```json
+{
+    "data": {
+        "balance_in_cents": 5000,
+        "balance": "€50.00"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+---
+
+### List Loyalty Transactions
+
+By default, returns the last 10 transactions for a loyalty program. The results can be filtered by loyalty transaction type.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//contacts/{{contact_uuid}}/loyalty-transactions
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`contact_uuid``string`
+
+`REQUIRED`
+
+UUID of the contact for whom loyalty transactions are to be retrieved.
+
+`limit``string`
+
+`OPTIONAL`
+
+Number of loyalty transactions to be retrieved (max. 100, default 10).
+
+`page``number`
+
+`OPTIONAL`
+
+Offset.
+
+`type``number`
+
+`OPTIONAL`
+
+Type of loyalty transactions to be retrieved, options: 'credit_receptions' and 'reward_receptions'. If not set, loyalty transactions of all types are retrieved.
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "uuid": "daa78841-b321-4564-9dd3-91c6ccd9d600",
+            "credits": 1177,
+            "created_at": "2023-11-12T19:27:49+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": 1.15,
+            "unit": {
+                "id": 298,
+                "name": "test2",
+                "label": "Calories",
+                "prefix": "t",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "9423bcfa-c2b1-41e6-998b-5c4182d1e259",
+            "credits": 20,
+            "created_at": "2023-11-12T17:37:41+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "57589e9f-0107-4cdc-afb6-03b8c89d892e",
+            "credits": 0,
+            "created_at": "2023-11-10T16:47:40+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "a45f1a18-bed8-4451-aba5-1a9e83fa5ea4",
+            "credits": 0,
+            "created_at": "2023-11-10T16:46:12+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123abc-def789-qwerty-34567",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "a06e0546-48d4-4faf-91c6-f66989f5a49f",
+            "credits": 0,
+            "created_at": "2023-11-10T16:23:38+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "e64ad300-668b-428d-850d-f4eb9b37268b",
+            "credits": 10,
+            "created_at": "2023-11-09T19:24:58+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123abc-def789-qwerty-34567",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "8630aa53-0097-4beb-8504-4938f4ef724e",
+            "credits": 10,
+            "created_at": "2023-11-09T14:13:36+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123abc-def789-qwerty-34567",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "ec2e9f1f-2573-4937-90f7-b610e881059b",
+            "credits": 10,
+            "created_at": "2023-11-09T14:12:44+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123abc-def789-qwerty-34567",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "e075a8a4-6d50-4b30-a62b-142fb8a91a30",
+            "credits": 10,
+            "created_at": "2023-11-09T14:12:29+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123abc-def789-qwerty-34567",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123abc-def789-qwerty-34567",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        },
+        {
+            "uuid": "13d3f57a-5566-42d0-8a63-328958f49144",
+            "credits": 10,
+            "created_at": "2023-11-09T14:11:32+00:00",
+            "type": "credit_reception",
+            "contact_identifier": null,
+            "contact": {
+                "uuid": "123",
+                "email": "spongebob@bikinibottom.sea",
+                "credit_balance": {
+                    "id": 2625740,
+                    "balance": 2929
+                }
+            },
+            "shop": {
+                "id": 15,
+                "uuid": "123123",
+                "type": "physical",
+                "name": "Krusty Krab",
+                "address": {
+                    "id": 59,
+                    "shop_id": 15,
+                    "street": "Conch Street",
+                    "housenumber": 12,
+                    "postalcode": "9999YZ",
+                    "city": "Bikini Bottom",
+                    "state": "NH",
+                    "country": "NL",
+                    "latitude": null,
+                    "longitude": null,
+                    "house_number": null,
+                    "postal_code": null
+                }
+            },
+            "unit_value": null,
+            "unit": {
+                "id": 112,
+                "name": "test",
+                "label": "Calories",
+                "prefix": "",
+                "is_default": true
+            }
+        }
+    ],
+    "meta": {
+        "page": 1,
+        "limit": 10,
+        "viewing_from": 1,
+        "viewing_to": 10,
+        "last_page": 6,
+        "total": 57
+    }
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+`55031`
+
+Contact not found.
+
+`1008`
+
+Shop not found.

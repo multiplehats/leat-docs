@@ -1,6 +1,6 @@
 ---
 title: "Order at Table"
-description: "This guide covers how to build a loyalty integration for Order at Table systems. These are typically mobile web applications where customers scan a QR code at their table and order directly from their own device."
+description: "This guide covers how to build a loyalty integration for Order at Table systems. These are typically mobile web applications where customers scan a QR code at t"
 ---
 
 ## Introduction
@@ -22,13 +22,17 @@ Order at Table integrations differ from kiosks and POS systems in several key wa
 
 ## Main Loyalty Flow
 
-This flow covers the complete Order at Table loyalty experience: from displaying offers to non-authenticated users, through login/signup, to redeeming offers and completing orders.
+This flow covers the complete Order at Table loyalty experience: from displaying offers to non-authenticated users, through login/signup, to redeeming offers and completing orders. Hover over the interactive previews to see which API endpoints are used at each step.
+
+1
 
 #### Adding Blocks to Page
 
 In an Order at Table integration, customers browse and order from their own mobile device. The loyalty integration should be seamlessly embedded into the ordering experience, with an offers section prominently displayed on the menu page.
 
 For non-authenticated users, show a prompt to join the loyalty program or log in to access their rewards and offers.
+
+2
 
 #### Identifying Customer
 
@@ -43,11 +47,15 @@ Use your own authentication layer if you have your own, otherwise, follow these 
 3.  **If found:** Send verification code via [Send Contact Verification Email](/api-reference/oauth/contact-verification#send)
 4.  **If not found:** Redirect to sign up form
 
-#### Verification Code
+2
+
+#### Verification Code (continued)
 
 For existing customers, send a verification code to their email. This provides a passwordless authentication experience that's secure and user-friendly on mobile devices.
 
 If your Order at Table system already has its own authentication layer (e.g., customers log in to your app), you can skip this verification step and directly link the session to the customer's contact record using their authenticated email or user ID.
+
+2
 
 #### Sign Up (New Customers)
 
@@ -61,6 +69,8 @@ For new customers, collect their basic information to create a loyalty account. 
 -   Birthdate (optional - useful for birthday rewards)
 -   Terms & Conditions acceptance
 
+3
+
 #### Showcasing Rewards and Vouchers
 
 Once logged in, the customer sees their available offers directly on the menu page. This includes vouchers and collectable rewards that can be redeemed with their order.
@@ -73,7 +83,9 @@ Once logged in, the customer sees their available offers directly on the menu pa
 -   Both vouchers and collectable rewards can be redeemed free of charge
 -   Provide a "See all" link to view all available offers
 
-#### All Offers View
+3
+
+#### All Offers View (continued)
 
 The "All offers" screen shows both available offers (vouchers and collectable rewards) and purchasable rewards that customers can redeem with their points.
 
@@ -88,6 +100,8 @@ Rewards that were pre-redeemed (points already deducted) but not yet collected. 
 ##### Rewards
 
 Items that customers can purchase with their points. Requires sufficient point balance to redeem.
+
+4
 
 #### Redeeming Offers
 
@@ -116,9 +130,13 @@ Applying discounts to the order is often the most complex part of the integratio
 -   `product_code` - SKU of the specific product
 -   `category` - If the reward applies to any product in a category
 
-#### Offer Applied
+4
+
+#### Offer Applied (continued)
 
 After confirming, show a success message and add the discounted item to the customer's basket.
+
+5
 
 #### Finalising the Order
 
@@ -130,6 +148,8 @@ The basket shows all items including any applied offers. Customers can still add
 -   Display the offer name that was applied
 -   Keep offers section visible for additional redemptions
 -   Show updated total reflecting all discounts
+
+6
 
 #### Order Successful
 

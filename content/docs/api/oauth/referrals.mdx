@@ -1,0 +1,166 @@
+---
+title: "Referrals"
+description: "Get insights in your referral program and retrieve all Referrals made by your Contact. The referring Contact is the one who shares their unique Referral code, e"
+---
+
+Get insights in your referral program and retrieve all Referrals made by your Contact. The referring Contact is the one who shares their unique Referral code, enabling other contacts to sign up using that code. The referred Contact is the Contact that has used a unique Referral code to sign up.
+
+---
+
+### List Referrals
+
+Retrieve a list of Referrals from your referral program.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//referrals
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ access_token | api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`referring_contact_uuid``string`
+
+`OPTIONAL`
+
+The uuid of the Contact who has referred another Contact.
+
+`status``string`
+
+`OPTIONAL`
+
+The Referral status can be one of the following: pending, completed, or failed, indicating the current state of the Referral.
+
+`limit``number`
+
+`OPTIONAL`
+
+Maximum number of items to retrieve. Default value = 30, limit max = 100.
+
+`page``number`
+
+`OPTIONAL`
+
+Page within list to retrieve
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "uuid": "d1fd45ac-0993-46c1-9ae7-334bcd9b0ad7",
+            "referring_contact": {
+                "uuid": "2e70ea71-631f-4b3c-8097-8e0284751c96",
+                "email": "patrick1@bikinibottom.sea"
+            },
+            "referred_contact": {
+                "uuid": "435438ef-7e62-43aa-87c7-3f6d3deb0a72",
+                "email": "gary1@bikinibottom.sea",
+            }
+            "status": "completed"
+        },
+        {
+            "uuid": "d1fd45ac-0993-46c1-9ae7-334bcd9b0ad7",
+            "referring_contact": {
+                "uuid": "8ff157c6-9808-46b9-ac43-ae14809d8f81",
+                "email": "patrick2@bikinibottom.sea"
+            },
+            "referred_contact": {
+                "uuid": "3ba05ab0-28f6-465d-a345-aaeccd83a24f",
+                "email": "gary2@bikinibottom.sea",
+            }
+            "status": "completed"
+        },
+        {
+            "uuid": "d1fd45ac-0993-46c1-9ae7-334bcd9b0ad7",
+            "referring_contact": {
+                "uuid": "2e70ea71-631f-4b3c-8097-8e0284751c96",
+                "email": "patrick3@bikinibottom.sea"
+            },
+            "referring_contact": {
+                "uuid": "5bc55776-dfac-41b4-a257-0aa2d2dac7b5",
+                "email": "gary3@bikinibottom.sea",
+            }
+            "status": "completed"
+        }
+    ],
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`1003`
+
+Invalid input.
+
+---
+
+### Get Referral Program Settings
+
+Retrieve a Referral program's settings, like the incentive for both the _referring_ contact and the _referred_ contact.
+
+**GET**
+
+```text
+https://api.piggy.eu/api/v3/oauth/clients/referrals/settings
+```
+
+Headers
+
+Authorization
+
+Accept
+
+`Bearer {{ personal_access_token }}`
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": {
+        "completion_event": {
+            "type": "loyalty_transaction",
+            "data": {
+                "number_of_transactions": 5
+            },
+        },
+        "limit_per_contact": 10,
+        "referred_contact_incentive": {
+            "type": "loyalty_points",
+            "data": {
+                "points": 50,
+                "business_profile": {
+                    "uuid": "13ac4cc1-3522-4dfc-ae4a-a821e5090108",
+                    "name": "Coral Avenue"
+                },
+            },
+        },
+        "referring_contact_incentive": {
+            "type": "voucher",
+            "data": {
+                "promotion": {
+                    "uuid": "539483d0-fab4-40db-add5-2ec65ef12901",
+                    "name": "Free Kelp Juice"
+                },
+            },
+        },
+    },
+    "meta": {}
+}
+```

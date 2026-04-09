@@ -1,0 +1,218 @@
+---
+title: "Promotions"
+description: "Retrieves a list of all Promotions linked to an Account, providing detailed insights into each promotion's attributes such as name, description, voucher limits,"
+---
+
+### List Promotions
+
+Retrieves a list of all Promotions linked to an Account, providing detailed insights into each promotion's attributes such as name, description, voucher limits, and expiration periods.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//promotions
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Response Example
+
+```json
+{
+    "data": [
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": "meer"
+            },
+            "name": "Free Krabby Patty",
+            "description": "Free Krabby Patty",
+            "voucher_limit": 25012,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "123"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "Free Kelp Smoothie",
+            "description": "Super lekker",
+            "voucher_limit": null,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "983a8692-f9de-4aa5-9fde-138d5f8f153b"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "Barnacle Bucks",
+            "description": "Gekke shit",
+            "voucher_limit": null,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "9c966b16-6212-4169-ae2f-a523566b533f"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "Test 123",
+            "description": "description 123",
+            "voucher_limit": null,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "c847707f-7f63-4132-aa77-9011702011a1"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "promotion zonder vouchers ",
+            "description": "use existing false",
+            "voucher_limit": 250,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "4f3e6cd0-55e8-4286-acb0-ba18a806573b"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "promotion met vouchers",
+            "description": "use existing true",
+            "voucher_limit": null,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "89ab7398-64d9-4e3c-b684-f55c5f666ffa"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "meh",
+            "description": "nee",
+            "voucher_limit": null,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "22f26b1c-5c24-4a13-8285-0dcb27eef05f"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "123",
+            "description": "222",
+            "voucher_limit": null,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "35d9b2a0-9f4b-401a-a59e-91263de57230"
+        },
+        {
+            "attributes": {
+                "joker": null,
+                "joker2": null,
+                "jokertje1233": null,
+                "someName2": null
+            },
+            "name": "some name for a promotion campaign",
+            "description": "free stuff !@#!!!",
+            "voucher_limit": null,
+            "limit_per_contact": null,
+            "expiration_duration": null,
+            "uuid": "b0ec7fd1-f6dd-4f39-a48c-a9573aea02ba"
+        },
+    ],
+    "meta": []
+}
+```
+
+---
+
+### Get Promotion
+
+Retrieve a specific Promotion by specifying its UUID.
+
+**GET**
+
+```text
+https://api.piggy.eu/api//promotions/{{promotion_uuid}}
+```
+
+Headers
+
+Authorization
+
+`Bearer {{ api_key }}`
+
+Accept
+
+`application/json`
+
+Params
+
+`promotion_uuid``string`
+
+`REQUIRED`
+
+The UUID of the Promotion you want to retrieve.
+
+Response Example
+
+```json
+{
+    "data": {
+        "attributes": {
+            "attributeOne": null,
+            "attributeTwo": null
+        },
+        "name": "Jellyfishing Day Special",
+        "description": "Example promotion description",
+        "voucher_limit": 12,
+        "limit_per_contact": 3,
+        "expiration_duration": 86400,
+        "uuid": "5c3d59c7-7799-4d41-894a-8f46e50edfda"
+    },
+    "meta": []
+}
+```
+
+Code
+
+Message
+
+`80002`
+
+Promotion not found.
