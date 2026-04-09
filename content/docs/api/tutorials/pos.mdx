@@ -1,13 +1,13 @@
 ---
 title: "POS Integration"
-description: "This is a guide on how to build an integration for POS software. The flows describe the typical flow, but much depends on possibilities and limitations offered "
+description: "This is a guide on how to build an integration for POS software. The flows describe the typical flow, but much depends on possibilities and limitations offered by both hardware and software involved."
 ---
 
 ## Introduction
 
 This is a guide on how to build an integration for POS software. The flows describe the typical flow, but much depends on possibilities and limitations offered by both hardware and software involved.
 
-In this tutorial, we assume you'll build the UI yourself, leveraging our API endpoints to feed the flows with the necessary data. However, there is also the option to use Portal Sessions to power your POS integration. This involves using either the [Portal Sessions API](/v3/oauth/portal-sessions) or the [Portal Sessions SDK](https://www.npmjs.com/package/@leatcom/portal-sessions). This option is sometimes used for a quick launch strategy or prototyping, while a more polished API-based approach is built in the mean time.
+In this tutorial, we assume you'll build the UI yourself, leveraging our API endpoints to feed the flows with the necessary data. However, there is also the option to use Portal Sessions to power your POS integration. This involves using either the [Portal Sessions API](/api-reference/oauth/portal-sessions) or the [Portal Sessions SDK](https://www.npmjs.com/package/@leatcom/portal-sessions). This option is sometimes used for a quick launch strategy or prototyping, while a more polished API-based approach is built in the mean time.
 
 ### In this tutorial
 
@@ -20,103 +20,11 @@ In this tutorial, we assume you'll build the UI yourself, leveraging our API end
 
 ---
 
-1
-
-#### Identifying Customers
-
-[
-
-REWARDS
-
-](/v3/tutorials/pos#scan-card)
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-1
-
 #### Identifying Customers
 
 On the POS, a button will need to be added to trigger the identification of the customer and subsequent loyalty flows. Where this button is placed and how it looks is up to you, it's usually accompanied by a label stating 'Loyalty' or 'Rewards' or similar.
 
 When the button is clicked, the POS will open a modal or a separate screen where the customer can be identified. This could be done by scanning a QR code, entering a loyalty card number or entering an email address. Scanning a QR-code is often quickest and most convenient.
-
-**Try it:** Click the green `Rewards` button on the POS screen to start the identification flow.
-
-#### Scanning the Customer's Card
-
-After clicking the rewards button, the customer needs to identify themselves. There are three common methods for this, depending on your hardware capabilities:
-
-Camera scanner
-
-Barcode/QR scanner
-
-Keyboard
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Scan identifier
-
-[
-
-SCAN
-
-ABCD12345
-
-](/v3/tutorials/pos#contact-overview)
-
-API endpoint
-
-[
-
-Find Contact Identifier
-
-](/v3/oauth/contact-identifiers#find-contact-identifier)
-
-[
-
-Close
-
-](/v3/tutorials/pos#start)
 
 #### Scanning the Customer's Card
 
@@ -126,151 +34,11 @@ After clicking the rewards button, the customer needs to identify themselves. Th
 -   **Barcode/QR Scanner:** Uses dedicated hardware scanners - fastest and most reliable for high-volume environments
 -   **Keyboard Entry:** Manual entry of card number or email - works on any system as a fallback
 
-**Try it:** Hover over the scan area and click to simulate a successful scan.
-
-**Tip:** You can also use [Find or Create Contact](/v3/oauth/contacts#find-or-create-contact) to identify customers by email address - useful when they've forgotten their loyalty card, though slower.
-
-2
+**Tip:** You can also use [Find or Create Contact](/api-reference/oauth/contacts#find-or-create-contact) to identify customers by email address - useful when they've forgotten their loyalty card, though slower.
 
 #### Customer Overview
 
-Once the customer is identified, you'll display their loyalty information. This typically includes their tier status, point balance, available offers (combination of Vouchers and Collectable Rewards), and redeemable rewards. Hover over each section to see which API endpoints provide this data.
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Hi Patrick
-
-Tier
-
-Golden Spatula
-
-Balance
-
-425 Shells
-
-API endpoint
-
-[
-
-Find Contact
-
-](/v3/oauth/contacts#find-contact)[
-
-Get Credit Balance
-
-](/v3/oauth/contacts#get-credit-balance)[
-
-Get Tier
-
-](/v3/oauth/contacts#get-tier)
-
-Available offers
-
-[
-
-€5 Discount
-
-Expires in 2 days
-
-](/v3/tutorials/pos#redeem-offer)[
-
-Bday Krabby Patty
-
-Expires in 31 days
-
-](/v3/tutorials/pos#redeem-offer)
-
-API endpoint
-
-[
-
-List Vouchers
-
-](/v3/oauth/vouchers#list-vouchers)[
-
-List Collectable Rewards
-
-](/v3/oauth/collectable-rewards#list-collectable-rewards)
-
-Redeem offers
-
-[
-
-Side of Sea Weed
-
-Natural or Salty
-
-150
-
-Shells
-
-REDEEM
-
-](/v3/tutorials/pos#redeem-reward)[
-
-Krabby Patty
-
-Our secret recipe
-
-400
-
-Shells
-
-REDEEM
-
-](/v3/tutorials/pos#redeem-reward)[
-
-Full Bikini Bottom
-
-Krabby Patty, Fries & Drink
-
-750
-
-Shells
-
-REDEEM
-
-](/v3/tutorials/pos#redeem-reward)
-
-API endpoint
-
-[
-
-List Rewards
-
-](/v3/oauth/rewards#list-rewards)
-
-[
-
-Done
-
-](/v3/tutorials/pos#start)
-
-2
-
-#### Customer Overview
-
-Once the customer is identified, you'll display their loyalty information. This typically includes their tier status, point balance, available offers (combination of Vouchers and Collectable Rewards), and redeemable rewards. Hover over each section to see which API endpoints provide this data.
+Once the customer is identified, you'll display their loyalty information. This typically includes their tier status, point balance, available offers (combination of Vouchers and Collectable Rewards), and redeemable rewards.
 
 **Displaying Rewards:** Rewards are typically displayed as a list ordered ascending by `required_credits`, showing the reward title, required points, and sometimes image.
 
@@ -279,64 +47,6 @@ Once the customer is identified, you'll display their loyalty information. This 
 -   Optionally show a progress bar indicating how many more points they need
 
 **Displaying Offers:** Rewards are typically fewer, therefore displayed as a grid or horizontal list, showing title, expiration date (if present), and sometimes image.
-
-3
-
-#### Redeeming Rewards
-
-When a customer selects a reward from their available options, you'll show a confirmation screen. This allows them to confirm they want to spend their points on this reward before it's applied to their order.
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Redeem Reward
-
-Krabby Patty
-
-Our secret recipe
-
-Redeem this reward for 400 Shells?
-
-[
-
-Redeem
-
-](/v3/tutorials/pos#reward-redeemed)
-
-API endpoint
-
-[
-
-Create Reward Reception
-
-](/v3/oauth/reward-receptions#create-reward-reception)
-
-[
-
-Cancel
-
-](/v3/tutorials/pos#contact-overview)
-
-3
 
 #### Redeeming Rewards
 
@@ -348,83 +58,21 @@ There are two common approaches for handling reward redemption. Neither is inher
 
 ##### Option 1: Redeem → Reverse on Failure
 
-1.  [Create Reward Reception](/v3/oauth/reward-receptions#create-reward-reception) — subtracts points immediately
+1.  [Create Reward Reception](/api-reference/oauth/reward-receptions#create-reward-reception) — subtracts points immediately
 2.  Process payment
 3.  On success: done!
-4.  On failure: [Reverse Reward Reception](/v3/oauth/reward-receptions#reverse-reward-reception)
+4.  On failure: [Reverse Reward Reception](/api-reference/oauth/reward-receptions#reverse-reward-reception)
 
 Best when your POS can easily handle failed orders but lacks post-success hooks.
 
 ##### Option 2: Pre-Redeem → Collect on Success
 
-1.  [Create Reward Reception](/v3/oauth/reward-receptions#create-reward-reception) with `reward.pre_redeemable: true` — creates a Collectable Reward
+1.  [Create Reward Reception](/api-reference/oauth/reward-receptions#create-reward-reception) with `reward.pre_redeemable: true` — creates a Collectable Reward
 2.  Process payment
-3.  On success: [Collect Reward](/v3/oauth/collectable-rewards#collect-reward)
+3.  On success: [Collect Reward](/api-reference/oauth/collectable-rewards#collect-reward)
 4.  On failure: reward remains collectable for later
 
 Best when your POS can easily trigger an API call after a successful order. Allows customers to save rewards for later visits.
-
-4
-
-#### Redeeming Offers
-
-Similarly, when a customer wants to use a voucher or collectable reward (like a birthday offer), they'll see a confirmation screen. These offers could have conditions like minimum spend requirements and expiration dates.
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Redeem Offer
-
-€5 Discount
-
-Minimum spend: €15
-
-Redeem this offer now?
-
-[
-
-Redeem
-
-](/v3/tutorials/pos#reward-redeemed)
-
-API endpoint
-
-[
-
-Redeem Voucher
-
-](/v3/oauth/vouchers#redeem-voucher)[
-
-Redeem Collectable Reward
-
-](/v3/oauth/collectable-rewards#collect-reward)
-
-[
-
-Cancel
-
-](/v3/tutorials/pos#contact-overview)
-
-4
 
 #### Redeeming Offers
 
@@ -436,133 +84,31 @@ There are two common approaches for handling voucher redemption. Neither is inhe
 
 ##### Option 1: Lock → Redeem on Success
 
-1.  [Check Voucher Validity](/v3/oauth/vouchers#validate-voucher) , then [Lock Voucher](/v3/oauth/vouchers#lock-voucher) — reserves the voucher
+1.  [Check Voucher Validity](/api-reference/oauth/vouchers#validate-voucher) , then [Lock Voucher](/api-reference/oauth/vouchers#lock-voucher) — reserves the voucher
 2.  Process payment
-3.  On success: [Redeem Voucher](/v3/oauth/vouchers#redeem-voucher)
-4.  On failure: [Release Voucher](/v3/oauth/vouchers#release-voucher) (or let it expire)
+3.  On success: [Redeem Voucher](/api-reference/oauth/vouchers#redeem-voucher)
+4.  On failure: [Release Voucher](/api-reference/oauth/vouchers#release-voucher) (or let it expire)
 
 Best when your POS can easily trigger an API call after a successful order.
 
 ##### Option 2: Redeem → Reverse on Failure
 
-1.  [Redeem Voucher](/v3/oauth/vouchers#redeem-voucher) — immediately redeems
+1.  [Redeem Voucher](/api-reference/oauth/vouchers#redeem-voucher) — immediately redeems
 2.  Process payment
 3.  On success: done!
-4.  On failure: [Reverse Voucher Redemption](/v3/oauth/vouchers#reverse-voucher-redemption)
+4.  On failure: [Reverse Voucher Redemption](/api-reference/oauth/vouchers#reverse-voucher-redemption)
 
 Best when your POS can easily handle failed orders but lacks post-success hooks.
 
-5
-
 #### Checkout with Rewards Applied
 
 After rewards and offers are confirmed, they're applied to the order. The checkout screen shows the discounts applied (highlighted in green) and the updated total. This is where you'll process the final payment and record the transaction.
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Krabby Patty
-
-- € 9.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-€5 Discount
-
-- € 5.00
-
-Total
-
-€ 16.50
-
-[
-
-Pay € 16.50
-
-](/v3/tutorials/pos#order-paid)
-
-API endpoint
-
-[
-
-Create and Process Order
-
-](/v3/oauth/orders#create-and-process-order)[
-
-Redeem Voucher
-
-](/v3/oauth/vouchers#redeem-voucher)[
-
-Redeem Collectable Reward
-
-](/v3/oauth/collectable-rewards#collect-reward)
-
-5
-
-#### Checkout with Rewards Applied
-
-After rewards and offers are confirmed, they're applied to the order. The checkout screen shows the discounts applied (highlighted in green) and the updated total. This is where you'll process the final payment and record the transaction.
-
-6
 
 #### Order Complete
 
 After payment, show the customer how many points they earned from this transaction. This reinforces the value of the loyalty program and encourages future visits.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Order successfully paid
-
-Shells earned
-
-+ 49
-
-[
-
-Close
-
-](/v3/tutorials/pos#start)
-
-6
-
-#### Order Complete
-
-After payment, show the customer how many points they earned from this transaction. This reinforces the value of the loyalty program and encourages future visits.
-
-Clients often want to display the points earned and new balance on the receipt. The response from the [Create and Process Order](/v3/oauth/orders#create-and-process-order) endpoint includes this information.
+Clients often want to display the points earned and new balance on the receipt. The response from the [Create and Process Order](/api-reference/oauth/orders#create-and-process-order) endpoint includes this information.
 
 When creating Orders, the best practice is to create the Order as completely as you can. This includes linking Products and any Leat-actions that may have been undertaken in the Order process (e.g. Reward Redemptions, Voucher Redemptions, Giftcard Transactions etc.). Some best practices to take into account:
 
@@ -570,7 +116,7 @@ When creating Orders, the best practice is to create the Order as completely as 
 -   `order_amount, total_order_amount, total_discount_amount:` These are mainly for visual and reference purposes. When Orders are using in Order Actions (to make Points Transactions, for instance), these values will be largely ignored. To account for product-specific exclusions and rules, the order amounts used in calculations and actions will be calculated using the line items, charges and discounts. Still, please ensure these match the content to prevent any confusion.
 -   `line_items.external_identifier:` This is the unique identifier of this line item. Another line item of the same product should have their own unique identifier.
 -   `line_items.total_amount:` The total amount of a line items ought to be the line items' price times the quantity, minus the discount amount. The total amount does not include the total amounts of any sub line items. They are counted separately.
--   `line_items.product:` For a host of features in Leat, it's imperative the product is linked (if present). The external identifier counts as the main unique identifier of the product, which is of course static for the same product across multiple line items and orders. If no product yet exists for the external identifier, one will be created. However, to fully enable the Product filtering feature, it's highly recommended to create the entire [product library](/v3/oauth/products#create-product), including [categories](/v3/oauth/categories#create-category), upon integration installation.
+-   `line_items.product:` For a host of features in Leat, it's imperative the product is linked (if present). The external identifier counts as the main unique identifier of the product, which is of course static for the same product across multiple line items and orders. If no product yet exists for the external identifier, one will be created. However, to fully enable the Product filtering feature, it's highly recommended to create the entire [product library](/api-reference/oauth/products#create-product), including [categories](/api-reference/oauth/categories#create-category), upon integration installation.
 -   `line_items.sub_line_items:` Line items may include sub line items, like modifiers. **Note:** the total amounts of the sub line items count separately from the line item's total amount. Example: a line item for a 'Pizza Margherita' with a total amount of 1200 ($12) may include a sub line item for 'Extra Cheese' with a total amount of 100 ($1), which would bring the total order amount to 1600 ($16). The $1 from the sub line item is _not_ included in the total amount on the parent line item. Sub line items are to be linked to products in the same way as their parent line items.
 -   `line_items.result:` This is the 'Leat result' of this line item, if any exists. Examples of this is when a customer buys a Gift card or a Voucher. This would be reflected as a line item on the Order and the resulting Giftcard Transaction (usually created after payment has succeeded) can be linked as a result. Highly recommended to link if present.
 -   `applied_discounts:` If one or more discounts have been applied to the order, these should be added here. Discounts are either applied on an Order level, or on a (Sub)Line Item level. In the latter, the applied discount should also be reflected in the discount amount on the individual (sub) line item(s).
@@ -622,7 +168,7 @@ When an order is cancelled or (partially) returned, you'll need to correct the l
 
 ##### 1. Correcting Issued Points
 
-To correct points that were issued for a cancelled or returned order, use the [Create and Process Order Return](/v3/oauth/order-returns#create-and-process-order-return) endpoint. This will subtract the points that were originally awarded for the returned items.
+To correct points that were issued for a cancelled or returned order, use the [Create and Process Order Return](/api-reference/oauth/order-returns#create-and-process-order-return) endpoint. This will subtract the points that were originally awarded for the returned items.
 
 For partial returns, only include the returned line items — the system will calculate the correct point deduction.
 
@@ -630,18 +176,18 @@ For partial returns, only include the returned line items — the system will ca
 
 If rewards or vouchers were redeemed as part of the order, these need to be reversed separately. Each type has its own reversal endpoint:
 
--   [Reverse Reward Reception](/v3/oauth/reward-receptions#reverse-reward-reception) — restores the points and marks the reward as unredeemed
--   [Reverse Voucher Redemption](/v3/oauth/vouchers#reverse-voucher-redemption) — restores the voucher to its original state
--   [Reverse Reward Collection](/v3/oauth/collectable-rewards#reverse-collectable-reward-redemption) — restores a collected reward back to collectable status
+-   [Reverse Reward Reception](/api-reference/oauth/reward-receptions#reverse-reward-reception) — restores the points and marks the reward as unredeemed
+-   [Reverse Voucher Redemption](/api-reference/oauth/vouchers#reverse-voucher-redemption) — restores the voucher to its original state
+-   [Reverse Reward Collection](/api-reference/oauth/collectable-rewards#reverse-collectable-reward-redemption) — restores a collected reward back to collectable status
 
 ##### 3. Reversing Payment Transactions
 
 If the order was (partially) paid with giftcard balance or prepaid credit, those transactions also need to be reversed:
 
--   [Reverse Giftcard Transaction](/v3/oauth/giftcard-transactions#reverse-giftcard-transaction) — refunds the amount back to the giftcard
--   [Reverse Prepaid Transaction](/v3/oauth/prepaid-transactions#reverse-prepaid-transaction) — refunds the amount back to the customer's prepaid balance
+-   [Reverse Giftcard Transaction](/api-reference/oauth/giftcard-transactions#reverse-giftcard-transaction) — refunds the amount back to the giftcard
+-   [Reverse Prepaid Transaction](/api-reference/oauth/prepaid-transactions#reverse-prepaid-transaction) — refunds the amount back to the customer's prepaid balance
 
-**💡 Tip:** Store the transaction UUIDs (reward reception UUID, voucher redemption UUID, giftcard transaction UUID, prepaid transaction UUID) alongside your order data. This makes it easy to reverse the correct transactions when processing returns.
+**Tip:** Store the transaction UUIDs (reward reception UUID, voucher redemption UUID, giftcard transaction UUID, prepaid transaction UUID) alongside your order data. This makes it easy to reverse the correct transactions when processing returns.
 
 ---
 
@@ -649,169 +195,15 @@ If the order was (partially) paid with giftcard balance or prepaid credit, those
 
 Instead of identifying the customer first and then retrieving their vouchers, customers can also scan a voucher QR code directly. This is useful when customers receive vouchers via email or printed flyers.
 
-1
-
-#### Trigger Voucher Scan
-
-Similar to the main loyalty flow, a button triggers the voucher scanning flow. This could be a separate "VOUCHER" button next to the "REWARDS" button, or integrated into the same flow.
-
-[
-
-VOUCHER
-
-](/v3/tutorials/pos#scan-voucher)
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-1
-
 #### Trigger Voucher Scan
 
 Similar to the main loyalty flow, a button triggers the voucher scanning flow. This could be a separate "VOUCHER" button next to the "REWARDS" button, or integrated into the same flow.
 
 This flow is typically used when a customer presents a voucher code (from an email, flyer, or printed coupon) without first identifying themselves via their loyalty card.
 
-**Try it:** Click the green `Voucher` button on the POS screen to start the voucher scanning flow.
-
-2
-
 #### Scan Voucher QR Code
 
-The customer presents a voucher QR code (from an email, flyer, or printed coupon). Use the [Find Voucher](/v3/oauth/vouchers#find-voucher) endpoint to retrieve the voucher details using the scanned code.
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Scan voucher
-
-[
-
-SCAN
-
-ABC-123
-
-](/v3/tutorials/pos#voucher-found)
-
-API endpoint
-
-[
-
-Find Voucher
-
-](/v3/oauth/vouchers#find-voucher)
-
-[
-
-Close
-
-](/v3/tutorials/pos#start)
-
-2
-
-#### Scan Voucher QR Code
-
-The customer presents a voucher QR code (from an email, flyer, or printed coupon). Use the [Find Voucher](/v3/oauth/vouchers#find-voucher) endpoint to retrieve the voucher details using the scanned code.
-
-**Try it:** Hover over the scan area and click to simulate scanning a voucher QR code.
-
-3
-
-#### Link Customer (If Not Linked)
-
-If the voucher is not yet linked to a contact, prompt the customer to scan their loyalty card to link the voucher to their account. This use case is relatively rare, as most vouchers are linked to a contact upon creation.
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Scan identifier
-
-Unlinked voucher found:
-
-Free Krabby Patty
-
-Scan your identifier to claim this voucher
-
-[
-
-SCAN
-
-ABCD12345
-
-](/v3/tutorials/pos#redeem-scanned-voucher)
-
-API endpoint
-
-[
-
-Find Contact Identifier
-
-](/v3/oauth/contact-identifiers#find-contact-identifier)
-
-[
-
-Close
-
-](/v3/tutorials/pos#scan-voucher-flow)
-
-3
+The customer presents a voucher QR code (from an email, flyer, or printed coupon). Use the [Find Voucher](/api-reference/oauth/vouchers#find-voucher) endpoint to retrieve the voucher details using the scanned code.
 
 #### Link Customer (If Not Linked)
 
@@ -823,73 +215,11 @@ This process can also be used to link the contact to the order itself, so the cu
 
 **Note:** When redeeming an unlinked voucher, you'll need to pass the `contact_uuid` parameter to the Redeem Voucher API call to link the transaction to the customer.
 
-4
-
 #### Confirm & Redeem Voucher
 
 Show the voucher details and ask the customer to confirm redemption. The Promotion linked to the Voucher should contain custom attributes (like `discount_rule_id`) that enable the POS to apply the discount.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Redeem offer
-
-Free Krabby Patty
-
-Choice of original, double, or triple patty
-
-Redeem this offer now?
-
-[
-
-Redeem
-
-](/v3/tutorials/pos#reward-redeemed)
-
-API endpoint
-
-[
-
-Lock Voucher
-
-](/v3/oauth/vouchers#lock-voucher)[
-
-Redeem Voucher
-
-](/v3/oauth/vouchers#redeem-voucher)
-
-[
-
-Cancel
-
-](/v3/tutorials/pos#scan-voucher-flow)
-
-4
-
-#### Confirm & Redeem Voucher
-
-Show the voucher details and ask the customer to confirm redemption. The Promotion linked to the Voucher should contain custom attributes (like `discount_rule_id`) that enable the POS to apply the discount.
-
-Use [Lock Voucher](/v3/oauth/vouchers#lock-voucher) to reserve it, then [Redeem Voucher](/v3/oauth/vouchers#redeem-voucher) after successful payment.
+Use [Lock Voucher](/api-reference/oauth/vouchers#lock-voucher) to reserve it, then [Redeem Voucher](/api-reference/oauth/vouchers#redeem-voucher) after successful payment.
 
 **Note:** Applying discount logic to the cart is often the most complex part of the integration. See the [Custom Attributes](#custom-attributes) section for how to configure discount logic.
 
@@ -899,195 +229,29 @@ Use [Lock Voucher](/v3/oauth/vouchers#lock-voucher) to reserve it, then [Redeem 
 
 This flow covers selling physical giftcards at the POS. These are pre-printed cards (already registered in the system with a €0 balance) that the cashier grabs from behind the counter when a customer wants to purchase one. Digital giftcards can also be purchased, though this use case is less common for POS systems.
 
-1
-
 #### Trigger Giftcard Sale
 
 When a customer wants to buy a giftcard, the cashier clicks the "GIFTCARD" button to start the flow. The cashier then grabs a physical giftcard from behind the counter.
 
-[
-
-GIFTCARD
-
-](/v3/tutorials/pos#scan-giftcard-buy)
-
-Total
-
-€ 0.00
-
-1
-
-#### Trigger Giftcard Sale
-
-When a customer wants to buy a giftcard, the cashier clicks the "GIFTCARD" button to start the flow. The cashier then grabs a physical giftcard from behind the counter.
-
-**Try it:** Click the `Giftcard` button on the POS screen to start the giftcard sale flow.
-
-2
-
 #### Scan Giftcard
 
-The cashier scans the QR code on the physical giftcard. The system calls the [Find Giftcard](/v3/oauth/giftcards#find-giftcard) endpoint to retrieve the giftcard details and verify it has a €0 balance (i.e., it hasn't been sold yet).
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Scan giftcard
-
-[
-
-SCAN
-
-HT123ABC
-
-](/v3/tutorials/pos#giftcard-amount)
-
-API endpoint
-
-[
-
-Find Giftcard
-
-](/v3/oauth/giftcards#find-giftcard)
-
-[
-
-Close
-
-](/v3/tutorials/pos#trigger-giftcard-buy)
-
-2
-
-#### Scan Giftcard
-
-The cashier scans the QR code on the physical giftcard. The system calls the [Find Giftcard](/v3/oauth/giftcards#find-giftcard) endpoint to retrieve the giftcard details and verify it has a €0 balance (i.e., it hasn't been sold yet).
-
-3
+The cashier scans the QR code on the physical giftcard. The system calls the [Find Giftcard](/api-reference/oauth/giftcards#find-giftcard) endpoint to retrieve the giftcard details and verify it has a €0 balance (i.e., it hasn't been sold yet).
 
 #### Choose Amount
 
 The customer chooses how much credit to load onto the giftcard. Common options are preset amounts (€10, €25, €50, etc.) but a custom amount can also be entered.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Choose giftcard amount
-
-Giftcard
-
-HT123ABC
-
-Balance
-
-€ 0.00
-
-Select amount to load
-
-€ 10
-
-€ 25
-
-[
-
-€ 50
-
-](/v3/tutorials/pos#giftcard-added)
-
-€ 75
-
-€ 100
-
-Custom
-
-[
-
-Cancel
-
-](/v3/tutorials/pos#trigger-giftcard-buy)
-
-3
-
-#### Choose Amount
-
-The customer chooses how much credit to load onto the giftcard. Common options are preset amounts (€10, €25, €50, etc.) but a custom amount can also be entered.
-
-4
-
 #### Giftcard Added to Cart
 
 The giftcard appears as a line item in the cart for the chosen amount. The customer pays for the giftcard like any other product.
 
-Giftcard
-
-1
-
-€ 50.00
-
-Total
-
-€ 50.00
-
-Pay € 50.00
-
-API endpoint
-
-[
-
-Create Giftcard Transaction
-
-](/v3/oauth/giftcard-transactions#create-giftcard-transaction)
-
-4
-
-#### Giftcard Added to Cart
-
-The giftcard appears as a line item in the cart for the chosen amount. The customer pays for the giftcard like any other product.
-
-After successful payment, the system calls [Create Giftcard Transaction](/v3/oauth/giftcard-transactions#create-giftcard-transaction) with a **positive amount** to load the credit onto the giftcard.
+After successful payment, the system calls [Create Giftcard Transaction](/api-reference/oauth/giftcard-transactions#create-giftcard-transaction) with a **positive amount** to load the credit onto the giftcard.
 
 For digital giftcards (not physical cards), the flow is slightly different:
 
-1.  [Create Giftcard](/v3/oauth/giftcards#create-giftcard) — creates a new giftcard in the system
-2.  [Create Giftcard Transaction](/v3/oauth/giftcard-transactions#create-giftcard-transaction) — loads the purchased amount
-3.  [(Optional) Send Giftcard by Email](/v3/oauth/giftcards#send-giftcard-by-email) — sends the giftcard code to the recipient
+1.  [Create Giftcard](/api-reference/oauth/giftcards#create-giftcard) — creates a new giftcard in the system
+2.  [Create Giftcard Transaction](/api-reference/oauth/giftcard-transactions#create-giftcard-transaction) — loads the purchased amount
+3.  [(Optional) Send Giftcard by Email](/api-reference/oauth/giftcards#send-giftcard-by-email) — sends the giftcard code to the recipient
 
 ---
 
@@ -1095,193 +259,23 @@ For digital giftcards (not physical cards), the flow is slightly different:
 
 Customers can use their giftcard balance to pay for (part of) their order. This flow is triggered at the payment step.
 
-1
-
 #### Select Giftcard Payment
 
 At the payment step, the customer indicates they want to pay with a giftcard. The cashier selects the "GIFTCARD" payment method.
 
-Order #OR-00212
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total to pay
-
-€ 30.50
-
-Select payment method
-
-[
-
-GIFTCARD
-
-](/v3/tutorials/pos#scan-giftcard-pay)
-
-1
-
-#### Select Giftcard Payment
-
-At the payment step, the customer indicates they want to pay with a giftcard. The cashier selects the "GIFTCARD" payment method.
-
-**Try it:** Click the `Giftcard` payment button to start the giftcard payment flow.
-
-2
-
 #### Scan Giftcard
 
-The customer scans or enters their giftcard code (e.g., 'HT123ABC'). The system calls [Find Giftcard](/v3/oauth/giftcards#find-giftcard) to retrieve the current balance.
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Scan giftcard
-
-[
-
-SCAN
-
-HT123ABC
-
-](/v3/tutorials/pos#giftcard-confirm-pay)
-
-API endpoint
-
-[
-
-Find Giftcard
-
-](/v3/oauth/giftcards#find-giftcard)
-
-[
-
-Close
-
-](/v3/tutorials/pos#trigger-giftcard-pay)
-
-2
-
-#### Scan Giftcard
-
-The customer scans or enters their giftcard code (e.g., 'HT123ABC'). The system calls [Find Giftcard](/v3/oauth/giftcards#find-giftcard) to retrieve the current balance.
-
-**Try it:** Hover over the scan area and click to simulate scanning a giftcard.
-
-3
+The customer scans or enters their giftcard code (e.g., 'HT123ABC'). The system calls [Find Giftcard](/api-reference/oauth/giftcards#find-giftcard) to retrieve the current balance.
 
 #### Confirm Payment
 
 The system shows the giftcard balance and calculates how much will be deducted. The customer confirms they want to use their giftcard funds.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Pay with giftcard
-
-Giftcard
-
-HT123ABC
-
-Balance
-
-€ 75.00
-
-API endpoint
-
-[
-
-Find Giftcard
-
-](/v3/oauth/giftcards#find-giftcard)
-
-Order total€ 30.50
-
-Giftcard payment- € 30.50
-
-Order amount remaining€ 0.00
-
-New giftcard balance€ 44.50
-
-Confirm Payment
-
-API endpoint
-
-[
-
-Create Giftcard Transaction
-
-](/v3/oauth/giftcard-transactions#create-giftcard-transaction)
-
-[
-
-Cancel
-
-](/v3/tutorials/pos#trigger-giftcard-pay)
-
-3
-
-#### Confirm Payment
-
-The system shows the giftcard balance and calculates how much will be deducted. The customer confirms they want to use their giftcard funds.
-
-Upon confirmation, the system calls [Create Giftcard Transaction](/v3/oauth/giftcard-transactions#create-giftcard-transaction) with a **negative amount** to deduct from the balance.
+Upon confirmation, the system calls [Create Giftcard Transaction](/api-reference/oauth/giftcard-transactions#create-giftcard-transaction) with a **negative amount** to deduct from the balance.
 
 **Note:** If the giftcard balance doesn't cover the full order, the remaining amount can be paid with another payment method (card, cash, etc.).
 
-If the order is cancelled or fails after the giftcard transaction has been created, use the [Reverse Giftcard Transaction](/v3/oauth/giftcard-transactions#reverse-giftcard-transaction) endpoint to restore the giftcard's balance.
+If the order is cancelled or fails after the giftcard transaction has been created, use the [Reverse Giftcard Transaction](/api-reference/oauth/giftcard-transactions#reverse-giftcard-transaction) endpoint to restore the giftcard's balance.
 
 ---
 
@@ -1289,199 +283,25 @@ If the order is cancelled or fails after the giftcard transaction has been creat
 
 Prepaid credit is tied to a customer's account, not a physical card. Customers can top up their prepaid balance at the POS and use it for future purchases.
 
-1
-
 #### Trigger Prepaid Top-up
 
 When a customer wants to add credit to their prepaid balance, the cashier clicks the "PREPAID" button to start the flow.
-
-[
-
-PREPAID
-
-](/v3/tutorials/pos#scan-prepaid-buy)
-
-Total
-
-€ 0.00
-
-1
-
-#### Trigger Prepaid Top-up
-
-When a customer wants to add credit to their prepaid balance, the cashier clicks the "PREPAID" button to start the flow.
-
-**Try it:** Click the `Prepaid` button on the POS screen to start the prepaid top-up flow.
-
-2
 
 #### Identify Customer
 
 Since prepaid credit is tied to a customer account (not a physical card), the customer must first be identified by scanning their loyalty card or entering their details.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Identify customer for top-up
-
-[
-
-SCAN LOYALTY CARD
-
-SPONGE-001
-
-](/v3/tutorials/pos#prepaid-amount)
-
-API endpoint
-
-[
-
-Find Contact Identifier
-
-](/v3/oauth/contact-identifiers#find-contact-identifier)
-
-[
-
-Close
-
-](/v3/tutorials/pos#trigger-prepaid-buy)
-
-2
-
-#### Identify Customer
-
-Since prepaid credit is tied to a customer account (not a physical card), the customer must first be identified by scanning their loyalty card or entering their details.
-
-The system calls [Find Contact Identifier](/v3/oauth/contact-identifiers#find-contact-identifier) to retrieve the customer and their current prepaid balance.
-
-3
+The system calls [Find Contact Identifier](/api-reference/oauth/contact-identifiers#find-contact-identifier) to retrieve the customer and their current prepaid balance.
 
 #### Choose Amount
 
 The customer chooses how much credit to add to their prepaid balance. The screen shows their current balance and preset amount options.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Top up prepaid credit
-
-SpongeBob
-
-Golden Spatula
-
-Balance
-
-€ 12.50
-
-API endpoint
-
-[
-
-Get Prepaid Balance
-
-](/v3/oauth/contacts#get-prepaid-balance)
-
-Select amount to add
-
-€ 10
-
-€ 25
-
-[
-
-€ 50
-
-](/v3/tutorials/pos#prepaid-added)
-
-€ 75
-
-€ 100
-
-Custom
-
-[
-
-Cancel
-
-](/v3/tutorials/pos#trigger-prepaid-buy)
-
-3
-
-#### Choose Amount
-
-The customer chooses how much credit to add to their prepaid balance. The screen shows their current balance and preset amount options.
-
-4
-
 #### Top-up Added to Cart
 
 The prepaid top-up appears as a line item in the cart. The customer pays for it like any other product.
 
-Prepaid
-
-1
-
-€ 50.00
-
-Total
-
-€ 50.00
-
-Pay € 50.00
-
-API endpoint
-
-[
-
-Create Prepaid Transaction
-
-](/v3/oauth/prepaid-transactions#create-transaction)
-
-4
-
-#### Top-up Added to Cart
-
-The prepaid top-up appears as a line item in the cart. The customer pays for it like any other product.
-
-After successful payment, the system calls [Create Prepaid Transaction](/v3/oauth/prepaid-transactions#create-prepaid-transaction) with a **positive amount** to add credit to the customer's prepaid balance.
+After successful payment, the system calls [Create Prepaid Transaction](/api-reference/oauth/prepaid-transactions#create-prepaid-transaction) with a **positive amount** to add credit to the customer's prepaid balance.
 
 ---
 
@@ -1489,188 +309,20 @@ After successful payment, the system calls [Create Prepaid Transaction](/v3/oaut
 
 Customers who have prepaid credit on their account can use it to pay for (part of) their order. Since prepaid is tied to their account, the customer must already be identified.
 
-1
-
 #### Select Prepaid Payment
 
 At the payment step, if the customer has been identified and has prepaid credit, the "PREPAID" payment option becomes available. The cashier selects it to use the customer's balance.
-
-Order #OR-00212
-
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total to pay
-
-€ 30.50
-
-Select payment method
-
-[
-
-PREPAID
-
-](/v3/tutorials/pos#scan-prepaid-pay)
-
-1
-
-#### Select Prepaid Payment
-
-At the payment step, if the customer has been identified and has prepaid credit, the "PREPAID" payment option becomes available. The cashier selects it to use the customer's balance.
-
-**Try it:** Click the `Prepaid` payment button to start the prepaid payment flow.
-
-2
 
 #### Scan Identifier
 
 If the customer hasn't identified themselves yet at this point, they must do so before proceeding with the prepaid payment.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Identify customer
-
-[
-
-SCAN LOYALTY CARD
-
-SPONGE-001
-
-](/v3/tutorials/pos#prepaid-confirm-pay)
-
-API endpoint
-
-[
-
-Find Contact Identifier
-
-](/v3/oauth/contact-identifiers#find-contact-identifier)
-
-[
-
-Close
-
-](/v3/tutorials/pos#trigger-prepaid-pay)
-
-2
-
-#### Scan Identifier
-
-If the customer hasn't identified themselves yet at this point, they must do so before proceeding with the prepaid payment.
-
-3
-
 #### Confirm Payment
 
 The system shows the customer's prepaid balance and calculates how much will be deducted. The customer confirms they want to use their prepaid credit.
 
-Krabby Patty
-
-2
-
-€ 18.00
-
-Kelp Fries
-
-1
-
-€ 7.50
-
-Seafoam Soda
-
-2
-
-€ 5.00
-
-Total
-
-€ 30.50
-
-Pay with prepaid credit
-
-SpongeBob
-
-Golden Spatula
-
-Balance
-
-€ 75.00
-
-API endpoint
-
-[
-
-Get Prepaid Balance
-
-](/v3/oauth/contacts#get-prepaid-balance)
-
-Order total€ 30.50
-
-Prepaid payment- € 30.50
-
-Order amount remaining€ 0.00
-
-New prepaid balance€ 44.50
-
-Confirm Payment
-
-API endpoint
-
-[
-
-Create Prepaid Transaction
-
-](/v3/oauth/prepaid-transactions#create-transaction)
-
-[
-
-Cancel
-
-](/v3/tutorials/pos#trigger-giftcard-pay)
-
-3
-
-#### Confirm Payment
-
-The system shows the customer's prepaid balance and calculates how much will be deducted. The customer confirms they want to use their prepaid credit.
-
-Upon confirmation, the system calls [Create Prepaid Transaction](/v3/oauth/prepaid-transactions#create-prepaid-transaction) with a **negative amount** to deduct from the balance.
+Upon confirmation, the system calls [Create Prepaid Transaction](/api-reference/oauth/prepaid-transactions#create-prepaid-transaction) with a **negative amount** to deduct from the balance.
 
 **Note:** If the prepaid balance doesn't cover the full order, the remaining amount can be paid with another payment method (card, cash, etc.).
 
-If the order is cancelled or fails after the prepaid transaction has been created, use the [Reverse Prepaid Transaction](/v3/oauth/prepaid-transactions#reverse-transaction) endpoint to restore the customer's balance.
+If the order is cancelled or fails after the prepaid transaction has been created, use the [Reverse Prepaid Transaction](/api-reference/oauth/prepaid-transactions#reverse-transaction) endpoint to restore the customer's balance.

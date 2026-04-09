@@ -193,6 +193,135 @@ td.addRule('fencedCodeBlock', {
 });
 
 // ---------------------------------------------------------------------------
+// Post-processing helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Rewrites internal links from the old docs.leat.com URL format to the new
+ * docs structure under /api-reference/.
+ *
+ * Applied to all pages.
+ */
+function fixInternalLinks(body) {
+  return body
+    .replace(/\(\/v3\/oauth\//g, '(/api-reference/oauth/')
+    .replace(/\(\/v3\/tutorials\//g, '(/api-reference/tutorials/')
+    .replace(/\(\/v3\/registers\//g, '(/api-reference/registers/')
+    .replace(/\(\/v3\)/g, '(/api-reference)')
+    .replace(/\(\/v3\//g, '(/api-reference/')
+    // Also handle links with docs.leat.com prefix
+    .replace(/\(https:\/\/docs\.leat\.com\/v3\/oauth\//g, '(/api-reference/oauth/')
+    .replace(/\(https:\/\/docs\.leat\.com\/v3\/tutorials\//g, '(/api-reference/tutorials/')
+    .replace(/\(https:\/\/docs\.leat\.com\/v3\/registers\//g, '(/api-reference/registers/')
+    .replace(/\(https:\/\/docs\.leat\.com\/v3\)/g, '(/api-reference)')
+    .replace(/\(https:\/\/docs\.leat\.com\/v3\//g, '(/api-reference/');
+}
+
+/**
+ * Cleans up tutorial pages (pos, kiosk, order-at-table) that contain
+ * interactive UI previews which don't scrape well.
+ *
+ * Removes:
+ * - Duplicate sections (the interactive preview copies)
+ * - Orphaned standalone numbers ("1", "2", "3" on their own line)
+ * - Fake UI elements (cart items, button links pointing to anchors on the same page)
+ *
+ * Applied to pages in the 'tutorials' section (except migrate-to-v3).
+ */
+function cleanTutorialPage(body) {
+  const lines = body.split('\n');
+  const cleaned = [];
+
+  // Track headings we've already seen to detect duplicate sections
+  const seenHeadings = new Set();
+  let skipUntilNextHeading = false;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    // Remove orphaned standalone numbers (from step indicators in interactive previews)
+    if (/^\d{1,2}$/.test(trimmed)) {
+      continue;
+    }
+
+    // Remove fake UI cart items and anchor-only button links
+    // e.g. [Add to cart](#) or [Button Text](#some-anchor)
+    if (/^\[.*\]\(#[^)]*\)\s*$/.test(trimmed)) {
+      continue;
+    }
+
+    // Detect duplicate heading sections
+    const headingMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
+    if (headingMatch) {
+      const headingText = headingMatch[2].trim();
+      if (seenHeadings.has(headingText)) {
+        // This is a duplicate section — skip until next heading of same or higher level
+        skipUntilNextHeading = true;
+        continue;
+      }
+      seenHeadings.add(headingText);
+
+      if (skipUntilNextHeading) {
+        skipUntilNextHeading = false;
+      }
+    }
+
+    if (skipUntilNextHeading) {
+      continue;
+    }
+
+    cleaned.push(line);
+  }
+
+  return cleaned.join('\n')
+    // Collapse excessive blank lines left by removals
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+/**
+ * Cleans up the error-handling page where error code tables get scraped
+ * with everything incorrectly wrapped in backticks.
+ *
+ * Applied when outputPath matches 'getting-started/error-handling.mdx'.
+ */
+function cleanErrorHandlingPage(body) {
+  // Fix rows where the entire cell content is wrapped in backticks
+  // e.g. | `400` | `Bad Request` | `The request was invalid` |
+  // should be: | 400 | Bad Request | The request was invalid |
+  // But keep actual code values (like error codes) in backticks.
+
+  // Remove backticks wrapping plain English phrases in table cells
+  // Match table rows and selectively clean them
+  body = body.replace(/\|([^|]*)\|/g, (match, cell) => {
+    // Remove backticks from cells that contain full English descriptions
+    // (more than 2 words or containing spaces)
+    const trimmed = cell.trim();
+    if (/^`[^`]+`$/.test(trimmed)) {
+      const inner = trimmed.slice(1, -1);
+      // Keep backticks for: HTTP status codes, error code strings, URLs, paths
+      if (/^\d{3}$/.test(inner) || /^[A-Z_]+$/.test(inner) || inner.startsWith('/') || inner.startsWith('http')) {
+        return match; // keep backticks for code-like values
+      }
+      // Remove backticks from descriptive text
+      if (inner.includes(' ') && inner.length > 10) {
+        return `| ${inner} |`;
+      }
+    }
+    return match;
+  });
+
+  // Fix cases where backtick-wrapped content spans create broken markdown
+  // e.g. ``code`` → `code`
+  body = body.replace(/``([^`]+)``/g, '`$1`');
+
+  // Fix empty backtick pairs
+  body = body.replace(/`\s*`/g, '');
+
+  return body;
+}
+
+// ---------------------------------------------------------------------------
 // HTML → clean MDX conversion
 // ---------------------------------------------------------------------------
 
@@ -411,6 +540,12 @@ function extractDescription(markdown) {
  */
 function writeMeta() {
   const sections = {
+    // NOTE: The root meta.json lists 'oauth' and 'registers' as sections.
+    // generate-api-docs.mjs also writes files into the oauth/ directory
+    // (from the Postman/OpenAPI conversion). Both scripts share the same
+    // output directory (content/docs/api/) — run port-api-docs.mjs first
+    // to create the directory structure and meta.json files, then run
+    // generate-api-docs.mjs to add the OpenAPI-derived endpoint pages.
     root: {
       path: CONTENT_DIR,
       meta: {
@@ -583,7 +718,23 @@ async function main() {
     try {
       const html = await fetchPage(fullUrl);
       const innerEl = extractMain(html);
-      const mdx = pageToMdx(page.title, innerEl);
+      let mdx = pageToMdx(page.title, innerEl);
+
+      // --- Post-processing ---
+
+      // Fix internal links on all pages
+      mdx = fixInternalLinks(mdx);
+
+      // Clean up tutorial pages with interactive UI previews
+      const interactiveTutorials = ['tutorials/pos', 'tutorials/kiosk', 'tutorials/order-at-table'];
+      if (page.section === 'tutorials' && interactiveTutorials.some((t) => page.outputPath.includes(t))) {
+        mdx = cleanTutorialPage(mdx);
+      }
+
+      // Fix error table scraping on the error-handling page
+      if (page.outputPath === 'getting-started/error-handling.mdx') {
+        mdx = cleanErrorHandlingPage(mdx);
+      }
 
       if (DRY_RUN) {
         console.log(`[dry-run] Would write ${outFile.replace(ROOT + '/', '')}`);
