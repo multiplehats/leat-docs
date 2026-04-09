@@ -9,6 +9,8 @@ Vouchers are discount codes generated from your promotion rules in Leat. When a 
 
 ## How vouchers and promotion rules work together
 
+![Leat Promotions page showing (1) the list of promotion rules that generate voucher codes and (2) the About Promotions sidebar with sync information.](/images/wordpress-plugin/promotions-vouchers.png)
+
 Every voucher in Leat is attached to a promotion rule. That rule defines what the discount actually does: a percentage off, a fixed amount, free shipping, or a discount on specific products. It also controls things like minimum order value, whether the code can be combined with other coupons, and which products are eligible.
 
 When a voucher code is issued to a customer, it picks up all of those settings from the promotion rule. There's nothing to configure on the voucher itself. If you need to change how a voucher behaves, update the promotion rule in Leat and run a sync.
@@ -28,6 +30,8 @@ Customers don't need to log in anywhere or check a separate page. The code is ju
 ---
 
 ## Configuring when vouchers are created
+
+![Leat Commerce Settings page scrolled to the (1) Voucher settings section showing the Voucher Order Status dropdown and Cancel vouchers on these order statuses checkboxes.](/images/wordpress-plugin/commerce-voucher-settings.png)
 
 You choose which order status kicks off voucher creation. Head to **Leat > Settings > Voucher Settings** and look for the **Voucher Order Status** field. It defaults to `completed`, so vouchers are only issued once you mark an order as complete.
 

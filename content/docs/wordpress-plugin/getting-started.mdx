@@ -1,44 +1,50 @@
 ---
 title: Getting started
-description: Connect the Leat WooCommerce plugin to your account and set up your loyalty program.
+description: Install the Leat WooCommerce plugin, connect your account, and set up your loyalty program.
 ---
 
-This guide walks you through connecting the plugin to your Leat account, choosing your shop, setting up earn rules and rewards, and publishing a loyalty dashboard page in WordPress.
+This guide walks you through installing the plugin, connecting it to your Leat account, configuring earn rules and rewards, and publishing a loyalty dashboard page in WordPress.
 
 ---
 
 ## 1. Install and activate the plugin
 
-Install the Leat plugin from the WordPress plugin directory or by uploading the plugin zip file manually. Once activated, WordPress will redirect you to the onboarding screen automatically.
+1. In your WordPress admin, go to **Plugins > Add New**
+2. Search for **Leat for WooCommerce**
+3. Click **Install Now**, then **Activate**
 
-If you skip the onboarding screen or you are already on the plugin settings page, continue with the steps below.
+![Search for the Leat plugin in the WordPress plugin directory. Type "Leat for WooCommerce" in the search field (1), find the Leat plugin card (2), and click Install Now / Activate (3).](/images/wordpress-plugin/01-search-plugin.png)
 
-`TODO:SCREENSHOT - onboarding welcome screen`
+<Callout type="info">The plugin requires WooCommerce. If WooCommerce is not installed, you will be prompted to install it first.</Callout>
+
+After activation, the plugin appears in the **Plugins** list (1) and a new **Leat** menu item (2) is added to the WordPress admin sidebar.
+
+![The Leat plugin active in the Plugins list](/images/wordpress-plugin/02-plugin-activated.png)
 
 ---
 
 ## 2. Connect your Leat account
 
+After activating the plugin, go to **Leat** in the admin sidebar. The plugin opens its **Get Started** wizard which walks you through each step.
+
+![The Get Started onboarding wizard. The setup progress widget (1) tracks your completion, and the onboarding steps (2) guide you through each configuration task.](/images/wordpress-plugin/00-get-started.png)
+
 The plugin authenticates with your Leat account using a Personal Access Token (PAT). To create one:
 
 1. Go to [business.leat.com/apps/integrations/personal-access-tokens](https://business.leat.com/apps/integrations/personal-access-tokens)
-2. Create a new token and copy it
+2. Click **Create token** and copy the generated value
 
-`TODO:SCREENSHOT - PAT creation in the Leat dashboard`
+Then open **Leat > General** in the WordPress admin sidebar and paste the token into the **API Key** field. Click **Save settings**.
 
-Back in WordPress, go to **Leat > General Settings** and paste the token into the API key field.
-
-`TODO:SCREENSHOT - API key field in plugin settings`
+![General Settings page. Paste your Personal Access Token into the API Key field (1), then select your shop from the Shop ID dropdown (2).](/images/wordpress-plugin/03-general-settings.png)
 
 ---
 
 ## 3. Select your shop
 
-After saving your token, the plugin fetches the shops linked to your Leat account. Select the shop you want to connect to this WordPress installation from the dropdown that appears.
+After saving your API key, the **API Connection** indicator turns green and the **Shop ID** dropdown populates with the shops linked to your Leat account. Select the shop you want to connect to this WordPress installation.
 
 If you have multiple locations, each one is listed here. You can read more about adding branches and shops to your account in the [Leat support docs](https://support.leat.com/en/articles/9375131-how-to-add-a-branch-or-shop-to-your-account).
-
-`TODO:SCREENSHOT - shop selection dropdown`
 
 Save your settings. The plugin is now connected.
 
@@ -46,28 +52,28 @@ Save your settings. The plugin is now connected.
 
 ## 4. Configure earn rules
 
-Go to **Leat > Loyalty Program** in the WordPress admin. At the top of this page you will find your earn rules, which control how customers collect credits.
+Go to **Leat > Earn Rules** in the plugin sidebar. Earn rules control how customers collect credits, for example a fixed amount per order or a percentage of the order total.
 
-[TODO: link to earn rules setup doc]
+![Earn rules settings page. Each earn rule (1) shows its status and rule type (2).](/images/wordpress-plugin/05-earn-rules.png)
 
-`TODO:SCREENSHOT - earn rules section in Loyalty Program settings`
+For a full walkthrough on configuring earn rules, see [Earn rules](/docs/wordpress-plugin/earn-rules).
 
 ---
 
 ## 5. Sync your rewards
 
-Below the earn rules on the same **Loyalty Program** page, you will see your rewards. These come from [business.leat.com/loyalty/rewards](https://business.leat.com/loyalty/rewards) in the Leat dashboard.
+Go to **Leat > Spend Rules** in the plugin sidebar. Spend rules are your rewards — they define what customers can redeem their credits for.
 
-Click **Sync now** to pull your rewards into the plugin.
+Rewards are pulled from [business.leat.com/loyalty/rewards](https://business.leat.com/loyalty/rewards) in the Leat dashboard. Click **Import now** in the sidebar to sync them into the plugin.
 
-`TODO:SCREENSHOT - rewards section with Sync now button`
+![Spend rules page. Your synced rewards appear as rows (1). Click Import now (2) to pull the latest rewards from your Leat dashboard.](/images/wordpress-plugin/06-spend-rules.png)
 
 A few things to keep in mind after syncing:
 
-- All rewards are inactive by default after syncing. You need to activate and configure each one individually before customers can use them.
-- Any new rewards you add in the Leat dashboard will not appear in WordPress until you sync again.
+- All rewards are inactive by default. You need to activate and configure each one individually before customers can use them.
+- New rewards added in the Leat dashboard will not appear in WordPress until you import again.
 
-For a full walkthrough on configuring individual rewards, see [TODO: link to rewards setup doc].
+For a full walkthrough on configuring individual rewards, see [Rewards](/docs/wordpress-plugin/rewards).
 
 ---
 
@@ -78,15 +84,15 @@ With earn rules and rewards configured, the last step is building a page where c
 1. Go to **Pages > Add New** in WordPress
 2. Open the Gutenberg block inserter (the **+** button)
 3. Switch to the **Patterns** tab and look for the Leat category
-4. Insert the pattern that fits your needs, for example the **Complete Dashboard** pattern to get everything on one page
+4. Insert the pattern that fits your needs — for example the **Complete Loyalty Dashboard** pattern to get everything on one page
 
-`TODO:SCREENSHOT - Gutenberg block inserter showing Leat patterns`
+Alternatively, go to **Leat > Customer Dashboard** in the plugin sidebar to configure the dashboard page and select which page to use.
+
+![Customer Dashboard settings. Use the page selector (1) to choose which page serves as the loyalty dashboard. The display toggles (2) control which sections are visible to customers.](/images/wordpress-plugin/07-customer-dashboard.png)
 
 Customize the layout to match your store, then publish the page.
 
-`TODO:SCREENSHOT - published loyalty page preview`
-
-For a full guide on all available blocks and patterns, see [TODO: link to Gutenberg blocks doc].
+For a full guide on all available blocks and patterns, see [Dashboard](/docs/wordpress-plugin/dashboard).
 
 ---
 
@@ -94,4 +100,12 @@ For a full guide on all available blocks and patterns, see [TODO: link to Gutenb
 
 At this point your loyalty program is live. Customers can earn credits on orders, redeem rewards at checkout, and view their account on the page you just published.
 
-From here you can dig into more advanced configuration like dashboard appearance, vouchers, gift cards, and tiers under the other settings pages in the **Leat** admin menu.
+From here you can dig into more advanced configuration under the other pages in the **Leat** admin menu:
+
+- [Gift cards](/docs/wordpress-plugin/gift-cards) — Sell and accept gift cards through WooCommerce
+- [Vouchers](/docs/wordpress-plugin/vouchers) — Issue voucher codes through promotion rules
+- [Tiers](/docs/wordpress-plugin/tiers) — Display your loyalty tier structure
+- [Referrals](/docs/wordpress-plugin/referrals) — Give customers a referral link
+- [Promotions](/docs/wordpress-plugin/promotions) — Run promotional campaigns
+- [Checkout](/docs/wordpress-plugin/checkout) — Points display, reward redemption, and gift cards at checkout
+- [Settings](/docs/wordpress-plugin/settings) — Full reference for all plugin settings

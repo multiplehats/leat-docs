@@ -1,27 +1,36 @@
-import { docs } from 'collections/server';
+import { gettingStartedDocs, wordpressDocs, apiDocs } from 'collections/server';
 import { type InferPageType, loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 
-// See https://fumadocs.dev/docs/headless/source-api for more info
-export const source = loader({
-  baseUrl: '/docs',
-  source: docs.toFumadocsSource(),
+export const gettingStartedSource = loader({
+  baseUrl: '/',
+  source: gettingStartedDocs.toFumadocsSource(),
   plugins: [lucideIconsPlugin()],
 });
 
-export function getPageImage(page: InferPageType<typeof source>) {
-  const segments = [...page.slugs, 'image.webp'];
+export const wordpressSource = loader({
+  baseUrl: '/wordpress-plugin',
+  source: wordpressDocs.toFumadocsSource(),
+  plugins: [lucideIconsPlugin()],
+});
 
+export const apiReferenceSource = loader({
+  baseUrl: '/api-reference',
+  source: apiDocs.toFumadocsSource(),
+  plugins: [lucideIconsPlugin()],
+});
+
+type AnySource = typeof gettingStartedSource | typeof wordpressSource | typeof apiReferenceSource;
+
+export function getPageImage(page: InferPageType<AnySource>, sectionPrefix = '') {
+  const segments = [...page.slugs, 'image.webp'];
   return {
     segments,
-    url: `/og/docs/${segments.join('/')}`,
+    url: `/og${sectionPrefix}/${segments.join('/')}`,
   };
 }
 
-export async function getLLMText(page: InferPageType<typeof source>) {
+export async function getLLMText(page: InferPageType<AnySource>) {
   const processed = await page.data.getText('processed');
-
-  return `# ${page.data.title}
-
-${processed}`;
+  return `# ${page.data.title}\n\n${processed}`;
 }
