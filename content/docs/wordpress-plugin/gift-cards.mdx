@@ -5,13 +5,47 @@ description: Sell gift cards in your WooCommerce store and let customers redeem 
 
 Gift cards in Leat are regular WooCommerce products with one extra behaviour: when a customer buys one, Leat generates a gift card code and emails it to the recipient. That recipient can then enter the code at your checkout to spend the balance.
 
----
+Before creating gift card products in WooCommerce, you need to set up a gift card program in your Leat dashboard first. This is what lets you select a program in the WooCommerce product editor later on. Follow the [Manage Gift Cards and Prepaid Value](https://www.leat.com/uk/resources/academy/courses/manage-gift-cards-and-prepaid-value) course in the Leat Academy to get that configured.
 
 ## Setting up a gift card product
 
-Open any product in the WooCommerce editor, scroll down to **Product data**, and find the Leat gift card options. Turn on the **Gift card product** toggle and save.
+A gift card is a regular WooCommerce product with one extra tab in the editor. You can set one up as a simple product with a single price, or as a variable product so customers can pick from multiple values.
 
-That's it for the product side. The gift card itself gets created automatically once the order hits the right status.
+### Simple product (single price)
+
+Create a new WooCommerce product (or open an existing one) and set the product type to **Simple product**. Set your price under the **General** tab, then click the **Leat: Giftcard Settings** tab.
+
+![The product data panel showing the Virtual checkbox (1) at the top. In the Leat: Giftcard Settings tab, select a Giftcard Program (2). The Enable Sale Price section (3) lets you offer promotional gift cards where the card value exceeds what the customer pays.](/images/wordpress-plugin/giftcard-simple-product.png)
+
+- **Virtual** (1) - Check this if the gift card is delivered digitally. It removes the shipping fields since there's nothing physical to ship.
+- **Giftcard Program** (2) - Select which Leat gift card program this product belongs to. Programs are managed in your Leat dashboard.
+- **Enable Sale Price** (3) - When enabled, the gift card value is based on the regular price instead of what the customer actually pays. For example, if the regular price is 50 and the sale price is 25, the customer pays 25 but receives a 50 gift card. Only use this for promotions where you intentionally give more value than the payment.
+
+<Callout type="warning">If you enable sale pricing, be aware that the revenue won't match the gift card liability. The difference needs to be tracked as a promotional expense. Check that your accounting integration can handle this before turning it on.</Callout>
+
+### Variable product (multiple prices)
+
+If you want customers to choose from different gift card values (like 10, 20, 50), create a **Variable product** instead. Set up the Leat gift card tab the same way as above: select the program and configure the sale price option if needed.
+
+The difference is in the **Variations** tab. Create a variation for each price tier and set the **Regular price** (1) on each one. Check **Virtual** (2) on each variation if the gift card is digital.
+
+![An expanded variation showing the Regular price field (1) set to 10, and the Virtual checkbox (2) that should be enabled for digital gift cards.](/images/wordpress-plugin/giftcard-variable-variation.png)
+
+### Name Your Price (custom amount)
+
+If you want customers to enter their own gift card amount, you can use the [WPC Name Your Price](https://wordpress.org/plugins/wpc-name-your-price/) plugin. This turns the gift card into an open-value product where customers type in whatever amount they like, within limits you define. This is the only Name Your Price plugin Leat integrates with, so other similar plugins won't work.
+
+Set the product up as a **Simple product** and enter a **Regular price** that matches where you want pricing to start. Check **Virtual** if the gift card is digital, and configure the **Leat: Giftcard Settings** tab the same way as a regular simple gift card.
+
+Then open the **Name Your Price** tab in the product data panel. Select **Overwrite** (1) so this product uses its own Name Your Price rules instead of the global defaults. Set the **Type** (2) to **Input** so customers get a free-text field. Under **Price constraints** (3), configure the minimum, step, and maximum values to control the allowed range.
+
+![The Name Your Price tab with Overwrite selected (1), Type set to Input (2), and the price constraints section (3) showing Minimum, Step, and Maximum fields.](/images/wordpress-plugin/giftcard-nyp-product.png)
+
+For example, setting a minimum of 10, a step of 5, and a maximum of 1000 means customers can enter 10, 15, 20, and so on up to 1000.
+
+<Callout type="warning">Before setting up your first Name Your Price gift card, go to **WP Clever > Name Your Price** in the WordPress admin sidebar and set **Status** (1) to **Disable** under the General tab. This prevents the Name Your Price fields from appearing on all products by default. You then enable it per product using the Overwrite option.</Callout>
+
+![The WPC Name Your Price global settings page with the Status dropdown (1) set to Disable.](/images/wordpress-plugin/giftcard-nyp-global-settings.png)
 
 ---
 
@@ -40,6 +74,8 @@ If you'd rather skip that field, turn on **Disable gift card recipient email** u
 There's also an optional message field customers can use to add a personal note to the gift card email. It's optional, so customers can leave it blank.
 
 To remove the field from checkout entirely, enable **Disable gift card recipient message** under **Leat > Gift Card Settings**.
+
+<Callout type="warning">If you allow customers to enter a custom message, make sure to include the `{{ custom.message }}` merge tag in your gift card email template in the [Leat dashboard](https://business.leat.com). Without it, the message won't appear in the email even though the customer filled it in. All custom merge tags must use the `custom.` prefix.</Callout>
 
 ---
 

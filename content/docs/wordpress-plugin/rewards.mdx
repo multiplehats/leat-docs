@@ -5,19 +5,17 @@ description: Sync your Leat rewards into WordPress and let customers redeem cred
 
 Rewards are what your customers spend their credits on, things like a discount on their next order or a free product. You create and manage them in the Leat business dashboard at [business.leat.com/loyalty/rewards](https://business.leat.com/loyalty/rewards). After creating them there, you sync them into WordPress, where they appear as spend rules. From that point you can activate each one and fine-tune how it behaves at checkout.
 
----
-
 ## How rewards get into WordPress
 
-Leat rewards don't automatically appear in WordPress. You bring them over manually by running a sync.
+When you first connect your API key and shop, Leat automatically pulls your rewards into WordPress. After that initial sync, any rewards you add or change in the Leat dashboard need to be synced manually.
 
-To sync your rewards:
+To run a manual sync:
 
 1. Go to **Leat > Loyalty Program** in your WordPress admin.
 2. Click the **Sync now** button.
 3. Wait a moment for it to finish. Your rewards will show up in the spend rules list.
 
-The sync pulls everything from Leat and creates or updates the matching spend rules in WordPress. Added a new reward in Leat? Just run the sync again.
+The sync pulls everything from Leat and creates or updates the matching spend rules in WordPress.
 
 ![The spend rules list (1) shows your synced rewards. Click Import now (2) in the sidebar to pull the latest rewards from Leat.](/images/wordpress-plugin/spend-rules-overview.png)
 
@@ -27,7 +25,7 @@ The sync pulls everything from Leat and creates or updates the matching spend ru
 
 ## Why rewards are inactive after syncing
 
-Freshly synced rewards land in WordPress as drafts. They're not visible to customers yet. This is on purpose. A new reward might need a minimum spend requirement, a usage limit, or a expiry date before it's ready. You get a chance to sort all that out before anything goes live.
+Freshly synced rewards land in WordPress as drafts. They're not visible to customers yet. This is on purpose. A new reward might need a minimum spend requirement or a usage limit before it's ready. You get a chance to sort all that out before anything goes live.
 
 Take a few minutes to open each reward after syncing and check that the settings look right.
 
@@ -50,13 +48,21 @@ Need to pull it back? Set it to draft again. It disappears from the dashboard st
 
 ## Configuring a reward
 
+Click on any reward in the spend rules list to open its configuration form.
+
+![The reward detail view showing the Title (1), Label, Description, and Instructions fields.](/images/wordpress-plugin/spend-rules-detail.png)
+
+![The lower section of the reward form showing Discount type (1), Minimum purchase amount (2), and Status (3).](/images/wordpress-plugin/spend-rules-config.png)
+
 Each spend rule has settings that control how the coupon behaves when a customer redeems it:
 
-- **Credits cost** - How many credits the customer needs to spend to claim the reward. This comes from Leat, set when you created the reward there.
-- **Minimum spend** - The minimum cart total needed for the generated coupon to apply. Set this to 50, for example, and the coupon won't work on orders under $50.
-- **Individual use** - Stops the coupon from being combined with other coupons. Good if you don't want customers stacking discounts.
-- **Usage limit per customer** - Caps how many times one customer can redeem the reward. Leave it blank for no limit.
-- **Expiry** - An optional end date after which generated coupon codes stop working. Handy for seasonal or limited-time offers.
+- **Title** (1) - The reward name, synced from Leat.
+- **Label** - The text shown to customers on the reward card.
+- **Description** - A short explanation of what the reward offers.
+- **Discount type** (1) - Whether the coupon applies a percentage or fixed amount discount.
+- **Discount value** - The size of the discount.
+- **Minimum purchase amount** (2) - The minimum cart total needed for the generated coupon to apply. Set this to 50, for example, and the coupon won't work on orders under $50.
+- **Status** (3) - Whether the reward is visible to customers or not.
 
 <Callout type="info">The credits cost lives in Leat, not in WordPress. To change what a reward costs, update it in your Leat dashboard and run a sync.</Callout>
 

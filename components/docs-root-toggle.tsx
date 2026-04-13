@@ -1,23 +1,23 @@
 import type { SidebarTab } from 'fumadocs-ui/utils/get-sidebar-tabs';
-import { BookOpen, Plug, Code } from 'lucide-react';
+import { Compass, ShoppingBag, Braces } from 'lucide-react';
 
 export const docsRootTabs: SidebarTab[] = [
   {
     title: 'Getting Started',
     description: 'Introduction to Leat',
     url: '/',
-    icon: <BookOpen />,
+    icon: <Compass className="size-full" />,
   },
   {
-    title: 'WordPress Plugin',
+    title: 'WooCommerce Plugin',
     description: 'WooCommerce integration',
     url: '/wordpress-plugin',
-    icon: <Plug />,
+    icon: <ShoppingBag className="size-full" />,
   },
   {
     title: 'API Reference',
     description: 'REST API documentation',
     url: '/api-reference',
-    icon: <Code />,
+    icon: <Braces className="size-full" />,
   },
 ];

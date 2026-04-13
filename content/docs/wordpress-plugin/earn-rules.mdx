@@ -5,13 +5,21 @@ description: Configure what customers see on their loyalty dashboard about how t
 
 Earn rules control what shows up under the "Earn" section of your customers' loyalty dashboard. They're how you tell customers what actions will earn them credits. You manage all of them in your WordPress admin under **Leat > Loyalty Program**.
 
----
-
 ## Finding earn rules
 
 Go to **Leat > Earn Rules** in your WordPress admin sidebar. Your earn rules are listed there showing each rule's title and current status, so you can quickly see what's live and what's still sitting as a draft.
 
-![The earn rules list (1) shows each rule with its status. The help panel (2) links to the Leat dashboard for creating new rules.](/images/wordpress-plugin/earn-rules-overview.png)
+![The earn rules list shows each rule with its title and status. Click Add earn rule (1) to create a new one.](/images/wordpress-plugin/earn-rules-overview.png)
+
+When you click **Add earn rule**, a modal appears where you pick the rule type. The available types are:
+
+- **Like on Facebook**
+- **Follow on TikTok**
+- **Follow on Instagram**
+- **Create Account**
+- **Place Order**
+
+Pick a type and give it a title. The title is internal, used only in the admin list to help you tell rules apart.
 
 ---
 
@@ -21,7 +29,7 @@ There are two types: an order-based rule and social action rules.
 
 ### The order-based earn rule
 
-The order-based earn rule is a single rule that tells customers how they earn credits when they shop. Think of it as a description card on the dashboard. It's purely cosmetic, so it describes your program but doesn't actually award credits itself. The real credit calculation happens automatically in the background when an order reaches the right status.
+The order-based earn rule is a single rule that tells customers how they earn credits when they shop. Think of it as a description card on the dashboard. It's purely cosmetic, so it describes your program but doesn't actually award credits itself. The real credit calculation happens automatically in the background when an order reaches the right status, as long as **Enable order processing** is turned on in the Loyalty Program settings.
 
 This rule has a few fields worth knowing about:
 
@@ -37,24 +45,26 @@ Social action rules reward customers for doing things outside of making a purcha
 
 Each social action rule can only be claimed once per customer. Once they claim it, the credits land in their account and the card shows as claimed so they know it's done.
 
+<Callout type="warning">Due to the nature of social platforms and their API limitations, Leat cannot fully verify whether a customer actually completed the action (for example, whether they truly followed your account or liked a post). Credits are awarded on claim, so these rules work on a trust basis.</Callout>
+
 Some common examples:
 
-- Follow us on Instagram (50 credits)
-- Subscribe to our newsletter (100 credits)
-- Leave a product review (75 credits)
+- Follow us on Instagram (5 credits)
+- Subscribe to our newsletter (10 credits)
+- Leave a product review (15 credits)
 
 ---
 
 ## Configuring an earn rule
 
-Click on any earn rule in the list (1) to open it. You'll find these fields:
+Click on any earn rule in the list to expand its configuration form.
 
-![Click an earn rule to expand its configuration form.](/images/wordpress-plugin/earn-rules-config.png)
+![The earn rule form showing the Title field (1), Credits field (2), and Rule settings section (3) with the Instagram handle.](/images/wordpress-plugin/earn-rules-config.png)
 
-- **Title** - The rule name shown to customers.
-- **Description** - A sentence or two about what the customer needs to do or what they'll get.
-- **Credits** - The credit amount awarded when the rule is claimed (for social action rules) or displayed (for the order rule).
-- **Icon or image** - An optional image that appears on the rule card.
+- **Title** (1) - An internal title used in the admin to identify the rule. Customers see the Label text instead.
+- **Label** - The text shown to customers on the earn rule card. Supports template variables like `{{ credits }}` and `{{ credits_currency }}`.
+- **Credits** (2) - The credit amount awarded when the rule is claimed (for social action rules) or displayed (for the order rule).
+- **Rule settings** (3) - Extra configuration specific to the rule type. For example, the "Follow on Instagram" rule has an **Instagram handle** field.
 - **Status** - Whether the rule is visible to customers or not.
 
 Fill in the fields and save. The rule won't show up on the customer dashboard until the status is set to active.
@@ -74,6 +84,13 @@ If you want to pull a rule off the dashboard without deleting it, just set it ba
 ## The Earn Rules List block
 
 The Earn Rules List is a Gutenberg block that shows your active earn rules on any page. You'll typically drop it onto your loyalty dashboard page. Each rule appears as a card with its title, description, credit value, and a claim button for social action rules.
+
+You can add it in two ways:
+
+- **As a block** - Open the block inserter (**+**) in the editor, search for "Earn Rules List", and drop the `leat/earn-rules-list` block onto your page.
+- **As a pattern** - Open the block inserter, switch to the **Patterns** tab, and look for **Earn Rules Section** under the **Leat** category. This pattern wraps the block in a styled section with a heading and description, ready to go.
+
+For a full walkthrough on working with Leat blocks and patterns, see the [Customer Dashboard](/docs/wordpress-plugin/dashboard) guide.
 
 There are a few display settings you can tweak in the block editor:
 
