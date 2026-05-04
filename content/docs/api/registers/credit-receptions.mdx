@@ -51,37 +51,37 @@ Accept
 
 Body
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `REQUIRED`
 
 The UUID of the Contact for whom the Credit Reception is to be created.
 
-`credits``number`
+`credits` `number`
 
 `REQUIRED_IF`
 
 Number of Credits, required if unit_value is not set. Overrides any Loyalty Rules.
 
-`unit_value``number`
+`unit_value` `number`
 
 `REQUIRED_IF`
 
 Value of the Unit to be given. This parameter is required if credits is not set. Subject to any Loyalty Rules.
 
-`unit_name``string`
+`unit_name` `string`
 
 `OPTIONAL`
 
 Name of the Unit for the corresponding value. If both unit_name and credits are not set, then the default unit (purchase_amount) is used.
 
-`contact_identifier_value``string`
+`contact_identifier_value` `string`
 
 `OPTIONAL`
 
 The value of the Contact Identifier linked to the Contact for whom the Credit Reception is to be created.
 
-`pos_transaction_uuid``string`
+`pos_transaction_uuid` `string`
 
 `OPTIONAL`
 
@@ -211,7 +211,7 @@ Accept
 
 Params
 
-`credit_reception_uuid``string`
+`credit_reception_uuid` `string`
 
 `REQUIRED`
 
@@ -266,19 +266,19 @@ Accept
 
 Params
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `OPTIONAL`
 
 The UUID of the Contact for whom the credits are to be calculated.
 
-`unit_value``number`
+`unit_value` `number`
 
 `REQUIRED`
 
 Value for which credits are to be calculated. Subject to any Loyalty Rules.
 
-`unit_name``string`
+`unit_name` `string`
 
 `OPTIONAL`
 

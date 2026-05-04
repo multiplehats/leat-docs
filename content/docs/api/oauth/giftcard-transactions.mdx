@@ -29,37 +29,37 @@ Accept
 
 Input parameters
 
-`perPage``number`
+`perPage` `number`
 
 `optional`
 
 Limit of records to retrieve. Default: 10; Maximum: 100.
 
-`page``number`
+`page` `number`
 
 `optional`
 
 Page to retrieve. Default: 1.
 
-`giftcard_hash``string`
+`giftcard_hash` `string`
 
 `optional`
 
 Retrieve transactions for a specific giftcard
 
-`giftcard_program_uuid``string`
+`giftcard_program_uuid` `string`
 
 `optional`
 
 Retrieve transactions for a specific giftcard program
 
-`shop_uuid``string`
+`shop_uuid` `string`
 
 `optional`
 
 Retrieve transactions performed at a specific Shop
 
-`sort``string`
+`sort` `string`
 
 `optional`
 
@@ -69,7 +69,7 @@ Possible values:
 
 `created_at`'Sort by creation date. Prefix with '-' for descending.
 
-`created_at``array`
+`created_at` `array`
 
 `optional`
 
@@ -306,25 +306,25 @@ Accept
 
 Body
 
-`giftcard_uuid``string`
+`giftcard_uuid` `string`
 
 `REQUIRED`
 
 The UUID of the Giftcard you want to create the transaction for.
 
-`amount_in_cents``integer`
+`amount_in_cents` `integer`
 
 `REQUIRED`
 
 The amount in cents with which the Giftcard is to be incremented or decremented. Supply a negative amount for a decrementation.
 
-`shop_uuid``string`
+`shop_uuid` `string`
 
 `REQUIRED`
 
 UUID of the Shop where the Giftcard Transaction has taken place.
 
-`custom_attributes``array`
+`custom_attributes` `array`
 
 `OPTIONAL`
 
@@ -404,7 +404,7 @@ Accept
 
 Params
 
-`giftcard_transaction_uuid``string`
+`giftcard_transaction_uuid` `string`
 
 `REQUIRED`
 
@@ -468,7 +468,7 @@ Accept
 
 Params
 
-`giftcard_transaction_uuid``string`
+`giftcard_transaction_uuid` `string`
 
 `REQUIRED`
 

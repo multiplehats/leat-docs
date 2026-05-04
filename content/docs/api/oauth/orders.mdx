@@ -67,19 +67,19 @@ Accept
 
 Input parameters
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 A unique identifier from your system
 
-`reference``string`
+`reference` `string`
 
 `optional`
 
 A human readable identifier from your system, for reference purposes only
 
-`status``string`
+`status` `string`
 
 `required`
 
@@ -95,7 +95,7 @@ Possible values:
 
 `CANCELLED`Order was cancelled before completion
 
-`payment_status``string`
+`payment_status` `string`
 
 `required`
 
@@ -109,37 +109,37 @@ Possible values:
 
 `PAID`Payment successful
 
-`total_order_amount``number`
+`total_order_amount` `number`
 
 `required`
 
 Total order amount, including all discounts and charges, in the currency's lowest denomination.
 
-`order_amount``number`
+`order_amount` `number`
 
 `optional`
 
 Sum of total amounts of all (sub) line items – including item-based discounts – before order-based discounts and charges, in the currency's lowest denomination.
 
-`total_discount_amount``number`
+`total_discount_amount` `number`
 
 `optional`
 
 Total discount amount, in the currency's lowest denomination
 
-`currency``string`
+`currency` `string`
 
 `optional`
 
 Order currency in ISO 4217 format; defaults to Account's default currency
 
-`paid_at``string`
+`paid_at` `string`
 
 `optional`
 
 The date and time this Order was paid, in ISO 8601 format
 
-`completed_at``string`
+`completed_at` `string`
 
 `optional`
 
@@ -153,7 +153,7 @@ The date and time this Order was completed, in ISO 8601 format
 
 Contact who made the Order
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
@@ -167,7 +167,7 @@ UUID of the Contact
 
 Location where the Order took place
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
@@ -181,37 +181,37 @@ UUID of the Business Profile
 
 List of Products in this Order
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 A unique identifier for this Line Item
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Line Item
 
-`price``number`
+`price` `number`
 
 `required`
 
 Price per unit of this Line Item
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
 Total amount of this Line Item, in the currency's lowest denomination, after discounts
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
@@ -225,7 +225,7 @@ Discount amount of this Line Item, in the currency's lowest denomination
 
 Associated Product, which enables the Product filtering feature, optional but highly recommended.
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -239,13 +239,13 @@ Unique identifier to identify the Product, Product will be created using externa
 
 Resulting Leat object, if applicable. Possible options: Giftcard Transaction, Prepaid Transaction and Voucher.
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
 UUID used to identify the resulting Leat object
 
-`type``string`
+`type` `string`
 
 `required`
 
@@ -267,37 +267,37 @@ Possible values:
 
 List of Sub Line Items of this Line Item
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 A unique identifier for this Sub Line Item
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Sub Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Sub Line Item
 
-`price``number`
+`price` `number`
 
 `required`
 
 Price per unit of this Sub Line Item
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
 Total amount of this Sub Line Item, in the currency's lowest denomination, after discounts
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
@@ -311,7 +311,7 @@ Discount amount of this Sub Line Item, in the currency's lowest denomination
 
 Associated Product, which enables the Product filtering feature, optional but highly recommended.
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -325,25 +325,25 @@ Unique identifier to identify the Product, Product will be created using externa
 
 List of Discounts applied to this Order
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 Unique identifier to the Discount
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Discount
 
-`amount``number`
+`amount` `number`
 
 `required`
 
 Resulting monetary discount amount in the currency's lowest denomination
 
-`type``string`
+`type` `string`
 
 `optional`
 
@@ -355,13 +355,13 @@ Possible values:
 
 `ABSOLUTE`For absolute discounts
 
-`value``number`
+`value` `number`
 
 `optional`
 
 The value of either the percentage or absolute discount
 
-`applied_to``string`
+`applied_to` `string`
 
 `required`
 
@@ -381,7 +381,7 @@ Possible values:
 
 List of Line Items to which this Discount was applied
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -395,7 +395,7 @@ Unique identifier to the Line Item with which it's identified under line_items
 
 List of Sub Line Items to which this Discount was applied
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -409,7 +409,7 @@ Unique identifier to the Sub Line Item with which it's identified under sub_line
 
 List of Charges to which this Discount was applied
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -423,13 +423,13 @@ Unique identifier to the Charge with which it's identified under charges
 
 Corresponding Leat Offer if applicable. Possible options: Reward Redemption, Collectable Reward Redemption and Voucher Redemption.
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
 UUID used to identify the Leat offer redemption
 
-`type``string`
+`type` `string`
 
 `required`
 
@@ -451,13 +451,13 @@ Possible values:
 
 Any charges not included as line items. E.g. gratuity, service charges or shipping
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 Unique identifier to the Charge
 
-`type``string`
+`type` `string`
 
 `optional`
 
@@ -465,25 +465,25 @@ Unique identifier to the Charge
 
 Deprecated: Please use charge_definition instead.
 
-`name``string`
+`name` `string`
 
 `required`
 
 A human readable reference to the charge
 
-`amount``number`
+`amount` `number`
 
 `optional`
 
 The cost of the charge, before discounts, in the currency's lowest denomination
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
 The discount amount, in the currency's lowest denomination
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
@@ -509,7 +509,7 @@ Default definitions:
 
 `TAX`Separate tax charges. Do not add if taxes are already included in line item total amounts.
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -523,13 +523,13 @@ Unique identifier to identify the Charge Definition, Charge Definition will be c
 
 Any payments made for this Order using Leat objects. Note: currently accepts Giftcard Transactions and Prepaid Transactions only.
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
 UUID used to identify the Leat Payment
 
-`type``string`
+`type` `string`
 
 `required`
 
@@ -694,19 +694,19 @@ Accept
 
 Input parameters
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 A unique identifier from your system
 
-`reference``string`
+`reference` `string`
 
 `optional`
 
 A human readable identifier from your system, for reference purposes only
 
-`status``string`
+`status` `string`
 
 `required`
 
@@ -722,7 +722,7 @@ Possible values:
 
 `CANCELLED`Order was cancelled before completion
 
-`payment_status``string`
+`payment_status` `string`
 
 `required`
 
@@ -736,37 +736,37 @@ Possible values:
 
 `PAID`Payment successful
 
-`total_order_amount``number`
+`total_order_amount` `number`
 
 `required`
 
 Total order amount, including all discounts and charges, in the currency's lowest denomination.
 
-`order_amount``number`
+`order_amount` `number`
 
 `optional`
 
 Sum of total amounts of all (sub) line items – including item-based discounts – before order-based discounts and charges, in the currency's lowest denomination.
 
-`total_discount_amount``number`
+`total_discount_amount` `number`
 
 `optional`
 
 Total discount amount, in the currency's lowest denomination
 
-`currency``string`
+`currency` `string`
 
 `optional`
 
 Order currency in ISO 4217 format; defaults to Account's default currency
 
-`paid_at``string`
+`paid_at` `string`
 
 `optional`
 
 The date and time this Order was paid, in ISO 8601 format
 
-`completed_at``string`
+`completed_at` `string`
 
 `optional`
 
@@ -780,7 +780,7 @@ The date and time this Order was completed, in ISO 8601 format
 
 Contact who made the Order
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
@@ -794,7 +794,7 @@ UUID of the Contact
 
 Location where the Order took place
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
@@ -808,37 +808,37 @@ UUID of the Business Profile
 
 List of Products in this Order
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 A unique identifier for this Line Item
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Line Item
 
-`price``number`
+`price` `number`
 
 `required`
 
 Price per unit of this Line Item
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
 Total amount of this Line Item, in the currency's lowest denomination, after discounts
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
@@ -852,7 +852,7 @@ Discount amount of this Line Item, in the currency's lowest denomination
 
 Associated Product, which enables the Product filtering feature, optional but highly recommended.
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -866,13 +866,13 @@ Unique identifier to identify the Product, Product will be created using externa
 
 Resulting Leat object, if applicable. Possible options: Giftcard Transaction, Prepaid Transaction and Voucher.
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
 UUID used to identify the resulting Leat object
 
-`type``string`
+`type` `string`
 
 `required`
 
@@ -894,37 +894,37 @@ Possible values:
 
 List of Sub Line Items of this Line Item
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 A unique identifier for this Sub Line Item
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Sub Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Sub Line Item
 
-`price``number`
+`price` `number`
 
 `required`
 
 Price per unit of this Sub Line Item
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
 Total amount of this Sub Line Item, in the currency's lowest denomination, after discounts
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
@@ -938,7 +938,7 @@ Discount amount of this Sub Line Item, in the currency's lowest denomination
 
 Associated Product, which enables the Product filtering feature, optional but highly recommended.
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -952,25 +952,25 @@ Unique identifier to identify the Product, Product will be created using externa
 
 List of Discounts applied to this Order
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 Unique identifier to the Discount
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Discount
 
-`amount``number`
+`amount` `number`
 
 `required`
 
 Resulting monetary discount amount in the currency's lowest denomination
 
-`type``string`
+`type` `string`
 
 `optional`
 
@@ -982,13 +982,13 @@ Possible values:
 
 `ABSOLUTE`For absolute discounts
 
-`value``number`
+`value` `number`
 
 `optional`
 
 The value of either the percentage or absolute discount
 
-`applied_to``string`
+`applied_to` `string`
 
 `required`
 
@@ -1008,7 +1008,7 @@ Possible values:
 
 List of Line Items to which this Discount was applied
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -1022,7 +1022,7 @@ Unique identifier to the Line Item with which it's identified under line_items
 
 List of Sub Line Items to which this Discount was applied
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -1036,7 +1036,7 @@ Unique identifier to the Sub Line Item with which it's identified under sub_line
 
 List of Charges to which this Discount was applied
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -1050,13 +1050,13 @@ Unique identifier to the Charge with which it's identified under charges
 
 Corresponding Leat Offer if applicable. Possible options: Reward Redemption, Collectable Reward Redemption and Voucher Redemption.
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
 UUID used to identify the Leat offer redemption
 
-`type``string`
+`type` `string`
 
 `required`
 
@@ -1078,13 +1078,13 @@ Possible values:
 
 Any charges not included as line items. E.g. gratuity, service charges or shipping
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 Unique identifier to the Charge
 
-`type``string`
+`type` `string`
 
 `optional`
 
@@ -1092,25 +1092,25 @@ Unique identifier to the Charge
 
 Deprecated: Please use charge_definition instead.
 
-`name``string`
+`name` `string`
 
 `required`
 
 A human readable reference to the charge
 
-`amount``number`
+`amount` `number`
 
 `optional`
 
 The cost of the charge, before discounts, in the currency's lowest denomination
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
 The discount amount, in the currency's lowest denomination
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
@@ -1136,7 +1136,7 @@ Default definitions:
 
 `TAX`Separate tax charges. Do not add if taxes are already included in line item total amounts.
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -1150,13 +1150,13 @@ Unique identifier to identify the Charge Definition, Charge Definition will be c
 
 Any payments made for this Order using Leat objects. Note: currently accepts Giftcard Transactions and Prepaid Transactions only.
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
 UUID used to identify the Leat Payment
 
-`type``string`
+`type` `string`
 
 `required`
 
@@ -1293,7 +1293,7 @@ Accept
 
 Input parameters
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
@@ -1338,7 +1338,7 @@ Accept
 
 Input parameters
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
@@ -1469,7 +1469,7 @@ Accept
 
 Input parameters
 
-`status``string`
+`status` `string`
 
 `optional`
 
@@ -1485,7 +1485,7 @@ Possible values:
 
 `CANCELLED`Order was cancelled before completion
 
-`payment_status``string`
+`payment_status` `string`
 
 `optional`
 
@@ -1624,7 +1624,7 @@ Accept
 
 Input parameters
 
-`status``string`
+`status` `string`
 
 `optional`
 
@@ -1638,7 +1638,7 @@ Possible values:
 
 `COMPLETED`When created
 
-`payment_status``string`
+`payment_status` `string`
 
 `optional`
 
@@ -1652,25 +1652,25 @@ Possible values:
 
 `PAID`Payment successful
 
-`total_order_amount``number`
+`total_order_amount` `number`
 
 `required`
 
 Total order amount, after discounts and other charges, in the currency's lowest denomination
 
-`order_amount``number`
+`order_amount` `number`
 
 `optional`
 
 Total order amount, before discounts and other charges, in the currency's lowest denomination
 
-`total_discount_amount``number`
+`total_discount_amount` `number`
 
 `optional`
 
 Total discount amount, in the currency's lowest denomination
 
-`currency``string`
+`currency` `string`
 
 `optional`
 
@@ -1684,7 +1684,7 @@ Order currency in ISO 4217 format; defaults to Account's default currency
 
 The Contact for this Order. If not given, Contact-based rules cannot be applied
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
@@ -1698,7 +1698,7 @@ UUID of the Contact
 
 Location where the Order takes place
 
-`uuid``string`
+`uuid` `string`
 
 `required`
 
@@ -1712,31 +1712,31 @@ UUID of the Business Profile
 
 List of Products in this Order
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Line Item
 
-`price``number`
+`price` `number`
 
 `required`
 
 Price per unit of this Line Item
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
 Total amount of this Line Item, in the currency's lowest denomination
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
@@ -1750,13 +1750,13 @@ Discount amount of this Line Item, in the currency's lowest denomination
 
 Associated Product
 
-`uuid``string`
+`uuid` `string`
 
 `optional`
 
 UUID to the Product
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `optional`
 
@@ -1770,31 +1770,31 @@ Unique identifier to the Product with which it's registered in Leat
 
 List of Sub Line Items of this Line Item
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Sub Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Sub Line Item
 
-`price``number`
+`price` `number`
 
 `required`
 
 Price per unit of this Sub Line Item
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
 Total amount of this Sub Line Item, in the currency's lowest denomination
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
@@ -1808,13 +1808,13 @@ Discount amount of this Sub Line Item, in the currency's lowest denomination
 
 Associated Product
 
-`uuid``string`
+`uuid` `string`
 
 `optional`
 
 UUID to the Product
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `optional`
 
@@ -1828,19 +1828,19 @@ Unique identifier to the Product with which it's registered in Leat
 
 List of Discounts applied to this Order
 
-`name``string`
+`name` `string`
 
 `required`
 
 Name of the Discount
 
-`amount``number`
+`amount` `number`
 
 `required`
 
 Resulting monetary discount amount in the currency's lowest denomination
 
-`type``string`
+`type` `string`
 
 `optional`
 
@@ -1852,13 +1852,13 @@ Possible values:
 
 `ABSOLUTE`For absolute discounts
 
-`value``number`
+`value` `number`
 
 `optional`
 
 The value of either the percentage or absolute discount
 
-`applied_to``string`
+`applied_to` `string`
 
 `required`
 
@@ -1880,25 +1880,25 @@ Possible values:
 
 Any charges not included as line items. E.g. gratuity, service charges or shipping
 
-`name``string`
+`name` `string`
 
 `required`
 
 A human readable reference to the charge
 
-`amount``number`
+`amount` `number`
 
 `optional`
 
 The cost of the charge, before discounts, in the currency's lowest denomination
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
 The discount amount, in the currency's lowest denomination
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
@@ -1924,13 +1924,13 @@ Default definitions:
 
 `TAX`Separate tax charges. Do not add if taxes are already included in line item total amounts.
 
-`uuid``string`
+`uuid` `string`
 
 `required if undefined`
 
 UUID to identify the Charge Definition
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required if undefined`
 

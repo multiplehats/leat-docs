@@ -29,13 +29,13 @@ Accept
 
 Body
 
-`type``number`
+`type` `number`
 
 `REQUIRED`
 
 Giftcard type - 0: Physical, 1: Digital. Only the creation of Digital Giftcards is supported at this time.
 
-`giftcard_program_uuid``string`
+`giftcard_program_uuid` `string`
 
 `REQUIRED`
 
@@ -112,19 +112,19 @@ Accept
 
 Params
 
-`giftcard_program_uuid``string`
+`giftcard_program_uuid` `string`
 
 `OPTIONAL`
 
 The UUID of the Giftcard Program for which you want to retrieve Giftcards.
 
-`page``integer`
+`page` `integer`
 
 `OPTIONAL`
 
 The page number.
 
-`limit``integer`
+`limit` `integer`
 
 `OPTIONAL`
 
@@ -220,7 +220,7 @@ Accept
 
 Params
 
-`hash``string`
+`hash` `string`
 
 `REQUIRED`
 
@@ -282,19 +282,19 @@ Accept
 
 Body
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `REQUIRED`
 
 The Contact to whom the giftcard email is to be sent.
 
-`email_uuid``string`
+`email_uuid` `string`
 
 `OPTIONAL`
 
 The email that is to be used to send the giftcard. If none is given, the system will attempt to use any valid email in the account. Email must contain the 'giftcard.hash' personalisation token.
 
-`merge_tags``array`
+`merge_tags` `array`
 
 `OPTIONAL`
 

@@ -25,31 +25,31 @@ Accept
 
 Params
 
-`promotion_uuid``string`
+`promotion_uuid` `string`
 
 `OPTIONAL`
 
 UUID of the Promotion for which the Vouchers are to be retrieved.
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `OPTIONAL`
 
 UUID of the Contact for which the Vouchers are to be retrieved.
 
-`status``string`
+`status` `string`
 
 `OPTIONAL`
 
 Status of the Vouchers, options: ACTIVE, REDEEMED, EXPIRED, DEACTIVATED, INACTIVE and LOCKED.
 
-`limit``number`
+`limit` `number`
 
 `OPTIONAL`
 
 Number of Vouchers to retrieve (min: 0, max: 500, default: 30).
 
-`page``number`
+`page` `number`
 
 `OPTIONAL`
 
@@ -1150,43 +1150,43 @@ Accept
 
 Body
 
-`promotion_uuid``string`
+`promotion_uuid` `string`
 
 `REQUIRED`
 
 UUID of the Promotion for which the Voucher is to be created.
 
-`code``string`
+`code` `string`
 
 `OPTIONAL`
 
 The unique code of the Voucher which will serve as its identifier. If not given, a random code will be automatically generated.
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `OPTIONAL`
 
 The Contact's UUID to be linked to this Voucher. If not given, the recipient will need to identify themselves to use the Voucher.
 
-`expiration_date``string`
+`expiration_date` `string`
 
 `OPTIONAL`
 
 The Vouchers expiration date in ISO 8601 format. Dates are stored in UTC time. If not given, Promotion validity rules apply.
 
-`activation_date``string`
+`activation_date` `string`
 
 `OPTIONAL`
 
 The Vouchers activation date in ISO 8601 format. Dates are stored in UTC time. If not given, Promotion validity rules apply.
 
-`total_redemptions_allowed``integer`
+`total_redemptions_allowed` `integer`
 
 `OPTIONAL`
 
 Number of times this specific Voucher can be redeemed. If not given, Promotion type and redemptions per voucher will apply.
 
-`custom_attributes``array`
+`custom_attributes` `array`
 
 `OPTIONAL`
 
@@ -1281,37 +1281,37 @@ Accept
 
 Body
 
-`promotion_uuid``string`
+`promotion_uuid` `string`
 
 `REQUIRED`
 
 UUID of the Promotion for which the Vouchers are to be created.
 
-`quantity``integer`
+`quantity` `integer`
 
 `REQUIRED`
 
 The number of Vouchers you want to generate (min: 1, max: 500)."
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `OPTIONAL`
 
 The Contact's UUID to be linked to the batch of Vouchers.
 
-`expiration_date``string`
+`expiration_date` `string`
 
 `OPTIONAL`
 
 The expiration date for the batch of Vouchers in ISO 8601 format. Dates are stored in UTC time. If not given, promotion validity rules apply.
 
-`activation_date``string`
+`activation_date` `string`
 
 `OPTIONAL`
 
 The activation date for the batch of Vouchers in ISO 8601 format. Dates are stored in UTC time. If not given, promotion validity rules apply.
 
-`custom_attributes``array`
+`custom_attributes` `array`
 
 `OPTIONAL`
 
@@ -1376,7 +1376,7 @@ Accept
 
 Body
 
-`code``string`
+`code` `string`
 
 `REQUIRED`
 
@@ -1456,7 +1456,7 @@ Accept
 
 Params
 
-`voucher_uuid``string`
+`voucher_uuid` `string`
 
 `REQUIRED`
 
@@ -1464,19 +1464,19 @@ The UUID of the Voucher that you want to update.
 
 Body
 
-`status``string`
+`status` `string`
 
 `REQUIRED`
 
 Can be either ACTIVE or DEACTIVATED.
 
-`custom_attributes``array`
+`custom_attributes` `array`
 
 `OPTIONAL`
 
 Additional Custom Attributes as a key-value array.
 
-`expiration_date``string`
+`expiration_date` `string`
 
 `OPTIONAL`
 
@@ -1553,19 +1553,19 @@ Accept
 
 Input parameters
 
-`voucher_uuid``string`
+`voucher_uuid` `string`
 
 `required`
 
 The UUID of the Voucher to check
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `required if no Contact linked`
 
 The UUID of the Contact who would redeem the Voucher
 
-`shop_uuid``string`
+`shop_uuid` `string`
 
 `required`
 
@@ -1599,25 +1599,25 @@ Accept
 
 Body
 
-`code``string`
+`code` `string`
 
 `REQUIRED`
 
 The unique code of the Voucher which will serve as its identifier
 
-`shop_uuid``string`
+`shop_uuid` `string`
 
 `REQUIRED`
 
 UUID of the Shop through which the voucher is redeemed.
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `REQUIRED_IF`
 
 Not required if Contact is already assigned to Voucher, but could serve as identity check if given nevertheless. In case no Contact is assigned to the Voucher, the contact_uuid must be supplied.
 
-`release_key``string`
+`release_key` `string`
 
 `OPTIONAL`
 
@@ -1721,7 +1721,7 @@ Accept
 
 Params
 
-`voucher_uuid``string`
+`voucher_uuid` `string`
 
 `REQUIRED`
 
@@ -1803,7 +1803,7 @@ Accept
 
 Params
 
-`voucher_uuid``string`
+`voucher_uuid` `string`
 
 `REQUIRED`
 
@@ -1811,7 +1811,7 @@ The UUID of the Voucher that you want to release.
 
 Body
 
-`release_key``string`
+`release_key` `string`
 
 `REQUIRED`
 
@@ -1881,7 +1881,7 @@ Accept
 
 Params
 
-`uuid``string`
+`uuid` `string`
 
 `REQUIRED`
 
@@ -1927,31 +1927,31 @@ Accept
 
 Body
 
-`code``string`
+`code` `string`
 
 `REQUIRED`
 
 The unique code of the Voucher which will serve as its identifier
 
-`number_of_times``integer`
+`number_of_times` `integer`
 
 `REQUIRED`
 
 Number of times the Voucher is to be redeemed (min: 1, max: 50). Note: Only multi-use Vouchers can be used here.
 
-`contact_uuid``string`
+`contact_uuid` `string`
 
 `REQUIRED_IF`
 
 Not required if Contact is already assigned to Voucher, but could serve as identity check if given nevertheless. In case no Contact is assigned to the Voucher, the contact_uuid must be supplied.
 
-`shop_uuid``string`
+`shop_uuid` `string`
 
 `REQUIRED`
 
 The Shop or Business Profile where the Voucher is redeemed
 
-`release_key``string`
+`release_key` `string`
 
 `OPTIONAL`
 

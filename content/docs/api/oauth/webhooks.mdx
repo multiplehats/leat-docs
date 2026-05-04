@@ -25,13 +25,13 @@ Accept
 
 Params
 
-`event_type``string`
+`event_type` `string`
 
 `OPTIONAL`
 
 Only retrieve Webhook Subscription of a specific event type (options: see available webhook event types).
 
-`status``string`
+`status` `string`
 
 `OPTIONAL`
 
@@ -106,25 +106,25 @@ Accept
 
 Body
 
-`name``string`
+`name` `string`
 
 `REQUIRED`
 
 A name given to the subscription for internal purposes.
 
-`event_type``string`
+`event_type` `string`
 
 `REQUIRED`
 
 The event type to listen to, can only choose from available event types.
 
-`url``string`
+`url` `string`
 
 `REQUIRED`
 
 The endpoint to which webhook data is to be sent.
 
-`secret``string`
+`secret` `string`
 
 `OPTIONAL`
 
@@ -179,7 +179,7 @@ Accept
 
 Params
 
-`webhook_subscription_uuid``string`
+`webhook_subscription_uuid` `string`
 
 `REQUIRED`
 
@@ -235,7 +235,7 @@ Accept
 
 Params
 
-`webhook_subscription_uuid``string`
+`webhook_subscription_uuid` `string`
 
 `REQUIRED`
 
@@ -243,25 +243,25 @@ The UUID of the Webhook Subscription you want to update.
 
 Body
 
-`name``string`
+`name` `string`
 
 `OPTIONAL`
 
 A name given to the subscription for internal purposes.
 
-`url``string`
+`url` `string`
 
 `OPTIONAL`
 
 The endpoint to which webhook data is to be sent.
 
-`status``string`
+`status` `string`
 
 `OPTIONAL`
 
 The subscription's status (options: ACTIVE, INACTIVE).
 
-`attributes``array`
+`attributes` `array`
 
 `REQUIRED | OPTIONAL`
 
@@ -321,7 +321,7 @@ Accept
 
 Params
 
-`webhook_subscription_uuid``string`
+`webhook_subscription_uuid` `string`
 
 `REQUIRED`
 

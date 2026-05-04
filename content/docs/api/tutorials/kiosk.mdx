@@ -22,9 +22,7 @@ The flows below describe the typical integration patterns, but the exact impleme
 
 This flow covers the core loyalty experience: identifying customers, displaying their rewards, and processing redemptions. Hover over the interactive previews to see which API endpoints are used at each step.
 
-1
-
-#### Identifying Customers
+#### 1. Identifying Customers
 
 On a kiosk, customers identify themselves by scanning their loyalty card. Best practice is to prompt customers directly at the start screen of the kiosk.
 
@@ -32,9 +30,7 @@ There should be a button or prompt for a customer to scan their member card, pre
 
 Unlike POS systems, entering email addresses is impractical on kiosk hardware, so identification is typically limited to scanning a QR code or entering a loyalty card number.
 
-2
-
-#### Customer Overview
+#### 2.Customer Overview
 
 Once identified, the customer sees their loyalty information: tier status, point balance, available offers (vouchers and collectable rewards), and redeemable rewards. Hover over each section to see which API endpoints provide this data.
 
@@ -44,9 +40,7 @@ Once identified, the customer sees their loyalty information: tier status, point
 -   Disable the button if the customer has insufficient points
 -   On kiosks, consider larger touch targets for easier interaction
 
-3
-
-#### Redeeming Rewards
+#### 3. Redeeming Rewards
 
 When a customer selects a reward, they see a confirmation screen. This is important on self-service kiosks to prevent accidental redemptions.
 
@@ -70,9 +64,7 @@ Best when your Kiosk can easily handle failed orders but lacks post-success hook
 
 Best when your Kiosk can easily trigger an API call after a successful order. Allows customers to save rewards for later visits.
 
-4
-
-#### Redeeming Offers
+#### 4. Redeeming Offers
 
 When a customer selects a voucher or collectable reward, they see a confirmation screen. This is important on self-service kiosks to prevent accidental redemptions.
 
@@ -85,15 +77,11 @@ For kiosks, we recommend the **Lock → Redeem** approach:
 
 This prevents vouchers from being permanently consumed if the customer abandons their order.
 
-4
-
-#### Offers Applied
+#### 4. Offers Applied
 
 After payment, show the customer how many points they earned. When the customer was identified via their loyalty card, you can directly award points to their account.
 
-5
-
-#### Order Paid
+#### 5. Order Paid
 
 After payment, show the customer how many points they earned. When the customer was identified via their loyalty card, you can directly award points to their account.
 
@@ -148,23 +136,17 @@ Use [Reverse Voucher Redemption](/api-reference/oauth/vouchers#reverse-voucher-r
 
 Customers can scan a voucher QR code directly at the kiosk without first identifying themselves. This is useful for promotional vouchers received via email, flyers, or printed coupons.
 
-1
-
-#### Trigger Voucher Scan
+#### 1. Trigger Voucher Scan
 
 Sometime during the ordering process, allow the customer to add a voucher. This is often done during the check-out step, but could also be at any other point before payment.
 
 This flow is typically used when a customer has a voucher code from an external source (email campaign, flyer, receipt) and wants to redeem it using the Voucher's QR-code.
 
-2
-
-#### Scan Voucher QR Code
+#### 2. Scan Voucher QR Code
 
 The customer scans the voucher QR code or enters the code manually. The system retrieves the voucher details using the [Find Voucher](/api-reference/oauth/vouchers#find-voucher) endpoint.
 
-3
-
-#### Apply Voucher
+#### 3. Apply Voucher
 
 The system displays the voucher details and the customer confirms they want to apply it to their order.
 
@@ -180,9 +162,7 @@ Some vouchers may not be linked to a customer account (e.g., promotional voucher
 
 Consider offering to link the voucher to the customer's account for a better experience on future visits.
 
-4
-
-#### Voucher Applied
+#### 4. Voucher Applied
 
 Add the discount logic to the Order, then finalise the redemption once the order was successfully paid.
 
@@ -203,21 +183,15 @@ Display clear error messages if the voucher cannot be applied.
 
 Customers can use their giftcard balance to pay for (part of) their order at the kiosk. This is typically offered as a payment option during checkout.
 
-1
-
-#### Select Giftcard Payment
+#### 1. Select Giftcard Payment
 
 At checkout, the customer selects "Giftcard" as their payment method. This triggers the giftcard scanning flow.
 
-2
-
-#### Scan Giftcard
+#### 2. Scan Giftcard
 
 The customer scans their giftcard QR code or enters the code manually. The system retrieves the giftcard balance using the [Find Giftcard](/api-reference/oauth/giftcards#find-giftcard) endpoint.
 
-3
-
-#### Confirm Payment
+#### 3. Confirm Payment
 
 The system displays the giftcard balance and calculates how much will be deducted. The customer confirms the payment.
 
@@ -233,17 +207,13 @@ If the order is cancelled or fails after the giftcard transaction has been creat
 
 Customers who have prepaid credit on their account can use it to pay for (part of) their order. Since prepaid is tied to their account, the customer must be identified first (typically through the loyalty flow).
 
-1
-
-#### Select Prepaid Payment
+#### 1. Select Prepaid Payment
 
 At checkout, if the customer has been identified and has prepaid credit, the "Prepaid" payment option becomes available. The customer can see their available balance before selecting this option.
 
 **Note:** Unlike giftcards, prepaid credit requires customer identification. On kiosks, this typically happens through the loyalty card scan in the main flow.
 
-2
-
-#### Confirm Payment
+#### 2. Confirm Payment
 
 The system displays the customer's prepaid balance and calculates how much will be deducted. The customer confirms the payment.
 

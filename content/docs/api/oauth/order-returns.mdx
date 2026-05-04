@@ -37,25 +37,25 @@ Input parameters
 
 The corresponding original Order for this Order Return
 
-`uuid``string`
+`uuid` `string`
 
 `required if external_identifier is missing`
 
 UUID of the Order
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required if uuid is missing`
 
 External identifier of the Order
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 A unique identifier from your system
 
-`status``string`
+`status` `string`
 
 `required`
 
@@ -75,31 +75,31 @@ Possible values:
 
 List of Line Items to be returned
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 External identifier of the Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Line Item
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
 Discount amount of the Line Item to be returned
 
-`total_amount``number`
+`total_amount` `number`
 
 `optional`
 
 Total amount of the Line Item to be returned (after discounts). If not given, remaining quantity and price will be used to calculate the total amount to be returned, discounts may be ignored.
 
-`reason``string`
+`reason` `string`
 
 `optional`
 
@@ -113,31 +113,31 @@ The reason that the Line Item was returned
 
 List of Sub Line Items that should be returned
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 External identifier of the Sub Line Item
 
-`quantity``number`
+`quantity` `number`
 
 `required`
 
 Quantity of the Sub Line Item
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
 Discount amount of the Sub Line Item to be returned
 
-`total_amount``number`
+`total_amount` `number`
 
 `optional`
 
 Total amount of the Sub Line Item to be returned (after discounts). If not given, remaining quantity and price will be used to calculate the total amount to be returned, discounts may be ignored.
 
-`reason``string`
+`reason` `string`
 
 `optional`
 
@@ -151,13 +151,13 @@ The reason that the Sub Line Item was returned
 
 List of Discounts applied to this Order
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 External identifier of the Applied Discount
 
-`amount``number`
+`amount` `number`
 
 `required`
 
@@ -171,25 +171,25 @@ Amount to be returned
 
 Any charges not included as line items. E.g. gratuity, service charges or shipping
 
-`external_identifier``string`
+`external_identifier` `string`
 
 `required`
 
 External identifier of the Charge
 
-`amount``number`
+`amount` `number`
 
 `optional`
 
 The cost of the charge, before discounts, in the currency's lowest denomination, to be returned
 
-`discount_amount``number`
+`discount_amount` `number`
 
 `optional`
 
 The discount amount, in the currency's lowest denomination, to be returned
 
-`total_amount``number`
+`total_amount` `number`
 
 `required`
 
