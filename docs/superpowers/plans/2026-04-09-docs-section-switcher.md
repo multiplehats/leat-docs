@@ -163,7 +163,7 @@ git commit -m "refactor: split into three defineDocs and loader instances"
 ```mdx
 ---
 title: Leat Docs
-description: Documentation for the Leat platform, API, and WordPress plugin.
+description: Documentation for the Leat API, and WordPress plugin.
 ---
 
 Welcome to the Leat documentation. Choose a section to get started.
