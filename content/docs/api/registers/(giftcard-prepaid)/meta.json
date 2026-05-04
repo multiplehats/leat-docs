@@ -1,0 +1,9 @@
+{
+  "title": "Giftcard & Prepaid",
+  "defaultOpen": true,
+  "pages": [
+    "giftcards",
+    "giftcard-transactions",
+    "prepaid-transactions"
+  ]
+}

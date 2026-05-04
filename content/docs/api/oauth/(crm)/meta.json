@@ -1,0 +1,13 @@
+{
+  "title": "CRM",
+  "defaultOpen": true,
+  "pages": [
+    "contacts",
+    "contact-identifiers",
+    "contact-session-tokens",
+    "contact-subscriptions",
+    "contact-verification",
+    "referrals",
+    "tiers"
+  ]
+}

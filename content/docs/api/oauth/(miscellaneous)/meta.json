@@ -1,0 +1,9 @@
+{
+  "title": "Miscellaneous",
+  "defaultOpen": true,
+  "pages": [
+    "forms",
+    "automations",
+    "contacts-portal"
+  ]
+}

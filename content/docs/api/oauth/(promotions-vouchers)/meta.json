@@ -1,0 +1,8 @@
+{
+  "title": "Promotions & Vouchers",
+  "defaultOpen": true,
+  "pages": [
+    "promotions",
+    "vouchers"
+  ]
+}

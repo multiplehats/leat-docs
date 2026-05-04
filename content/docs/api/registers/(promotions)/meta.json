@@ -1,0 +1,8 @@
+{
+  "title": "Promotions",
+  "defaultOpen": true,
+  "pages": [
+    "promotions",
+    "vouchers"
+  ]
+}

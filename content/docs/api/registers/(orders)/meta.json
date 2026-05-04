@@ -1,0 +1,10 @@
+{
+  "title": "Orders",
+  "defaultOpen": true,
+  "pages": [
+    "orders",
+    "order-returns",
+    "products",
+    "categories"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Other",
+  "defaultOpen": true,
+  "pages": [
+    "portal-sessions",
+    "custom-attributes",
+    "custom-attribute-groups",
+    "subscription-types",
+    "pos-transactions"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Loyalty",
+  "defaultOpen": true,
+  "pages": [
+    "credit-receptions",
+    "loyalty-program",
+    "rewards",
+    "reward-receptions",
+    "collectable-rewards",
+    "perks",
+    "units"
+  ]
+}
