@@ -21,9 +21,19 @@ It's worth knowing that prepaid balance is separate from loyalty credits earned 
 
 Open any product in the WooCommerce product editor.
 
-For a **simple product**, go to the **General** tab in the product data panel. You'll find a checkbox labelled **Leat: Prepaid Top-up?**. Tick it and save.
+### Simple product
 
-For a **variable product**, open the **Variations** tab and expand an individual variation. Each variation has its own **Leat: Prepaid Top-up** checkbox, so you can enable it per-variation. In practice, keeping all prepaid variations on one product and all standard variations on another tends to be less confusing.
+For a **simple product**, go to the **General** tab in the product data panel. You'll find a checkbox labelled **Leat: Prepaid Top-up?** (1). Tick it and save.
+
+![The Product data General tab on a simple product showing the Leat: Prepaid Top-up? checkbox (1) below the regular and sale price fields.](/images/wordpress-plugin/prepaid-simple-product.png)
+
+### Variable product
+
+For a **variable product**, open the **Variations** tab and expand an individual variation. Each variation has its own **Leat: Prepaid Top-up** checkbox alongside its **Regular price** (1), so you can enable it per-variation. The top-up amount follows the variation's price, so a customer who picks the 25 variation gets 25 added to their balance.
+
+![A variable product's expanded variation showing the Regular price field (1) and the Leat: Prepaid Top-up checkbox (2) directly below it.](/images/wordpress-plugin/prepaid-variation.png)
+
+In practice, keeping all prepaid variations on one product and all standard variations on another tends to be less confusing.
 
 The top-up amount is based on what the customer actually paid. Buy a product at 25, get 25 added to their Leat balance.
 

@@ -1,0 +1,97 @@
+---
+title: Products
+description: Show how many credits a product earns on the product page, using the Product Points block or the Content Blocks feature for classic themes.
+---
+
+Telling customers what they will earn before they add to cart is one of the most effective ways to nudge a purchase. The plugin ships with a **Product Points Display** block that does exactly that, recalculating the number live as the price or selected variation changes.
+
+## Product Points Display block
+
+The block reads the product price, runs it through your earn rule for purchases, and outputs a line of text like "Earn 25 credits with this purchase." If the visitor is not yet enrolled, it can show an alternative message that invites them to join.
+
+You can add the block to:
+
+- A single product page in the Site Editor (block themes), or
+- A WooCommerce product hook through **Leat > Content Blocks** (classic themes)
+
+---
+
+## Adding it to a block-based theme
+
+If your theme supports the Site Editor, you can edit the single product template directly.
+
+1. Go to **Appearance > Editor** and open **Templates > Single Product** (or **Product Catalog** if you want it on archives too).
+2. Click the **+** inserter, search for "Product Points," and drop the **Product Points Display** block where you want it. Inside the product summary, just under the price, is a common place.
+3. Save the template.
+
+Every product page now renders the block in that position.
+
+---
+
+## Adding it to a classic theme with Content Blocks
+
+If you are on a classic PHP theme, you cannot edit the product template from the Gutenberg editor. The plugin's [Content Blocks](/docs/wordpress-plugin/content-blocks) feature is built for this case. It lets you author a block in the editor and have the plugin inject it into a WooCommerce action hook on the frontend, without touching theme files.
+
+1. Go to **Leat > Content Blocks > Add New**.
+2. Give it a title like "Product Points."
+3. Insert the **Product Points Display** block in the editor.
+4. In the **Display Location** meta box, pick a product page hook. **Product Page - In Summary (default)** matches where most themes show price and short description.
+5. Publish.
+
+The block now appears on every product page at the chosen hook. You can create as many Content Blocks as you need, each pinned to a different location.
+
+### Available product page locations
+
+| Location | Where it appears |
+|---|---|
+| Product Page - In Summary (default) | Inside the summary column, after the short description |
+| Product Page - Before Summary | Above the summary column |
+| Product Page - After Summary | Below the summary column |
+| Product Page - Before Add to Cart Form | Just above the add-to-cart form |
+| Product Page - Before Add to Cart Button | Right before the add-to-cart button |
+| Product Page - After Add to Cart Button | Right after the add-to-cart button |
+| Product Page - After Add to Cart Form | Below the add-to-cart form |
+| Product Page - Before Meta (SKU, categories) | Above the SKU and category meta |
+| Product Page - After Meta | Below the SKU and category meta |
+| Product Page - After Product | Below the entire product layout |
+
+<Callout type="info">Content Blocks also covers Thank You page hooks, custom hooks, and reusable shortcodes for page builders. See [Content Blocks](/docs/wordpress-plugin/content-blocks) for the full reference.</Callout>
+
+---
+
+## Editing the messages
+
+Select the block inside the editor and you will see three settings in the sidebar:
+
+- **Member text**: shown to customers who are enrolled in the loyalty program. Use `{{ points }}` for the calculated amount and `{{ credits_currency }}` for your credits name (for example "credits" or "coins"). Default: `Earn {{ points }} {{ credits_currency }} with this purchase`.
+- **Invitation text**: shown to non-members. Same variables, plus `{{ join_link }}...{{ /join_link }}` to wrap text in a link to your loyalty signup page. Default: `{{ join_link }}Join our program{{ /join_link }} to earn {{ points }} {{ credits_currency }} with this purchase`.
+- **Show zero points**: off by default, so products that earn nothing (free products, products under your minimum spend) hide the block entirely. Turn on if you want the block to render anyway.
+
+The block also supports the standard WordPress color, typography, and spacing controls so you can match it to your theme.
+
+---
+
+## Variable products
+
+On variable products the displayed amount updates when the customer picks a variation. Each variation has its own price, so the credits line always reflects what they are actually about to buy.
+
+If no variation is selected yet, the block uses the default variation's price (or hides itself if there is no default and no fallback price).
+
+---
+
+## Guests and non-members
+
+Two settings drive what guests and non-enrolled customers see:
+
+- **Include guests in earning** (Leat > Loyalty Program). When on, guests see the member text with their projected credits, the same as enrolled customers.
+- **Only reward known contacts** (Leat > Loyalty Program). When on, guests see the invitation text instead, prompting them to join before they can earn.
+
+You can preview both states by viewing a product page while logged out, then logged in as a non-member, then logged in as a member.
+
+---
+
+## Showing points and rewards at checkout
+
+To show projected credits, redeemable rewards, or already-claimed coupons inside the checkout flow, see [Checkout integrations](/docs/wordpress-plugin/checkout). Those blocks live in the WooCommerce block checkout and cover the equivalent points display and reward redemption on the order side.
+
+<Callout type="warning">The checkout integrations only work with the **WooCommerce Block Checkout**. If you are still on the classic shortcode checkout (`[woocommerce_checkout]`) the Leat checkout blocks will not render. Switch to the block checkout under **WooCommerce > Settings > Advanced > Page setup**, or keep your checkout as is and rely on the product-page Product Points block to set expectations before the customer reaches checkout.</Callout>

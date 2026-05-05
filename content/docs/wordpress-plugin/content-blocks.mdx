@@ -1,0 +1,120 @@
+---
+title: Content Blocks
+description: Turn any Leat Gutenberg block into a shortcode you can paste into page builders, classic editors, widgets, or theme files, or pin it to a WooCommerce hook without touching template code.
+---
+
+The plugin's loyalty blocks are designed for the WordPress block editor, but plenty of stores run on classic themes, page builders, or widget areas where Gutenberg is not in charge. The **Content Blocks** feature is the bridge. You build a block in the Leat editor, save it as a Content Block, and the plugin gives you back a shortcode and an optional auto-placement hook so you can drop it anywhere on the site.
+
+In short: Content Blocks make any Leat Gutenberg block work as a shortcode.
+
+## What you can do with it
+
+- Paste a Leat block into Elementor, Beaver Builder, Bricks, Divi, or any page builder that accepts shortcodes.
+- Add a Leat block to the classic editor or a custom post type that does not have block editor support.
+- Drop a block into a sidebar or footer widget area through a Shortcode widget.
+- Pin a block to a WooCommerce action hook (product page, thank you page) without editing PHP templates.
+- Reuse the same block across many places without rebuilding it each time.
+
+---
+
+## Creating a Content Block
+
+1. Go to **Leat > Content Blocks > Add New** in your WordPress admin.
+2. Give it a clear title. The title is for your reference and shows up as a `data-block-title` attribute on the rendered output, so something like "Product points - In summary" or "Thank you referral CTA" works well.
+3. Insert any Leat block (or any combination of blocks and regular content) into the editor body.
+4. In the **Display Location** meta box on the right, choose where it should render.
+5. Publish.
+
+Once saved, the Content Blocks list shows two extra columns next to the title:
+
+- **Location**: where the block is auto-rendered, if you picked a hook.
+- **Shortcode**: the ready-to-copy `[leat_content_block id="..."]` snippet for that block.
+
+<Callout type="info">A Content Block can hold any blocks, not just Leat ones. If you want a card with a heading, a paragraph, and a Leat **Spend Rules List** stacked together, build the whole thing inside the Content Block and the shortcode renders all of it as one unit.</Callout>
+
+---
+
+## Option 1: Use it as a shortcode
+
+This is the path for page builders, classic editors, widgets, and theme files where you want full control over placement.
+
+Each Content Block has its own shortcode. From the **Shortcode** column on the Content Blocks list, copy the snippet for the block you want, for example:
+
+```text
+[leat_content_block id="42"]
+```
+
+Where you can paste it:
+
+- Inside any page or post in the classic editor
+- Into a Shortcode block in the block editor (handy if you want to embed a Content Block inside a regular page without rebuilding it)
+- Into a page builder widget that accepts shortcodes (Elementor's Shortcode widget, Beaver Builder's HTML/Shortcode module, and so on)
+- Into a sidebar or footer **Shortcode** widget under **Appearance > Widgets**
+- Into theme PHP via `<?php echo do_shortcode( '[leat_content_block id="42"]' ); ?>`
+
+The shortcode renders the same HTML the block would, including the styling, JavaScript, and customer-aware behavior. So a **Product Points Display** placed via shortcode still recalculates with the cart, and a **Spend Rules List** still authenticates the visitor before deciding what to show.
+
+---
+
+## Option 2: Pin it to a WooCommerce hook
+
+If you want the block to appear automatically in a specific spot on every product page or thank you page without editing layouts, pick one of the built-in hook locations in the **Display Location** meta box.
+
+### Available locations
+
+**Thank You page hooks**
+
+- Thank You Page - Before Thank You Message
+- Thank You Page - After Thank You Message
+- Thank You Page - After Order Details Table
+- Thank You Page - After All Order Details
+
+**Product Page hooks**
+
+- Product Page - In Summary (default)
+- Product Page - Before Summary
+- Product Page - After Summary
+- Product Page - Before Add to Cart Form
+- Product Page - Before Add to Cart Button
+- Product Page - After Add to Cart Button
+- Product Page - After Add to Cart Form
+- Product Page - Before Meta (SKU, categories)
+- Product Page - After Meta
+- Product Page - After Product
+
+**Custom hook**
+
+If your theme or another plugin exposes its own action hook (for example, a custom checkout step or a footer CTA position), pick **Custom** and enter the hook name in the field that appears. Hook names must start with a letter or underscore and contain only letters, numbers, and underscores. Anything else is ignored.
+
+<Callout type="info">Multiple Content Blocks can target the same location. They render in the order set by the post's **Order** field (under Page Attributes), so use that to control stacking when more than one block lives on the same hook.</Callout>
+
+---
+
+## Common recipes
+
+### Show product points on a classic-theme product page
+
+Build a Content Block containing only the **Product Points Display** block, set the location to **Product Page - In Summary (default)**, and publish. Every product page now shows the credits line under the price. See [Products](/docs/wordpress-plugin/products) for the block's text and variable options.
+
+### Add a referral CTA to the thank you page
+
+Build a Content Block with a heading like "Earn more by inviting a friend" and the **Referral Rewards** block. Set the location to **Thank You Page - After Order Details Table**. Customers see it right after they place an order, when motivation to share is highest.
+
+### Drop the loyalty dashboard into a page builder
+
+Build a Content Block with the **Complete Loyalty Dashboard** pattern (or assemble the sections you want manually), leave the location empty, copy the `[leat_content_block id="..."]` shortcode, and paste it into your page builder. The full dashboard renders inside whatever layout your builder produces.
+
+### Replace a legacy shortcode
+
+If you previously placed the loyalty dashboard with `[leat_customer_dashboard]` and now want the block-based version inside a non-Gutenberg page builder, build the dashboard with Leat blocks in a Content Block and swap the old shortcode for `[leat_content_block id="..."]`. Same idea works for the points balance and the referral section.
+
+---
+
+## Notes and limits
+
+- Only **published** Content Blocks render. Drafts and trashed posts return nothing.
+- A Content Block with no Display Location set will not render automatically, but its shortcode still works. This is the right setup for shortcode-only placement.
+- The output runs through WordPress's `the_content` filter, so any plugin that filters post content (oEmbed, lazy loading, and so on) applies here too.
+- Each Content Block is wrapped in a `<div class="leat-content-block leat-content-block-{id}" data-block-id="{id}" data-block-title="{title}">`, so you can target it from CSS or analytics by ID or title.
+- Frontend assets for blocks like **Product Points Display** and **Referral Rewards** are auto-enqueued only on pages that actually render those blocks, so adding Content Blocks does not load JavaScript everywhere.
+- Content Blocks are not the same as the **Patterns** under the Leat category in the block inserter. Patterns are starting points for editing inside a regular page; Content Blocks are reusable units pinned via shortcode or hook.

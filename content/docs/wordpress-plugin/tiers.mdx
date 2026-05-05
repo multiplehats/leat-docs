@@ -21,18 +21,6 @@ Higher-tier customers can earn credits faster thanks to earn multipliers. You se
 
 The multiplier applies automatically to order-based credit calculations. Nothing needs to be configured on the WordPress side.
 
----
-
-## Showing tiers on the dashboard
-
-![Customer Dashboard settings with display toggles (2) for tiers, referrals, and other sections.](/images/wordpress-plugin/customer-dashboard-settings.png)
-
-Go to **Leat > Dashboard Settings** in your WordPress admin and find the **Show tiers** toggle. Switch it on to show the tiers section on the built-in loyalty dashboard, or off if your program doesn't use tiers yet.
-
-This toggle only affects the My Account loyalty dashboard. If you've built a custom loyalty page using blocks, just add or remove the Tiers List block on that page directly.
-
----
-
 ## Adding the Tiers List block
 
 The Tiers List block shows your full tier structure as a card for each tier. Open any page in the WordPress block editor, search for **Tiers List** in the block inserter, and add it. You'll find it under the Leat category.
@@ -70,3 +58,13 @@ An enrolled customer visiting your page with the Tiers List block will see:
 Customers who aren't logged in see a prompt to sign in. Customers who are logged in but haven't joined the program yet see a prompt to enroll.
 
 <Callout type="info">The progress bar toward the next tier updates in real time based on the customer's credit balance. There's nothing to configure for it to work.</Callout>
+
+---
+
+## Showing tiers on the dashboard (legacy)
+
+![Customer Dashboard settings with display toggles (2) for tiers, referrals, and other sections.](/images/wordpress-plugin/customer-dashboard-settings.png)
+
+Go to **Leat > Dashboard Settings** in your WordPress admin and find the **Show tiers** toggle. Switch it on to show the tiers section on the built-in loyalty dashboard, or off if your program doesn't use tiers yet.
+
+This toggle only affects the legacy `[leat_dashboard]` shortcode. If you've built a loyalty page using blocks, just add or remove the Tiers List block on that page directly.
